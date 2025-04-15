@@ -1,81 +1,55 @@
+// components/roadmap/RoadmapSidebar.tsx
 'use client'
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSession } from 'next-auth/react';
-import Link from 'next/link';
-import { Roadmap } from '../../../types/roadmaps';
+import CreateRoadmapForm from './CreateRoadmapForm';
+import RoadmapList from './RoadmapList';
 
-export default function RoadmapSidebar() {
-  const [isOpen, setIsOpen] = useState(false);
+export default function RoadmapSidebar({ onClose }: { onClose?: () => void }) {
   const { data: session } = useSession();
-  const [roadmaps, setRoadmaps] = useState<Roadmap[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchRoadmaps() {
-      if (session?.user?.id) {
-        try {
-          const res = await fetch(`/api/roadmaps?userId=${session.user.id}`);
-          const data = await res.json();
-          setRoadmaps(data);
-        } catch (error) {
-          console.error('Failed to fetch roadmaps:', error);
-        } finally {
-          setLoading(false);
-        }
-      }
-    }
-    fetchRoadmaps();
-  }, [session]);
+  const [showForm, setShowForm] = useState(false);
 
   return (
-    <div className="relative">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center space-x-2 bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors"
-      >
-        <span>My Roadmaps</span>
-        <svg
-          className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
-      </button>
-
-      {isOpen && (
-        <div className="absolute left-0 mt-2 w-64 bg-white rounded-md shadow-lg py-2 z-50 max-h-96 overflow-y-auto">
-          {loading ? (
-            <div className="px-4 py-2 text-sm text-gray-500">Loading...</div>
-          ) : roadmaps.length === 0 ? (
-            <div className="px-4 py-3 text-center">
-              <p className="text-sm text-gray-500 mb-2">No roadmaps available</p>
-              <Link
-                href="/dashboard/new"
-                className="text-sm text-indigo-600 hover:text-indigo-800 font-medium"
+    <div className="h-full flex flex-col">
+      <div className="p-4 border-b border-gray-200 flex justify-between items-center">
+        <h2 className="text-lg font-semibold text-gray-900">
+          {showForm ? 'Create New Roadmap' : 'My Roadmaps'}
+        </h2>
+        {showForm && (
+          <button 
+            onClick={() => setShowForm(false)}
+            className="text-gray-500 hover:text-gray-700"
+          >
+            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        )}
+      </div>
+      
+      <div className="flex-1 overflow-y-auto">
+        {showForm ? (
+          <div className="p-4">
+            <CreateRoadmapForm 
+              onSuccess={() => setShowForm(false)}
+              onCancel={() => setShowForm(false)}
+            />
+          </div>
+        ) : (
+          <>
+            <div className="p-4">
+              <button
+                onClick={() => setShowForm(true)}
+                className="w-full flex items-center justify-center space-x-2 bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors"
               >
-                Create your first roadmap
-              </Link>
+                <span>+ Create New Roadmap</span>
+              </button>
             </div>
-          ) : (
-            roadmaps.map((roadmap) => (
-              <Link
-                key={roadmap.id}
-                href={`/dashboard/${roadmap.id}`}
-                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-b border-gray-100"
-              >
-                <div className="font-medium">{roadmap.title}</div>
-                <div className="text-xs text-gray-500">
-                  {roadmap.company} • {roadmap.role}
-                </div>
-              </Link>
-            ))
-          )}
-        </div>
-      )}
+            <RoadmapList onClose={onClose} />
+          </>
+        )}
+      </div>
     </div>
   );
 }

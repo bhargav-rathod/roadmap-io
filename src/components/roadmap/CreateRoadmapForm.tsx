@@ -254,7 +254,7 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
           </label>
           <select
             name="language"
-            value={formData.language}
+            value={formData.programmingLanguage}
             onChange={handleChange}
             className="w-full p-2 border rounded"
           >
