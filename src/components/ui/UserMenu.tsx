@@ -36,13 +36,13 @@ export default function UserMenu() {
         className="flex items-center space-x-2 focus:outline-none"
       >
         <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center">
-        <Image
-          src={session?.user?.image || '/default-avatar.png'}
-          alt="User avatar"
-          width={32}
-          height={32}
-          className="object-cover"
-        />
+        <img
+  src="https://ui-avatars.com/api/?name=H+I"
+  alt="User avatar"
+  width={32}
+  height={32}
+  className="object-cover rounded-full"
+/>
         </div>
       </button>
 
