@@ -37,12 +37,12 @@ export default function UserMenu() {
       >
         <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center">
         <img
-  src="https://ui-avatars.com/api/?name=H+I"
-  alt="User avatar"
-  width={32}
-  height={32}
-  className="object-cover rounded-full"
-/>
+          src="https://ui-avatars.com/api/?name=H+I"
+          alt="User avatar"
+          width={32}
+          height={32}
+          className="object-cover rounded-full"
+        />
         </div>
       </button>
 
