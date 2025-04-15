@@ -1,9 +1,14 @@
+// lib/openai.ts
 import prisma from '../lib/prisma';
 
 export async function generateRoadmap(roadmapId: string) {
   try {
     const roadmap = await prisma.roadmap.findUnique({
       where: { id: roadmapId },
+      include: {
+        companyRef: true,
+        roleRef: true,
+      },
     });
 
     if (!roadmap) {
@@ -17,16 +22,12 @@ export async function generateRoadmap(roadmapId: string) {
       data: { status: 'processing' },
     });
 
-    // Call OpenAI API (mock implementation)
-    // In a real implementation, you would call the actual OpenAI API here
-    const prompt = `Create a detailed roadmap for a ${roadmap.role} position at ${roadmap.company} with ${roadmap.yearsOfExperience} years of experience.`;
-    
     // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 10000));
+    await new Promise(resolve => setTimeout(resolve, 5000));
     
-    // Mock response
+    // Mock response - in a real app, you'd call the OpenAI API here
     const response = {
-      content: `# ${roadmap.role} Roadmap for ${roadmap.company}\n\n## Month 1\n- Learn core skills\n- Study company culture\n\n## Month 2\n- Build projects\n- Network with employees`,
+      content: `# ${roadmap.role} Roadmap for ${roadmap.company}\n\n## Overview\nCustom roadmap for ${roadmap.role} position at ${roadmap.company}\n\n## Skills Required\n- Core technical skills\n- Industry knowledge\n\n## Timeline\n- Month 1-3: Foundation building\n- Month 4-6: Specialization\n\n## Resources\n- Recommended courses\n- Books and articles`,
     };
 
     // Save the generated roadmap

@@ -1,0 +1,36 @@
+# prisma/seed.yml
+companies:
+  - name: Google
+    type: IT
+  - name: Microsoft
+    type: IT
+  - name: Amazon
+    type: IT
+  - name: McKinsey
+    type: Non-IT
+  - name: Goldman Sachs
+    type: Non-IT
+  - name: Other
+    type: Both
+
+roles:
+  - name: Software Engineer
+    type: IT
+  - name: Data Scientist
+    type: IT
+  - name: Product Manager
+    type: IT
+  - name: Management Consultant
+    type: Non-IT
+  - name: Investment Banker
+    type: Non-IT
+  - name: Other
+    type: Both
+
+programmingLanguages:
+  - name: JavaScript
+    type: IT
+  - name: Python
+    type: IT
+  - name: Java
+    type: IT

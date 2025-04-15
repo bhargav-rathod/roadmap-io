@@ -1,3 +1,4 @@
+// app/api/roadmaps/route.ts
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/auth';
@@ -12,12 +13,23 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
   }
 
-  const roadmaps = await prisma.roadmap.findMany({
-    where: { userId },
-    orderBy: { createdAt: 'desc' },
-  });
-
-  return NextResponse.json(roadmaps);
+  try {
+    const roadmaps = await prisma.roadmap.findMany({
+      where: { userId },
+      orderBy: { createdAt: 'desc' },
+      include: {
+        companyRef: { select: { name: true } },
+        roleRef: { select: { name: true } },
+      },
+    });
+    return NextResponse.json(roadmaps);
+  } catch (error) {
+    console.error('Failed to fetch roadmaps:', error);
+    return NextResponse.json(
+      { error: 'Failed to fetch roadmaps' },
+      { status: 500 }
+    );
+  }
 }
 
 export async function POST(request: Request) {
@@ -26,27 +38,47 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const data = await request.json();
-  const { userId, ...roadmapData } = data;
-
   try {
-    // Create roadmap in DB
+    const { language, ...roadmapData } = await request.json();
+
+    // Validate required fields
+    if (!roadmapData.roleType || !roadmapData.company || !roadmapData.role) {
+      return NextResponse.json(
+        { error: 'Role type, company, and role are required' },
+        { status: 400 }
+      );
+    }
+
+    // Ensure programming language exists
+    if (language) {
+      await prisma.programmingLanguage.upsert({
+        where: { name: language },
+        update: {},
+        create: { 
+          name: language, 
+          type: roadmapData.roleType === 'Non-IT' ? 'Non-IT' : 'IT' 
+        }
+      });
+    }
+
+    // Create roadmap
     const roadmap = await prisma.roadmap.create({
       data: {
         ...roadmapData,
+        programmingLanguage: language || null,
         userId: session.user.id,
-        status: 'processing',
       },
     });
 
-    // Trigger async processing
-    generateRoadmap(roadmap.id);
+    return NextResponse.json(roadmap);
 
-    return NextResponse.json({ id: roadmap.id });
-  } catch (error) {
-    console.error('Failed to create roadmap:', error);
+  } catch (error: any) {
+    console.error('Roadmap creation error:', error);
     return NextResponse.json(
-      { error: 'Failed to create roadmap' },
+      { 
+        error: 'Failed to create roadmap',
+        details: process.env.NODE_ENV === 'development' ? error.message : undefined
+      },
       { status: 500 }
     );
   }

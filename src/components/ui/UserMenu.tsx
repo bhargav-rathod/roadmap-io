@@ -1,7 +1,7 @@
 // components/ui/UserMenu.tsx
 'use client'
 
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -10,6 +10,7 @@ export default function UserMenu() {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const { data: session } = useSession();
 
   const handleLogout = async () => {
     await signOut({ redirect: false });
@@ -35,13 +36,13 @@ export default function UserMenu() {
         className="flex items-center space-x-2 focus:outline-none"
       >
         <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center">
-          <Image
-            src="/default-avatar.png"
-            alt="User avatar"
-            width={32}
-            height={32}
-            className="rounded-full"
-          />
+        <Image
+          src={session?.user?.image || '/default-avatar.png'}
+          alt="User avatar"
+          width={32}
+          height={32}
+          className="object-cover"
+        />
         </div>
       </button>
 
