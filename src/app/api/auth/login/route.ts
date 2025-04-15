@@ -1,5 +1,7 @@
-import { directSignIn, createSession } from "../../../../lib/session";
+// app/api/auth/login/route.ts
 import { NextResponse } from "next/server";
+import { authOptions } from "@/auth";
+import { getServerSession } from "next-auth";
 
 export const dynamic = "force-dynamic";
 
@@ -14,23 +16,23 @@ export async function POST(request: Request) {
       );
     }
 
-    const user = await directSignIn(email, password);
+    const session = await getServerSession(authOptions);
 
-    if (!user) {
+    if (session) {
       return NextResponse.json(
-        { error: "Invalid credentials" },
-        { status: 401 }
+        { error: "Already logged in" },
+        { status: 400 }
       );
     }
 
-    return await createSession(user.id);
+    const response = NextResponse.json({ success: true });
+    return response;
 
   } catch (error: any) {
     console.error("Login error:", error);
     return NextResponse.json(
       { 
-        error: "Internal server error",
-        details: process.env.NODE_ENV === "development" ? error.message : undefined
+        error: error.message || "Internal server error",
       },
       { status: 500 }
     );

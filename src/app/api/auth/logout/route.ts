@@ -1,22 +1,17 @@
+// app/api/auth/logout/route.ts
 import { NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
 import { authOptions } from '@/auth';
-import prisma from '../../../../lib/prisma';
+import { getServerSession } from 'next-auth';
 
-export async function GET(request: Request) {
+export async function POST(request: Request) {
   try {
     const session = await getServerSession(authOptions);
     const url = new URL(request.url);
     
-    if (session?.user?.id) {
-      await prisma.session.deleteMany({
-        where: {
-          userId: session.user.id
-        }
-      });
-    }
-
-    const response = NextResponse.redirect(new URL('/login?logout=success', url.origin));
+    const response = NextResponse.json(
+      { success: true },
+      { status: 200 }
+    );
     
     // Clear all auth cookies
     response.cookies.set({
@@ -27,7 +22,7 @@ export async function GET(request: Request) {
     });
     
     response.cookies.set({
-      name: 'next-auth.callback-url',
+      name: '__Secure-next-auth.session-token',
       value: '',
       expires: new Date(0),
       path: '/',
