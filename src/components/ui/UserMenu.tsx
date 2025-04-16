@@ -11,7 +11,9 @@ export default function UserMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const { data: session } = useSession();
-
+  const firstAvatarLetter = session?.user?.name?.toLocaleUpperCase().split(' ')[0]?.charAt(0) ?? "" 
+  const secondAvatarLetter = session?.user?.name?.toLocaleUpperCase().split(' ')[1]?.charAt(0) ?? "";
+  const imageSrc = "https://ui-avatars.com/api/?name=" + firstAvatarLetter + "+" + secondAvatarLetter;
   const handleLogout = async () => {
     await signOut({ redirect: false });
     router.push('/login');
@@ -37,7 +39,7 @@ export default function UserMenu() {
       >
         <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center">
         <img
-          src="https://ui-avatars.com/api/?name=H+I"
+          src={imageSrc}
           alt="User avatar"
           width={32}
           height={32}

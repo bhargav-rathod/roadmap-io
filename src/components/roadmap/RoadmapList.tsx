@@ -1,15 +1,28 @@
-// components/roadmap/RoadmapList.tsx
 'use client'
 
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
-import Link from 'next/link';
 import { Roadmap } from '../../../types/roadmaps';
+import { Card, CardContent } from '../ui/card';
+import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
+import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { SortableItem } from './ScrollableItem';
 
 export default function RoadmapList({ onClose }: { onClose?: () => void }) {
   const { data: session } = useSession();
   const [roadmaps, setRoadmaps] = useState<Roadmap[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
 
   useEffect(() => {
     async function fetchRoadmaps() {
@@ -28,6 +41,26 @@ export default function RoadmapList({ onClose }: { onClose?: () => void }) {
     fetchRoadmaps();
   }, [session]);
 
+  function handleDragEnd(event: any) {
+    const { active, over } = event;
+    
+    if (active.id !== over.id) {
+      setRoadmaps((items) => {
+        const oldIndex = items.findIndex(item => item.id === active.id);
+        const newIndex = items.findIndex(item => item.id === over.id);
+        const newItems = arrayMove(items, oldIndex, newIndex);
+        
+        // Optional: Send new order to API if you want to persist it
+        // fetch('/api/roadmaps/order', {
+        //   method: 'POST',
+        //   body: JSON.stringify({ order: newItems.map(item => item.id) })
+        // });
+        
+        return newItems;
+      });
+    }
+  }
+
   if (loading) {
     return (
       <div className="px-4 py-8 text-center">
@@ -45,20 +78,28 @@ export default function RoadmapList({ onClose }: { onClose?: () => void }) {
   }
 
   return (
-    <div className="space-y-1 px-2">
-      {roadmaps.map((roadmap) => (
-        <Link
-          key={roadmap.id}
-          href={`/dashboard/${roadmap.id}`}
-          onClick={onClose}
-          className="block px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors"
-        >
-          <div className="font-medium truncate">{roadmap.title}</div>
-          <div className="text-xs text-gray-500 truncate">
-            {roadmap.company} • {roadmap.role}
-          </div>
-        </Link>
-      ))}
-    </div>
+    <DndContext 
+      sensors={sensors}
+      collisionDetection={closestCenter}
+      onDragEnd={handleDragEnd}
+    >
+      <SortableContext 
+        items={roadmaps}
+        strategy={verticalListSortingStrategy}
+      >
+        <div className="space-y-4 p-4">
+          {roadmaps.map((roadmap) => (
+            <SortableItem key={roadmap.id} id={roadmap.id} onClose={onClose}>
+              <div className="text-xl font-bold">{roadmap.title}</div>
+              <div className="text-sm text-gray-600 mt-2">
+                {roadmap.company && <span>Company: {roadmap.company}</span>}
+                {roadmap.role && <span className="ml-4">Role: {roadmap.role}</span>}
+                {roadmap.yearsOfExperience && <span className="ml-4">Experience: {roadmap.yearsOfExperience} years</span>}
+              </div>
+            </SortableItem>
+          ))}
+        </div>
+      </SortableContext>
+    </DndContext>
   );
 }
