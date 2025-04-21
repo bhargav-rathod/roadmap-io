@@ -1,3 +1,5 @@
+//app/api/generate/route
+
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
 

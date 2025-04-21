@@ -1,4 +1,3 @@
-// auth.ts
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "./src/lib/prisma";
@@ -38,7 +37,9 @@ export const authOptions = {
           return {
             id: user.id,
             email: user.email,
-            name: user.name
+            name: user.name,
+            credits: user.credits,
+            user_role: user.user_role
           };
         } catch (error) {
           console.error("Authorization error:", error);
@@ -51,19 +52,23 @@ export const authOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
+        token.credits = user.credits;
+        token.user_role = user.user_role;
       }
       return token;
     },
     async session({ session, token }) {
       if (token?.id) {
         session.user.id = token.id as string;
+        session.user.credits = token.credits as number;
+        session.user.user_role = token.user_role as string;
       }
       return session;
     }
   },
   pages: {
     signIn: "/login",
-    error: "/login" // Changing this to redirect errors to login page
+    error: "/login"
   },
   secret: process.env.NEXTAUTH_SECRET,
   debug: process.env.NODE_ENV === "development"

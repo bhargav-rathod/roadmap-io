@@ -11,6 +11,12 @@ export default async function RoadmapPage({ params }: { params: { id: string } }
     where: {
       id: params.id,
       userId: session.user.id,
+      expiresAt: { gt: new Date() } // Only show if not expired
+    },
+    include: {
+      companyRef: true,
+      roleRef: true,
+      programmingLanguageRef: true,
     },
   });
 
@@ -51,9 +57,33 @@ export default async function RoadmapPage({ params }: { params: { id: string } }
           </div>
         </div>
       ) : (
-        <div>
-          <h1 className="text-2xl font-bold mb-4">{roadmap.title}</h1>
-          {/* Render roadmap content here */}
+        <div className="space-y-6">
+          <div className="border-b pb-4">
+            <h1 className="text-2xl font-bold">{roadmap.title}</h1>
+            <div className="flex flex-wrap gap-4 mt-2 text-sm text-gray-600">
+              {roadmap.companyRef && (
+                <span>Company: {roadmap.companyRef.name}</span>
+              )}
+              {roadmap.roleRef && (
+                <span>Role: {roadmap.roleRef.name}</span>
+              )}
+              {roadmap.yearsOfExperience && (
+                <span>Experience: {roadmap.yearsOfExperience} years</span>
+              )}
+              {roadmap.programmingLanguageRef && (
+                <span>Language: {roadmap.programmingLanguageRef.name}</span>
+              )}
+              <span>Target: {roadmap.targetDuration} months</span>
+            </div>
+          </div>
+          
+          <div className="prose max-w-none">
+            {roadmap.content ? (
+              <div dangerouslySetInnerHTML={{ __html: roadmap.content }} />
+            ) : (
+              <p>No content available for this roadmap.</p>
+            )}
+          </div>
         </div>
       )}
     </div>

@@ -1,4 +1,4 @@
-// middleware.ts
+// middleware.ts (root level)
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { authOptions } from './auth';

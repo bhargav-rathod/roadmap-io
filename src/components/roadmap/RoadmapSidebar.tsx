@@ -29,14 +29,14 @@ export default function RoadmapSidebar({
         <h2 className="text-lg font-semibold text-gray-900">
           {showForm ? 'Create New Roadmap' : 'My Roadmaps'}
         </h2>
-        <button 
+        {/* <button 
           onClick={handleClose}
           className="text-gray-500 hover:text-gray-700"
         >
           <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
-        </button>
+        </button> */}
       </div>
       
       <div className="flex-1 overflow-y-auto">
@@ -67,7 +67,7 @@ export default function RoadmapSidebar({
 
       <div className="p-4 border-t border-gray-200">
         <div className="text-sm text-gray-600">
-          <span className="font-medium">Available Credits:</span> 10
+          <span className="font-medium">Available Credits:</span> {session?.user?.credits}
         </div>
         <p className="text-xs text-gray-500 mt-1">
           Each roadmap creation uses 1 credit

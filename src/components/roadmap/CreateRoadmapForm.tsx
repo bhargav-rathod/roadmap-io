@@ -1,4 +1,5 @@
 // components/roadmap/CreateRoadmapForm.tsx
+
 'use client'
 
 import { useState, useEffect } from 'react';
@@ -18,6 +19,7 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
     yearsOfExperience: '',
     monthsOfExperience: '',
     programmingLanguage: '',
+    targetDuration: '3',
     includeSimilarCompanies: false,
     includeCompensationData: false,
   });
@@ -27,28 +29,24 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  // Fetch data only once when component mounts
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       try {
         const [companiesRes, rolesRes, languagesRes] = await Promise.all([
-          fetch('/api/companies'),
-          fetch('/api/roles'),
-          fetch('/api/programmingLanguages'),
+          fetch('/api/companies').then(res => res.json()),
+          fetch('/api/roles').then(res => res.json()),
+          fetch('/api/programmingLanguages').then(res => res.json()),
         ]);
         
-        const [companiesData, rolesData, languagesData] = await Promise.all([
-          companiesRes.json(),
-          rolesRes.json(),
-          languagesRes.json(),
-        ]);
-        
-        setCompanies(companiesData);
-        setRoles(rolesData);
-        setLanguages(languagesData);
+        setCompanies(companiesRes);
+        setRoles(rolesRes);
+        setLanguages(languagesRes);
       } catch (error) {
         console.error('Failed to fetch data:', error);
       }
-    }
+    };
+    
     fetchData();
   }, []);
 
@@ -68,11 +66,12 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
     setLoading(true);
 
     try {
-      const company = formData.company === 'Other' ? formData.companyOther : formData.company;
-      const role = formData.role === 'Other' ? formData.roleOther : formData.role;
+      if (!session?.user?.id) {
+        throw new Error('User not authenticated');
+      }
 
-      if (!formData.roleType || !company || !role) {
-        throw new Error('Please fill all required fields');
+      if (session.user.credits <= 0) {
+        throw new Error('Insufficient credits to create roadmap');
       }
 
       const response = await fetch('/api/roadmaps', {
@@ -81,16 +80,9 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          roleType: formData.roleType,
-          company,
-          role,
-          yearsOfExperience: formData.yearsOfExperience,
-          monthsOfExperience: formData.monthsOfExperience,
-          programmingLanguage: formData.programmingLanguage,
-          includeSimilarCompanies: formData.includeSimilarCompanies,
-          includeCompensationData: formData.includeCompensationData,
-          title: `${role} at ${company}`,
-          userId: session?.user?.id,
+          ...formData,
+          userId: session.user.id,
+          title: `${formData.role === 'Other' ? formData.roleOther : formData.role} at ${formData.company === 'Other' ? formData.companyOther : formData.company}`,
         }),
       });
 
@@ -125,6 +117,15 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
     !formData.roleType || language.type === formData.roleType || language.type === 'Both'
   );
 
+  const targetDurations = [
+    { value: '1', label: '1 month' },
+    { value: '2', label: '2 months' },
+    { value: '3', label: '3 months' },
+    { value: '6', label: '6 months' },
+    { value: '12', label: '1 year' },
+    { value: '0', label: 'Not decided yet' },
+  ];
+
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       {error && (
@@ -133,6 +134,7 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
         </div>
       )}
 
+      {/* Role Type */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
           Role Type <span className="text-red-500">*</span>
@@ -150,6 +152,7 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
         </select>
       </div>
 
+      {/* Company */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
           Target Company <span className="text-red-500">*</span>
@@ -181,6 +184,7 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
         )}
       </div>
 
+      {/* Role */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
           Target Role <span className="text-red-500">*</span>
@@ -212,6 +216,7 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
         )}
       </div>
 
+      {/* Experience */}
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -247,13 +252,33 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
         </div>
       </div>
 
+      {/* Target Duration */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Target Duration
+        </label>
+        <select
+          name="targetDuration"
+          value={formData.targetDuration}
+          onChange={handleChange}
+          className="w-full p-2 border rounded"
+        >
+          {targetDurations.map((duration) => (
+            <option key={duration.value} value={duration.value}>
+              {duration.label}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Programming Language (only for IT roles) */}
       {formData.roleType === 'IT' && (
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Preferred Language
           </label>
           <select
-            name="language"
+            name="programmingLanguage"
             value={formData.programmingLanguage}
             onChange={handleChange}
             className="w-full p-2 border rounded"
@@ -268,6 +293,7 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
         </div>
       )}
 
+      {/* Options */}
       <div className="space-y-2">
         <div className="flex items-center">
           <input
@@ -297,6 +323,7 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
         </div>
       </div>
 
+      {/* Buttons */}
       <div className="flex justify-end space-x-3 pt-4">
         <button
           type="button"
