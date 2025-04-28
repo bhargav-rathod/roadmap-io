@@ -117,7 +117,17 @@ export async function POST(request: Request) {
     }
 
     // Generate content with OpenAI (simplified example)
-    const prompt = `Do a deep research and generate a detailed roadmap for ${roleName} at ${companyName} with ${roadmapData.yearsOfExperience || 0} years experience. Target duration is: ${targetDuration} months. Give interview pattern and 150+ recently asked interview questions for the same role. (If role is IT then only add DSA questions). Also give 5 recent compensation package for this role.`;
+    var prompt = "";
+    if(roadmapData.roleType == "IT"){
+      prompt = `Do a deep research and web search, and generate a detailed roadmap for ${roleName} at ${companyName} India with ${roadmapData.yearsOfExperience || 0} years experience. Give interview pattern and 150+ recently asked interview questions with detailed and accurate answers for the same role. Add 150+ recently asked DSA questions with solutions in programming language: ${language}). Also give 5 recent compensation package for this role.`;
+      if(targetDuration > 0){
+        prompt += "Target duration is: ${targetDuration} months.";
+      }
+    }
+    else{
+      prompt = `Do a deep research and web search, and generate a detailed roadmap for ${roleName} at ${companyName} with ${roadmapData.yearsOfExperience || 0} years experience. Target duration is: ${targetDuration} months. Give interview pattern and 150+ recently asked interview questions with detailed and accurate answers for the same role. Also give 5 recent compensation package for this role.`;
+
+    }
     const content = await generateRoadmapContent(prompt); // Implement this function
 
     // Calculate expiry date (30 days from now)
