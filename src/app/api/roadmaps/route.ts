@@ -72,30 +72,36 @@ export async function POST(request: Request) {
     let companyName = roadmapData.company;
     if (roadmapData.company === 'Other' && companyOther) {
       companyName = companyOther;
-      // Create new company if it doesn't exist
-      await prisma.company.upsert({
-        where: { name: companyName },
-        update: {},
-        create: { 
-          name: companyName, 
-          type: roadmapData.roleType === 'Non-IT' ? 'Non-IT' : 'IT' 
-        }
-      });
+      if(process.env.PUSH_OTHER_ENTRY_IN_DB === "true")
+      {
+          // Create new company if it doesn't exist
+          await prisma.company.upsert({
+            where: { name: companyName },
+            update: {},
+            create: { 
+              name: companyName, 
+              type: roadmapData.roleType === 'Non-IT' ? 'Non-IT' : 'IT' 
+            }
+          });
+      }
     }
 
     // Handle "Other" role
     let roleName = roadmapData.role;
     if (roadmapData.role === 'Other' && roleOther) {
       roleName = roleOther;
-      // Create new role if it doesn't exist
-      await prisma.role.upsert({
-        where: { name: roleName },
-        update: {},
-        create: { 
-          name: roleName, 
-          type: roadmapData.roleType === 'Non-IT' ? 'Non-IT' : 'IT' 
-        }
-      });
+      if(process.env.PUSH_OTHER_ENTRY_IN_DB === "true")
+      {
+        // Create new role if it doesn't exist
+        await prisma.role.upsert({
+          where: { name: roleName },
+          update: {},
+          create: { 
+            name: roleName, 
+            type: roadmapData.roleType === 'Non-IT' ? 'Non-IT' : 'IT' 
+          }
+        });
+      }
     }
 
     // Ensure programming language exists
