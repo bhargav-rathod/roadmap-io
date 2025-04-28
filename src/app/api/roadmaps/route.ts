@@ -136,13 +136,16 @@ export async function POST(request: Request) {
       },
     });
 
-    // Deduct credit
-    await prisma.user.update({
+    // Deduct credit and get updated user
+    const updatedUser = await prisma.user.update({
       where: { id: session.user.id },
-      data: { credits: { decrement: 1 } }
+      data: { credits: { decrement: 1 } },
     });
 
-    return NextResponse.json(roadmap);
+    return NextResponse.json({
+      roadmap,
+      updatedCredits: updatedUser.credits
+    });
 
   } catch (error: any) {
     console.error('Roadmap creation error:', error);

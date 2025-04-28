@@ -9,7 +9,7 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
   onSuccess: (roadmap: any) => void; 
   onCancel: () => void 
 }) {
-  const { data: session } = useSession();
+  const { data: session, update } = useSession();
   const [formData, setFormData] = useState({
     roleType: '',
     company: '',
@@ -64,16 +64,16 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
     e.preventDefault();
     setError('');
     setLoading(true);
-
+  
     try {
       if (!session?.user?.id) {
         throw new Error('User not authenticated');
       }
-
+  
       if (session.user.credits <= 0) {
         throw new Error('Insufficient credits to create roadmap');
       }
-
+  
       const response = await fetch('/api/roadmaps', {
         method: 'POST',
         headers: {
@@ -85,12 +85,21 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
           title: `${formData.role === 'Other' ? formData.roleOther : formData.role} at ${formData.company === 'Other' ? formData.companyOther : formData.company}`,
         }),
       });
-
+  
       if (!response.ok) {
-        throw new Error('Failed to create roadmap');
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to create roadmap');
       }
-
-      const newRoadmap = await response.json();
+  
+      const { newRoadmap, updatedCredits } = await response.json();
+      
+      // Update the session with the new credit value
+      await update({
+        user: {
+          ...session.user,
+          credits: updatedCredits
+        }
+      });
       onSuccess(newRoadmap);
     } catch (error: any) {
       setError(error.message);
