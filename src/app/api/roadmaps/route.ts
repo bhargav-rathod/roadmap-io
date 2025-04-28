@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/auth';
 import prisma from '../../../lib/prisma';
+import { OpenAI } from 'openai';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -110,7 +111,7 @@ export async function POST(request: Request) {
     }
 
     // Generate content with OpenAI (simplified example)
-    const prompt = `Create a roadmap for ${roleName} at ${companyName} with ${roadmapData.yearsOfExperience || 0} years experience. Target duration: ${targetDuration} months.`;
+    const prompt = `Do a deep research and generate a detailed roadmap for ${roleName} at ${companyName} with ${roadmapData.yearsOfExperience || 0} years experience. Target duration is: ${targetDuration} months. Give interview pattern and 150+ recently asked interview questions for the same role. (If role is IT then only add DSA questions). Also give 5 recent compensation package for this role.`;
     const content = await generateRoadmapContent(prompt); // Implement this function
 
     // Calculate expiry date (30 days from now)
@@ -160,6 +161,34 @@ export async function POST(request: Request) {
 }
 
 async function generateRoadmapContent(prompt: string): Promise<string> {
-  // Implement your OpenAI API call here
-  return "Generated roadmap content based on the prompt";
-}
+  //   if (process.env.NODE_ENV === 'development') {
+  //     console.log('[Mock] Generating roadmap content for prompt:', prompt);
+  //     return `This is a mock roadmap generated for prompt: "${prompt}" (since you are in development mode)`;
+  //   }
+  
+    try {
+      const response = await openai.chat.completions.create({
+        model: 'llama-3.3-70b-versatile',
+        messages: [
+          { role: 'system', content: 'You are an expert career counselor who generates detailed, actionable roadmaps for users based on their career goals.' },
+          { role: 'user', content: prompt },
+        ],
+        temperature: 0.7,
+        max_tokens: 2000,
+      });
+  
+      console.log(response);
+      const content = response.choices[0]?.message?.content;
+      if (!content) throw new Error('No content received from OpenAI');
+      
+      return content.trim();
+    } catch (error: any) {
+      console.error('Error generating roadmap content:', error);
+      throw new Error('Failed to generate roadmap content');
+    }
+  }
+
+  const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+    baseURL: 'https://api.groq.com/openai/v1', // Important!
+  });
