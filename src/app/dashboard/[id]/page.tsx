@@ -43,14 +43,14 @@ export default async function RoadmapPage({ params }: { params: { id: string } }
               <h1 className="text-4xl font-extrabold text-gray-900">{roadmap.title}</h1>
 
               <div className="flex flex-wrap gap-4 text-sm">
-                {roadmap.companyRef && (
+                {roadmap.company && (
                   <div className="bg-indigo-100 text-indigo-800 font-semibold px-4 py-2 rounded-full">
-                    Company: {roadmap.companyRef.name}
+                    Company: {roadmap.company}
                   </div>
                 )}
-                {roadmap.roleRef && (
+                {roadmap.role && (
                   <div className="bg-green-100 text-green-800 font-semibold px-4 py-2 rounded-full">
-                    Role: {roadmap.roleRef.name}
+                    Role: {roadmap.role}
                   </div>
                 )}
                 {roadmap.yearsOfExperience && (
@@ -58,13 +58,13 @@ export default async function RoadmapPage({ params }: { params: { id: string } }
                     Experience: {roadmap.yearsOfExperience} years
                   </div>
                 )}
-                {roadmap.programmingLanguageRef && (
+                {roadmap.programmingLanguage && (
                   <div className="bg-pink-100 text-pink-800 font-semibold px-4 py-2 rounded-full">
-                    Language: {roadmap.programmingLanguageRef.name}
+                    Language: {roadmap.programmingLanguage}
                   </div>
                 )}
                 <div className="bg-blue-100 text-blue-800 font-semibold px-4 py-2 rounded-full">
-                  Target: {roadmap.targetDuration} months
+                  Target: {roadmap.targetDuration}
                 </div>
               </div>
             </div>
