@@ -34,7 +34,7 @@ export const pricingPlans = [
       price: "₹ 7000",
       description: "For serious job seekers",
       features: [
-        "Unlimited Roadmaps",
+        "50 Roadmaps",
         "Premium resources",
         "1-year access",
         "Advanced interview strategies",
