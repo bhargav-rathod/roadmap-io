@@ -5,7 +5,6 @@
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { Roadmap } from '../../../types/roadmaps';
-import { Card, CardContent } from '../ui/card';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { SortableItem } from './ScrollableItem';
@@ -96,7 +95,7 @@ export default function RoadmapList({ onClose }: { onClose?: () => void }) {
               <div className="text-sm text-gray-600 mt-2">
                 {roadmap.company && <span>Company: {roadmap.company}</span>}
                 {roadmap.role && <span className="ml-4">Role: {roadmap.role}</span>}
-                {roadmap.yearsOfExperience && <span className="ml-4">Experience: {roadmap.yearsOfExperience} years</span>}
+                {roadmap.yearsOfExperience && <span className="ml-4">Experience: {roadmap.yearsOfExperience} years {roadmap.monthsOfExperience} Months</span>}
               </div>
             </SortableItem>
           ))}

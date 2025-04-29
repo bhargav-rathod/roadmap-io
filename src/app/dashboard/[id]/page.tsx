@@ -17,8 +17,7 @@ export default async function RoadmapPage({ params }: { params: { id: string } }
       expiresAt: { gt: new Date() },
     },
     include: {
-      countryRef: true,
-      programmingLanguageRef: true,
+      
     },
   });
 
@@ -55,7 +54,12 @@ export default async function RoadmapPage({ params }: { params: { id: string } }
                 )}
                 {roadmap.yearsOfExperience && (
                   <div className="bg-yellow-100 text-yellow-800 font-semibold px-4 py-2 rounded-full">
-                    Experience: {roadmap.yearsOfExperience} years
+                    Experience: {roadmap.yearsOfExperience} Years
+                    {
+                      roadmap.monthsOfExperience && parseInt(roadmap.monthsOfExperience, 10) > 0 && (
+                        <span> {roadmap.monthsOfExperience} Months</span>
+                      )
+                    }
                   </div>
                 )}
                 {roadmap.programmingLanguage && (
@@ -63,9 +67,14 @@ export default async function RoadmapPage({ params }: { params: { id: string } }
                     Language: {roadmap.programmingLanguage}
                   </div>
                 )}
-                <div className="bg-blue-100 text-blue-800 font-semibold px-4 py-2 rounded-full">
+                {
+                  roadmap.targetDuration && roadmap.targetDuration.toLocaleLowerCase() !== "any" && roadmap.targetDuration.toLocaleLowerCase() !== "not decided yet" && (
+                    <div className="bg-blue-100 text-blue-800 font-semibold px-4 py-2 rounded-full">
                   Target: {roadmap.targetDuration}
                 </div>
+                  )
+                }
+                
               </div>
             </div>
 
