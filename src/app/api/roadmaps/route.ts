@@ -23,8 +23,7 @@ export async function GET(request: Request) {
       },
       orderBy: { createdAt: 'desc' },
       include: {
-        companyRef: { select: { name: true } },
-        roleRef: { select: { name: true } },
+        countryRef: { select: { name: true } }
       },
     });
     return NextResponse.json(roadmaps);

@@ -19,7 +19,8 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
     yearsOfExperience: '',
     monthsOfExperience: '',
     programmingLanguage: '',
-    targetDuration: '3',
+    targetDuration: 'Any',
+    country: '',
     includeSimilarCompanies: false,
     includeCompensationData: false,
   });
@@ -28,20 +29,23 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
   const [languages, setLanguages] = useState<{name: string, type: string}[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [countries, setCountries] = useState<{name: string}[]>([]);
 
   // Fetch data only once when component mounts
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [companiesRes, rolesRes, languagesRes] = await Promise.all([
+        const [companiesRes, rolesRes, languagesRes, countriesRes] = await Promise.all([
           fetch('/api/companies').then(res => res.json()),
           fetch('/api/roles').then(res => res.json()),
           fetch('/api/programmingLanguages').then(res => res.json()),
+          fetch('/api/countries').then(res => res.json()),
         ]);
         
         setCompanies(companiesRes);
         setRoles(rolesRes);
         setLanguages(languagesRes);
+        setCountries(countriesRes);
       } catch (error) {
         console.error('Failed to fetch data:', error);
       }
@@ -127,12 +131,15 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
   );
 
   const targetDurations = [
-    { value: '1', label: '1 month' },
-    { value: '2', label: '2 months' },
-    { value: '3', label: '3 months' },
-    { value: '6', label: '6 months' },
-    { value: '12', label: '1 year' },
-    { value: '0', label: 'Not decided yet' },
+    { value: 'Any', label: 'Any' },
+    { value: '1 Month', label: '1 Month' },
+    { value: '2 Months', label: '2 Months' },
+    { value: '3 Months', label: '3 Months' },
+    { value: '6 Months', label: '6 Months' },
+    { value: '1 Year', label: '1 Year' },
+    { value: '2 Years', label: '2 Years' },
+    { value: '3 Years', label: '3 Years' },
+    { value: 'Not decided yet', label: 'Not decided yet' },
   ];
 
   return (
@@ -192,6 +199,26 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
           />
         )}
       </div>
+      
+      {/* Country */}
+    <div>
+      <label className="block text-sm font-medium text-gray-700 mb-1">
+        Country
+      </label>
+      <select
+        name="country"
+        value={formData.country}
+        onChange={handleChange}
+        className="w-full p-2 border rounded"
+      >
+        <option value="">Select Country</option>
+        {countries.map((country) => (
+          <option key={country.name} value={country.name}>
+            {country.name}
+          </option>
+        ))}
+      </select>
+    </div>
 
       {/* Role */}
       <div>
@@ -255,7 +282,7 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
           >
             <option value="">Select Months</option>
             {Array.from({ length: 12 }, (_, i) => (
-              <option key={i} value={i + 1}>{i + 1}</option>
+              <option key={i} value={i}>{i}</option>
             ))}
           </select>
         </div>

@@ -26,6 +26,11 @@ async function main() {
     data: data.programmingLanguages,
     skipDuplicates: true,
   });
+
+  await prisma.country.createMany({
+    data: data.countries.map((name: string) => ({ name })),
+    skipDuplicates: true,
+  });
 }
 
 main()

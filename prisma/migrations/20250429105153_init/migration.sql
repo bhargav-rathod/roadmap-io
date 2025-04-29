@@ -70,16 +70,25 @@ CREATE TABLE "ProgrammingLanguage" (
 );
 
 -- CreateTable
+CREATE TABLE "Country" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+
+    CONSTRAINT "Country_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Roadmap" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "roleType" TEXT NOT NULL,
     "company" TEXT NOT NULL,
+    "country" TEXT,
     "role" TEXT NOT NULL,
     "yearsOfExperience" TEXT,
     "monthsOfExperience" TEXT,
     "programmingLanguage" TEXT,
-    "targetDuration" TEXT NOT NULL DEFAULT '3',
+    "targetDuration" TEXT NOT NULL DEFAULT 'Any',
     "includeSimilarCompanies" BOOLEAN NOT NULL DEFAULT false,
     "includeCompensationData" BOOLEAN NOT NULL DEFAULT false,
     "status" TEXT NOT NULL DEFAULT 'pending',
@@ -89,6 +98,8 @@ CREATE TABLE "Roadmap" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "completedAt" TIMESTAMP(3),
+    "companyId" TEXT,
+    "roleId" TEXT,
 
     CONSTRAINT "Roadmap_pkey" PRIMARY KEY ("id")
 );
@@ -111,6 +122,9 @@ CREATE UNIQUE INDEX "Role_name_key" ON "Role"("name");
 -- CreateIndex
 CREATE UNIQUE INDEX "ProgrammingLanguage_name_key" ON "ProgrammingLanguage"("name");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "Country_name_key" ON "Country"("name");
+
 -- AddForeignKey
 ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
@@ -121,10 +135,13 @@ ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId"
 ALTER TABLE "Roadmap" ADD CONSTRAINT "Roadmap_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Roadmap" ADD CONSTRAINT "Roadmap_company_fkey" FOREIGN KEY ("company") REFERENCES "Company"("name") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Roadmap" ADD CONSTRAINT "Roadmap_role_fkey" FOREIGN KEY ("role") REFERENCES "Role"("name") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "Roadmap" ADD CONSTRAINT "Roadmap_programmingLanguage_fkey" FOREIGN KEY ("programmingLanguage") REFERENCES "ProgrammingLanguage"("name") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Roadmap" ADD CONSTRAINT "Roadmap_country_fkey" FOREIGN KEY ("country") REFERENCES "Country"("name") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Roadmap" ADD CONSTRAINT "Roadmap_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Company"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Roadmap" ADD CONSTRAINT "Roadmap_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES "Role"("id") ON DELETE SET NULL ON UPDATE CASCADE;

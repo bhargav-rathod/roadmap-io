@@ -1,29 +1,285 @@
 # prisma/seed.yml
+users:
+  - name: Roadmap Admin
+    email: admin@roadmap.io
+    password: Admin@123
+    user_role: ADMIN
+    credits: 100
+  - name: Roadmap User
+    email: user@roadmap.io
+    password: User@123
+    user_role: User
+    credits: 10
+
 companies:
   - name: Google
-    type: IT
+    type: Both
   - name: Microsoft
-    type: IT
+    type: Both
   - name: Amazon
+    type: Both
+  - name: Netflix
+    type: Both
+  - name: Meta
+    type: Both
+  - name: Apple
+    type: Both
+  - name: Infosys
+    type: Both
+  - name: Tata Consultancy Services 
+    type: Both
+  - name: Cognizant
+    type: Both
+  - name: Capgemini
+    type: Both
+  - name: Nasdaq
+    type: Both
+  - name: EdgeVerve
+    type: Both
+  - name: IQVIA
     type: IT
   - name: McKinsey
-    type: Non-IT
+    type: Both
   - name: Goldman Sachs
-    type: Non-IT
+    type: Both
+  - name: Adobe
+    type: Both
+  - name: Flipkart
+    type: Both
+  - name: Shopify
+    type: Both
+  - name: Flexport
+    type: Both
+  - name: FedEx
+    type: Both
   - name: Other
     type: Both
 
 roles:
   - name: Software Engineer
     type: IT
+  - name: Senior Software Engineer
+    type: IT
+  - name: Staff Software Engineer
+    type: IT
+  - name: SDE
+    type: IT
+  - name: SDE I
+    type: IT
+  - name: SDE II
+    type: IT
+  - name: SDE III
+    type: IT
+  - name: SDE IV
+    type: IT
+  - name: SDE V
+    type: IT
+  - name: Backend Engineer
+    type: IT
+  - name: Senior Backend Engineer
+    type: IT
+  - name: Frontend Engineer
+    type: IT
+  - name: Senior Frontend Engineer
+    type: IT
+  - name: Fullstack Engineer
+    type: IT
+  - name: Senior Fullstack Engineer
+    type: IT
+  - name: AI Engineer
+    type: IT
+  - name: Senior AI Engineer
+    type: IT
+  - name: ML Engineer
+    type: IT
+  - name: Senior ML Engineer
+    type: IT
+  - name: AI & ML Engineer
+    type: IT
+  - name: Senior AI & ML Engineer
+    type: IT
+  - name: DevOps Engineer
+    type: IT
+  - name: Senior DevOps Engineer
+    type: IT
+  - name: Infra Engineer
+    type: IT
+  - name: Network Engineer
+    type: IT
+  - name: Senior Network Engineer
+    type: IT
+  - name: Cloud Engineer
+    type: IT
+  - name: Senior Cloud Engineer
+    type: IT
+  - name: Cloud Engineer - GCP (Google Cloud)
+    type: IT
+  - name: Senior Cloud Engineer - GCP (Google Cloud)
+    type: IT
+  - name: Cloud Engineer - AWS (Amazon AWS Cloud)
+    type: IT
+  - name: Senior Cloud Engineer - AWS (Amazon AWS Cloud)
+    type: IT
+  - name: Cloud Engineer - Azure (Microsoft Azure Cloud)
+    type: IT
+  - name: Senior Cloud Engineer - Azure (Microsoft Azure Cloud)
+    type: IT
+  - name: Solution Architect
+    type: IT
+  - name: Senior Solution Architect
+    type: IT
+  - name: Product Architect
+    type: IT
+  - name: Senior Product Architect
+    type: IT
+  - name: Product Engineer
+    type: IT
+  - name: Senior Product Engineer
+    type: IT
+  - name: MTS (Member of Technical Staff)
+    type: IT
+  - name: MTS I
+    type: IT
+  - name: MTS II
+    type: IT
+  - name: MTS III
+    type: IT
+  - name: MTS IV
+    type: IT
+  - name: MTS V
+    type: IT
+  - name: SMTS (Senior Member of Technical Staff)
+    type: IT
+  - name: Computer Scientist
+    type: IT
+  - name: Computer Scientist I
+    type: IT
+  - name: Computer Scientist II
+    type: IT
+  - name: Computer Scientist III
+    type: IT
+  - name: Computer Scientist IV
+    type: IT
+  - name: Computer Scientist V
+    type: IT
+  - name: Senior Computer Scientist
+    type: IT
+  - name: Manager
+    type: IT
+  - name: Senior Manager
+    type: IT
+  - name: Project Manager
+    type: Both
+  - name: Senior Project Manager
+    type: Both
+  - name: Business Analyst
+    type: Both
+  - name: Senior Business Analyst
+    type: Both
+  - name: Product Owner
+    type: IT
+  - name: Senior Product Owner
+    type: IT
+  - name: Program Manager
+    type: IT
+  - name: Senior Program Manager
+    type: IT
+  - name: Technical Program Manager
+    type: IT
+  - name: Senior Technical Program Manager
+    type: IT
   - name: Data Scientist
     type: IT
-  - name: Product Manager
+  - name: Senior Data Scientist
     type: IT
+  - name: Data Analyst
+    type: IT
+  - name: Senior Data Analyst
+    type: IT
+  - name: Data Engineer
+    type: IT
+  - name: Senior Data Engineer
+    type: IT
+  - name: Product Manager
+    type: Both
+  - name: Senior Product Manager
+    type: Both
+  - name: Associate Director
+    type: Both
+  - name: Associate Vice President
+    type: Both
+  - name: Director
+    type: Both
+  - name: Senior Director
+    type: Both
+  - name: President
+    type: Both
+  - name: Support Engineer
+    type: Both
+  - name: Senior Support Scientist
+    type: IT
+  - name: L1 Support Engineer
+    type: IT
+  - name: L2 Support Engineer
+    type: IT
+  - name: L3 Support Engineer
+    type: IT
+  - name: L4 Support Engineer
+    type: IT
+  - name: Consultant
+    type: Both
+  - name: Senior Consultant
+    type: Both
   - name: Management Consultant
-    type: Non-IT
+    type: Both
   - name: Investment Banker
     type: Non-IT
+  - name: Technical Recruiter
+    type: Both
+  - name: Non IT Recruiter 
+    type: Non-IT
+  - name: Human Resource Management
+    type: Non-IT
+  - name: Human Resource Manager
+    type: Non-IT
+  - name: Human Resource Lead
+    type: Non-IT
+  - name: Employee Relations Officer
+    type: Non-IT
+  - name: Diversity & Inclusion 
+    type: Non-IT
+  - name: Talent Acquisition
+    type: Non-IT
+  - name: Process Analyst
+    type: Both
+  - name: Senior Process Analyst
+    type: Both
+  - name: Payroll Associate
+    type: Non-IT
+  - name: Senior Payroll Associate
+    type: Non-IT
+  - name: Associate
+    type: Both
+  - name: Senior Associate
+    type: Both
+  - name: Gym Trainer
+    type: Non-IT
+  - name: Gym Coach 
+    type: Non-IT
+  - name: Sport Coach
+    type: Non-IT
+  - name: Civil Engineer
+    type: Non-IT
+  - name: Senior Civil Engineer
+    type: Non-IT
+  - name: IPS Officer - India
+    type: Non-IT
+  - name: IAS Officer - India
+    type: Non-IT
+  - name: Air Hostess
+    type: Non-IT
+  - name: State Government Officer
+    type: Non-IT 
   - name: Other
     type: Both
 
@@ -34,3 +290,217 @@ programmingLanguages:
     type: IT
   - name: Java
     type: IT
+  - name: C++
+    type: IT
+  - name: C#
+    type: IT
+  - name: C
+    type: IT
+  - name: Go
+    type: IT
+  - name: F#
+    type: IT
+  - name: Ruby
+    type: IT
+  - name: PHP
+    type: IT
+
+countries:
+  - India
+  - Afghanistan
+  - Albania
+  - Algeria
+  - Andorra
+  - Angola
+  - Antigua & Deps
+  - Argentina
+  - Armenia
+  - Australia
+  - Austria
+  - Azerbaijan
+  - Bahamas
+  - Bahrain
+  - Bangladesh
+  - Barbados
+  - Belarus
+  - Belgium
+  - Belize
+  - Benin
+  - Bermuda
+  - Bhutan
+  - Bolivia
+  - Bosnia Herzegovina
+  - Botswana
+  - Brazil
+  - Brunei
+  - Bulgaria
+  - Burkina
+  - Burundi
+  - Cambodia
+  - Cameroon
+  - Canada
+  - CapeVerde
+  - Central African Rep
+  - Chad
+  - Chile
+  - China
+  - Colombia
+  - Comoros
+  - Congo
+  - Congo (DemocraticRep)
+  - CostaRica
+  - Croatia
+  - Cuba
+  - Cyprus
+  - Czech Republic
+  - Denmark
+  - Djibouti
+  - Dominica
+  - Dominican Republic
+  - EastTimor
+  - Ecuador
+  - Egypt
+  - ElSalvador
+  - Equatorial Guinea
+  - Eritrea
+  - Estonia
+  - Eswatini
+  - Ethiopia
+  - Fiji
+  - Finland
+  - France
+  - Gabon
+  - Gambia
+  - Georgia
+  - Germany
+  - Ghana
+  - Greece
+  - Grenada
+  - Guatemala
+  - Guinea
+  - Guinea Bissau
+  - Guyana
+  - Haiti
+  - Honduras
+  - Hungary
+  - Iceland
+  - Indonesia
+  - Iran
+  - Iraq
+  - Ireland (Republic)
+  - Israel
+  - Italy
+  - IvoryCoast
+  - Jamaica
+  - Japan
+  - Jordan
+  - Kazakhstan
+  - Kenya
+  - Kiribati
+  - KoreaNorth
+  - KoreaSouth
+  - Kosovo
+  - Kuwait
+  - Kyrgyzstan
+  - Laos
+  - Latvia
+  - Lebanon
+  - Lesotho
+  - Liberia
+  - Libya
+  - Liechtenstein
+  - Lithuania
+  - Luxembourg
+  - Macedonia
+  - Madagascar
+  - Malawi
+  - Malaysia
+  - Maldives
+  - Mali
+  - Malta
+  - Marshall Islands
+  - Mauritania
+  - Mauritius
+  - Mexico
+  - Micronesia
+  - Moldova
+  - Monaco
+  - Mongolia
+  - Montenegro
+  - Morocco
+  - Mozambique
+  - Myanmar
+  - Namibia
+  - Nauru
+  - Nepal
+  - Netherlands
+  - New Zealand
+  - Nicaragua
+  - Niger
+  - Nigeria
+  - Norway
+  - Oman
+  - Pakistan
+  - Palau
+  - Palestine
+  - Panama
+  - Papua New Guinea
+  - Paraguay
+  - Peru
+  - Philippines
+  - Poland
+  - Portugal
+  - Qatar
+  - Romania
+  - Russian Federation
+  - Rwanda
+  - StKitts&Nevis
+  - StLucia
+  - SaintVincent & the Grenadines
+  - Samoa
+  - SanMarino
+  - SaoTome & Principe
+  - Saudi Arabia
+  - Senegal
+  - Serbia
+  - Seychelles
+  - SierraLeone
+  - Singapore
+  - Slovakia
+  - Slovenia
+  - SolomonIslands
+  - Somalia
+  - South Africa
+  - South Sudan
+  - Spain
+  - SriLanka
+  - Sudan
+  - Suriname
+  - Sweden
+  - Switzerland
+  - Syria
+  - Taiwan
+  - Tajikistan
+  - Tanzania
+  - Thailand
+  - Togo
+  - Tonga
+  - Trinidad & Tobago
+  - Tunisia
+  - Turkey
+  - Turkmenistan
+  - Tuvalu
+  - Uganda
+  - Ukraine
+  - United Arab Emirates
+  - United Kingdom
+  - United States
+  - Uruguay
+  - Uzbekistan
+  - Vanuatu
+  - VaticanCity
+  - Venezuela
+  - Vietnam
+  - Yemen
+  - Zambia
+  - Zimbabwe

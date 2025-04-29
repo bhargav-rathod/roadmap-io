@@ -17,8 +17,7 @@ export default async function RoadmapPage({ params }: { params: { id: string } }
       expiresAt: { gt: new Date() },
     },
     include: {
-      companyRef: true,
-      roleRef: true,
+      countryRef: true,
       programmingLanguageRef: true,
     },
   });

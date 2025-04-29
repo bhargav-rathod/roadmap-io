@@ -53,14 +53,12 @@ model Company {
   id       String    @id @default(cuid())
   name     String    @unique
   type     String // IT or Non-IT
-  roadmaps Roadmap[]
 }
 
 model Role {
   id       String    @id @default(cuid())
   name     String    @unique
   type     String // IT or Non-IT
-  roadmaps Roadmap[]
 }
 
 model ProgrammingLanguage {
@@ -70,16 +68,23 @@ model ProgrammingLanguage {
   Roadmap Roadmap[]
 }
 
+model Country {
+  id       String    @id @default(cuid())
+  name     String    @unique
+  roadmaps Roadmap[]
+}
+
 model Roadmap {
   id                      String               @id @default(cuid())
   title                   String
   roleType                String // IT or Non-IT
   company                 String
+  country                 String?
   role                    String
   yearsOfExperience       String?
   monthsOfExperience      String?
   programmingLanguage     String?
-  targetDuration          String               @default("3") // 1, 2, 3, 6, 12 months
+  targetDuration          String               @default("Any") // 1, 2, 3, 6, 12 months
   includeSimilarCompanies Boolean              @default(false)
   includeCompensationData Boolean              @default(false)
   status                  String               @default("pending")
@@ -87,10 +92,13 @@ model Roadmap {
   userId                  String
   expiresAt               DateTime             @default(now())
   user                    User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
-  companyRef              Company?             @relation(fields: [company], references: [name])
-  roleRef                 Role?                @relation(fields: [role], references: [name])
   programmingLanguageRef  ProgrammingLanguage? @relation(fields: [programmingLanguage], references: [name])
   createdAt               DateTime             @default(now())
   updatedAt               DateTime             @updatedAt
   completedAt             DateTime?
+  countryRef              Country?             @relation(fields: [country], references: [name])
+  Company                 Company?             @relation(fields: [companyId], references: [id])
+  companyId               String?
+  Role                    Role?                @relation(fields: [roleId], references: [id])
+  roleId                  String?
 }
