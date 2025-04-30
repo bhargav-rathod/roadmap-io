@@ -3,7 +3,6 @@
 import React from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { Card, CardContent } from '../ui/card';
 import Link from 'next/link';
 
 export function SortableItem({ id, children, onClose }: { id: string; children: React.ReactNode; onClose?: () => void }) {
@@ -37,11 +36,11 @@ export function SortableItem({ id, children, onClose }: { id: string; children: 
         }}
         className="block"
       >
-        <Card className="hover:bg-gray-50 transition-colors">
+        {/* <Card className="hover:bg-gray-50 transition-colors"> */}
           <div {...listeners} className="p-4">
             {children}
           </div>
-        </Card>
+        {/* </Card> */}
       </Link>
     </div>
   );

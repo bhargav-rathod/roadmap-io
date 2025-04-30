@@ -1,5 +1,3 @@
-// components/roadmap/CreateRoadmapList.tsx
-
 'use client'
 
 import { useEffect, useState } from 'react';
@@ -8,6 +6,14 @@ import { Roadmap } from '../../../types/roadmaps';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { SortableItem } from './ScrollableItem';
+
+const cardColors = [
+  'bg-blue-50',
+  'bg-pink-50',
+  'bg-green-50',
+  'bg-yellow-50',
+  'bg-purple-50',
+];
 
 export default function RoadmapList({ onClose }: { onClose?: () => void }) {
   const { data: session } = useSession();
@@ -44,22 +50,14 @@ export default function RoadmapList({ onClose }: { onClose?: () => void }) {
 
   function handleDragEnd(event: any) {
     const { active, over } = event;
-    
-    if (active.id !== over.id) {
-      setRoadmaps((items) => {
-        const oldIndex = items.findIndex(item => item.id === active.id);
-        const newIndex = items.findIndex(item => item.id === over.id);
-        const newItems = arrayMove(items, oldIndex, newIndex);
-        
-        // Optional: Send new order to API if you want to persist it
-        // fetch('/api/roadmaps/order', {
-        //   method: 'POST',
-        //   body: JSON.stringify({ order: newItems.map(item => item.id) })
-        // });
-        
-        return newItems;
-      });
-    }
+
+    if (!over || active.id === over.id) return;
+
+    setRoadmaps((items) => {
+      const oldIndex = items.findIndex(item => item.id === active.id);
+      const newIndex = items.findIndex(item => item.id === over.id);
+      return arrayMove(items, oldIndex, newIndex);
+    });
   }
 
   if (loading) {
@@ -89,15 +87,33 @@ export default function RoadmapList({ onClose }: { onClose?: () => void }) {
         strategy={verticalListSortingStrategy}
       >
         <div className="space-y-4 p-4">
-          {roadmaps.map((roadmap) => (
-            <SortableItem key={roadmap.id} id={roadmap.id} onClose={onClose}>
-              <div className="text-xl font-bold">{roadmap.title}</div>
-              <div className="text-sm text-gray-600 mt-2">
-                {roadmap.company && <span>Company: {roadmap.company}</span>}
-                {roadmap.role && <span className="ml-4">Role: {roadmap.role}</span>}
-                {roadmap.yearsOfExperience && <span className="ml-4">Experience: {roadmap.yearsOfExperience} years {roadmap.monthsOfExperience} Months</span>}
-              </div>
-            </SortableItem>
+          {roadmaps.map((roadmap, index) => (
+            <div 
+              key={roadmap.id}
+              style={{ touchAction: 'none' }} // Prevent touch scrolling during drag
+            >
+              <SortableItem 
+                id={roadmap.id} 
+                onClose={onClose}
+              >
+                <div 
+                  className={`rounded-xl p-5 shadow-md transition-all duration-300 border ${cardColors[index % cardColors.length]}`}
+                  onDragStart={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                  }}
+                >
+                  <h3 className="text-xl font-semibold text-gray-800">{roadmap.title}</h3>
+                  <div className="text-sm text-gray-700 mt-3 space-y-1">
+                    {roadmap.company && <div>📌 Company: {roadmap.company}</div>}
+                    {roadmap.role && <div>💼 Role: {roadmap.role}</div>}
+                    {(roadmap.yearsOfExperience || roadmap.monthsOfExperience) && (
+                      <div>🧭 Experience: {roadmap.yearsOfExperience} yr {roadmap.monthsOfExperience} mo</div>
+                    )}
+                  </div>
+                </div>
+              </SortableItem>
+            </div>
           ))}
         </div>
       </SortableContext>

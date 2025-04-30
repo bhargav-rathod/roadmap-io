@@ -1,7 +1,7 @@
 "use client";
 
 import { ComponentProps, ReactNode, useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { X } from "lucide-react";
 import { theme } from "@/app/theme";
 import Image from "next/image";
