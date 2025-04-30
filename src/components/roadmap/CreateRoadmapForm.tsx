@@ -57,7 +57,6 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
         setLanguages(languagesRes);
         setCountries(countriesRes);
       } catch (error) {
-        console.error('Failed to fetch data:', error);
       }
     };
 

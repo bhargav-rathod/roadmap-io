@@ -16,7 +16,6 @@ export default function LogoutButton() {
         window.location.href = '/login?logout=success';
       }
     } catch (error) {
-      console.error('Logout failed:', error);
       router.push('/login?logout=error');
     } finally {
       setLoading(false);

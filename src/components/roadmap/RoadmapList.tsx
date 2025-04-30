@@ -39,7 +39,6 @@ export default function RoadmapList({ onClose }: { onClose?: () => void }) {
           const data = await res.json();
           setRoadmaps(data);
         } catch (error) {
-          console.error('Failed to fetch roadmaps:', error);
         } finally {
           setLoading(false);
         }

@@ -28,7 +28,6 @@ export async function GET(request: Request) {
     });
     return NextResponse.json(roadmaps);
   } catch (error) {
-    console.error('Failed to fetch roadmaps:', error);
     return NextResponse.json(
       { error: 'Failed to fetch roadmaps' },
       { status: 500 }
@@ -58,8 +57,6 @@ export async function POST(request: Request) {
       roleOther,
       ...roadmapData 
     } = await request.json();
-
-    console.log('--->' + request.json());
 
     // Validate required fields
     if (!roadmapData.roleType || !roadmapData.company || !roadmapData.role) {
@@ -169,7 +166,6 @@ export async function POST(request: Request) {
     });
 
   } catch (error: any) {
-    console.error('Roadmap creation error:', error);
     return NextResponse.json(
       { 
         error: 'Failed to create roadmap',
@@ -193,13 +189,11 @@ async function generateRoadmapContent(prompt: string): Promise<string> {
         max_tokens: 2000,
       });
   
-      console.log(response);
       const content = response.choices[0]?.message?.content;
       if (!content) throw new Error('No content received from OpenAI');
       
       return content.trim();
     } catch (error: any) {
-      console.error('Error generating roadmap content:', error);
       throw new Error('Failed to generate roadmap content');
     }
   }

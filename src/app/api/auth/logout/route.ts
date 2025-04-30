@@ -31,7 +31,6 @@ export async function POST(request: Request) {
     return response;
 
   } catch (error) {
-    console.error('Logout error:', error);
     const url = new URL(request.url);
     return NextResponse.redirect(new URL('/login?logout=error', url.origin));
   }

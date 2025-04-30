@@ -54,7 +54,6 @@ export async function POST(request: Request) {
     )
 
   } catch (error: any) {
-    console.error('Signup error:', error)
     return new Response(
       JSON.stringify({ 
         error: 'Internal server error',

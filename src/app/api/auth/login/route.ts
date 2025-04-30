@@ -29,7 +29,6 @@ export async function POST(request: Request) {
     return response;
 
   } catch (error: any) {
-    console.error("Login error:", error);
     return NextResponse.json(
       { 
         error: error.message || "Internal server error",

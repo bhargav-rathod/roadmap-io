@@ -15,7 +15,6 @@ export async function GET() {
       roadmaps
     })
   } catch (error) {
-    console.error('Prisma test error:', error)
     return NextResponse.json(
       { error: 'Prisma client not working properly' },
       { status: 500 }

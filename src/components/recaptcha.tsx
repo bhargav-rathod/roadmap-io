@@ -25,7 +25,6 @@ export default function Recaptcha({ onVerify }: { onVerify: (token: string) => v
 
         document.body.appendChild(script);
       } catch (error) {
-        console.error('reCAPTCHA load error:', error);
       }
     };
 

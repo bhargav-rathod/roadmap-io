@@ -17,7 +17,6 @@ export async function verifyRecaptcha(token: string): Promise<boolean> {
       const data = await response.json();
       return data.success && data.score >= 0.5; // Adjust threshold as needed
     } catch (error) {
-      console.error('reCAPTCHA verification error:', error);
       return false;
     }
   }

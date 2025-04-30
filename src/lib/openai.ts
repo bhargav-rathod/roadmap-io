@@ -6,13 +6,10 @@ export async function generateRoadmap(roadmapId: string) {
     const roadmap = await prisma.roadmap.findUnique({
       where: { id: roadmapId },
       include: {
-        companyRef: true,
-        roleRef: true,
       },
     });
 
     if (!roadmap) {
-      console.error('Roadmap not found');
       return;
     }
 
@@ -41,7 +38,6 @@ export async function generateRoadmap(roadmapId: string) {
     });
 
   } catch (error) {
-    console.error('Failed to generate roadmap:', error);
     await prisma.roadmap.update({
       where: { id: roadmapId },
       data: { status: 'failed' },
