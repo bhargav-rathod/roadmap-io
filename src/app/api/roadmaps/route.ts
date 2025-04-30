@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/auth';
 import prisma from '../../../lib/prisma';
 import { OpenAI } from 'openai';
+import { createPrompt } from './prompt';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -115,17 +116,7 @@ export async function POST(request: Request) {
     }
 
     // Generate content with OpenAI (simplified example)
-    var prompt = "";
-    if(roadmapData.roleType == "IT"){
-      prompt = `Do a deep research and web search, and generate a detailed roadmap for ${roleName} at ${companyName} India with ${roadmapData.yearsOfExperience || 0} years experience. Give interview pattern and 150+ recently asked interview questions with detailed and accurate answers for the same role. Add 150+ recently asked DSA questions with solutions in programming language: ${language}). Also give 5 recent compensation package for this role.`;
-      if(targetDuration > 0){
-        prompt += "Target duration is: ${targetDuration} months.";
-      }
-    }
-    else{
-      prompt = `Do a deep research and web search, and generate a detailed roadmap for ${roleName} at ${companyName} with ${roadmapData.yearsOfExperience || 0} years experience. Target duration is: ${targetDuration} months. Give interview pattern and 150+ recently asked interview questions with detailed and accurate answers for the same role. Also give 5 recent compensation package for this role.`;
-
-    }
+    var prompt = await createPrompt(roadmapData);
     const content = await generateRoadmapContent(prompt); // Implement this function
 
     // Calculate expiry date (30 days from now)
