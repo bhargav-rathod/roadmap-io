@@ -70,7 +70,9 @@ export default function RoadmapList({ onClose }: { onClose?: () => void }) {
   if (roadmaps.length === 0) {
     return (
       <div className="px-4 py-8 text-center">
-        <p className="text-sm text-gray-500 mb-4">No roadmaps available</p>
+        <p className="text-sm text-gray-500 mb-4">Hey, you don't have any roadmaps created yet, start your journey by creating first roadmap and it will appear here!</p>
+        <p className="text-sm text-gray-500 mb-4">We are also excited to see your first roadmap.</p>
+        <p className="text-sm text-gray-500 mb-4">Don't worry! If you don't know how to create the roadmap, we have goat you covered. Just click on the Create New Roadmap button and add necessary details and hola, the miracle will heappen!</p>
       </div>
     );
   }

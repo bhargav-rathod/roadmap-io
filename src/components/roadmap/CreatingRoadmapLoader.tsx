@@ -30,7 +30,7 @@ export default function CreatingRoadmapLoader() {
         <div className="relative z-10 flex flex-col items-center w-full">
           <div className="w-48 h-48 mb-8">
             <img 
-              src="/loading_animation.gif"
+              src="/gifs/loading_animation.gif"
               alt="Creating roadmap"
               className="w-full h-full object-contain"
             />

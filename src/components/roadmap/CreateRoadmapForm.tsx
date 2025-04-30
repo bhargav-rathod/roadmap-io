@@ -330,7 +330,11 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Country
+            <Tooltip content="Country at which you are applying for the position">
+              <FiInfo className="ml-2 inline text-gray-400 hover:text-gray-600" size={16} />
+            </Tooltip>
           </label>
+          
           <CustomDropdown
             options={countryOptions}
             value={formData.country}
