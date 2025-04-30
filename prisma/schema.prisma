@@ -80,12 +80,15 @@ model Roadmap {
   company                 String
   country                 String?
   role                    String
+  isFresher               Boolean?
   yearsOfExperience       String?
   monthsOfExperience      String?
   programmingLanguage     String?
   targetDuration          String    @default("Any") // 1, 2, 3, 6, 12 months
   includeSimilarCompanies Boolean   @default(false)
   includeCompensationData Boolean   @default(false)
+  includeOtherDetails     Boolean   @default(false)
+  otherDetails            String?
   status                  String    @default("pending")
   content                 String?
   userId                  String

@@ -54,10 +54,12 @@ export async function POST(request: Request) {
     const { 
       language, 
       targetDuration,
-      companyOther, // Extract these from the request
+      companyOther,
       roleOther,
       ...roadmapData 
     } = await request.json();
+
+    console.log('--->' + request.json());
 
     // Validate required fields
     if (!roadmapData.roleType || !roadmapData.company || !roadmapData.role) {
@@ -140,12 +142,15 @@ export async function POST(request: Request) {
         roleType: roadmapData.roleType,
         company: companyName,
         role: roleName,
+        isFresher: roadmapData.isFresher || false,
         yearsOfExperience: roadmapData.yearsOfExperience,
         monthsOfExperience: roadmapData.monthsOfExperience,
         programmingLanguage: language || null,
-        targetDuration: targetDuration || '3',
+        targetDuration: targetDuration || null,
         includeSimilarCompanies: roadmapData.includeSimilarCompanies || false,
         includeCompensationData: roadmapData.includeCompensationData || false,
+        includeOtherDetails: roadmapData.includeOtherDetails || false,
+        otherDetails: roadmapData.otherDetails,
         content,
         userId: session.user.id,
         expiresAt,
@@ -176,11 +181,7 @@ export async function POST(request: Request) {
 }
 
 async function generateRoadmapContent(prompt: string): Promise<string> {
-  //   if (process.env.NODE_ENV === 'development') {
-  //     console.log('[Mock] Generating roadmap content for prompt:', prompt);
-  //     return `This is a mock roadmap generated for prompt: "${prompt}" (since you are in development mode)`;
-  //   }
-  
+
     try {
       const response = await openai.chat.completions.create({
         model: 'llama-3.3-70b-versatile',
@@ -207,3 +208,5 @@ async function generateRoadmapContent(prompt: string): Promise<string> {
     apiKey: process.env.OPENAI_API_KEY,
     baseURL: 'https://api.groq.com/openai/v1', // Important!
   });
+
+  
