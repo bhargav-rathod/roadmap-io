@@ -1,6 +1,6 @@
 export async function createPrompt(roadmapData: any): Promise<string> {
     try {
-        let prompt = `Conduct in-depth research and generate a comprehensive, detailed roadmap for the role of \
+        let prompt = `Conduct in-depth deep research, web search and generate a comprehensive, detailed roadmap for the role of \
       ${roadmapData.role} at ${roadmapData.company},`;
 
         if (roadmapData.country) {
@@ -8,9 +8,9 @@ export async function createPrompt(roadmapData: any): Promise<string> {
         }
 
         prompt += `The roadmap should be highly structured and tailored to real-world expectations, including the following sections:\n\n\
-  1. Role Overview - Responsibilities, required skills, and tools/technologies commonly used.\n\
-  2. Interview Pattern - Provide a detailed breakdown of the interview process (number of rounds, types of interviews, etc.).\n\
-  3. Interview Questions & Answers - Include over 150+ recently asked interview questions across all rounds, each with detailed and accurate answers.\n`;
+                    1. Role Overview - Responsibilities, required skills, and tools/technologies commonly used.\n\
+                    2. Interview Pattern - Provide a detailed breakdown of the interview process (number of rounds, types of interviews, etc.).\n\
+                    3. Interview Questions & Answers - Include over 150+ recently asked interview questions across all rounds, each with detailed and accurate answers.\n`;
 
         if (roadmapData.isFresher) {
             prompt += `\n4. Experience Level - Structure the roadmap specifically for freshers (0 years of experience).\n`;
