@@ -33,7 +33,7 @@ export default function DashboardPage() {
         <ul className="list-disc list-inside text-gray-700 space-y-2">
           <li><strong>Create Custom Roadmaps:</strong> Pick a company, choose your dream role and boom — get a step-by-step game plan.</li>
           <li><strong>Choose Your Domain:</strong> IT or non-IT? Doesn't matter. You're the main character — we build the plot around you.</li>
-          <li><strong>Track Your Journey:</strong> See your progress like a Netflix series. Binge-worthy and satisfying AF.</li>
+          <li><strong>Track Your Journey:</strong> See your progress like a Netflix series. Binge-worthy and satisfying.</li>
           <li><strong>Real Career Insights:</strong> We're talking actual industry patterns, current hiring trends, and handpicked resources.</li>
           <li><strong>Recent Data:</strong> We're giving you the recent insights on interview patterns, questions and handpicked true compensations. No bluff!</li>
           <li><strong>Budget Friendly:</strong> Very chip. Yeah? Just like a one pizza treat. 😎</li>

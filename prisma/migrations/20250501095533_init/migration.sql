@@ -8,6 +8,9 @@ CREATE TABLE "User" (
     "image" TEXT,
     "user_role" TEXT NOT NULL DEFAULT 'USER',
     "credits" INTEGER NOT NULL DEFAULT 10,
+    "verified" BOOLEAN NOT NULL DEFAULT false,
+    "verificationToken" TEXT,
+    "verificationTokenExpires" TIMESTAMP(3),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
