@@ -186,6 +186,12 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
   ];
 
   // Convert your data to dropdown options
+
+  const roleTypeOptions = [
+    { value: 'IT', label: 'IT' },
+    { value: 'Non-IT', label: 'Non-IT' },
+  ];
+
   const companyOptions = companies.map(company => ({
     value: company.name,
     label: company.name,
@@ -203,6 +209,26 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
   const countryOptions = countries.map(country => ({
     value: country.name,
     label: country.name,
+  }));
+
+  const yearsOfExperienceOptions = Array.from({ length: 31 }, (_, i) => ({
+    value: i.toString(),
+    label: i.toString(),
+  }));
+
+  const monthsOfExperienceOptions = Array.from({ length: 12 }, (_, i) => ({
+    value: i.toString(),
+    label: i.toString(),
+  }));
+
+  const targetDurationOptions = targetDurations.map(duration => ({
+    value: duration.value,
+    label: duration.label,
+  }));
+
+  const programmingLanguageOptions = languages.map(language => ({
+    value: language.name,
+    label: language.name,
   }));
 
   // Consistent checkbox component
@@ -255,15 +281,15 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
             <span className="w-2/3 font-medium">{formData.country}</span>
           </div>
         )}
-        { (formData.isFresher || parseInt(formData.yearsOfExperience, 10) > 0 || parseInt(formData.monthsOfExperience, 10) > 0) && (
-        <div className="flex">
-          <span className="w-1/3 text-gray-600">Work Experience:</span>
-          <span className="w-2/3 font-medium">
-            {formData.isFresher
-              ? 'Fresher'
-              : `${formData.yearsOfExperience || 0} years ${formData.monthsOfExperience || 0} months`}
-          </span>
-        </div>
+        {(formData.isFresher || parseInt(formData.yearsOfExperience, 10) > 0 || parseInt(formData.monthsOfExperience, 10) > 0) && (
+          <div className="flex">
+            <span className="w-1/3 text-gray-600">Work Experience:</span>
+            <span className="w-2/3 font-medium">
+              {formData.isFresher
+                ? 'Fresher'
+                : `${formData.yearsOfExperience || 0} years ${formData.monthsOfExperience || 0} months`}
+            </span>
+          </div>
         )}
         {formData.roleType === 'IT' && formData.programmingLanguage && (
           <div className="flex">
@@ -271,11 +297,16 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
             <span className="w-2/3 font-medium">{formData.programmingLanguage}</span>
           </div>
         )}
-        {formData.includeCompensationData && (
+        {(formData.includeCompensationData || formData.includeSimilarCompanies || (formData.includeOtherDetails && formData.otherDetails)) && (
           <div className="flex items-center">
             <span className="w-1/3 text-gray-600">Includes:</span>
+          </div>
+        )}
+        {formData.includeCompensationData && (
+          <div className="flex items-center">
+            <span className="w-1/3 text-gray-600"></span>
             <span className="w-2/3 font-medium flex items-center">
-              <span className="text-green-500 mr-1">✓</span> Compensation Data
+              <span className="text-green-500 mr-1">✓</span>&nbsp; Compensation Data
             </span>
           </div>
         )}
@@ -283,14 +314,16 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
           <div className="flex items-center">
             <span className="w-1/3 text-gray-600"></span>
             <span className="w-2/3 font-medium flex items-center">
-              <span className="text-green-500 mr-1">✓</span> Similar Roles
+              <span className="text-green-500 mr-1">✓</span>&nbsp; Similar Roles
             </span>
           </div>
         )}
         {formData.includeOtherDetails && formData.otherDetails && (
-          <div className="flex">
-            <span className="w-1/3 text-gray-600">Additional Details:</span>
-            <span className="w-2/3 font-medium">{formData.otherDetails}</span>
+          <div className="flex items-center">
+            <span className="w-1/3 text-gray-600"></span>
+            <span className="w-2/3 font-medium flex items-center">
+              <span className="text-green-500 mr-1">✓</span>&nbsp; Additional Details
+            </span>
           </div>
         )}
       </div>
@@ -329,17 +362,13 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Role Type <span className="text-red-500">*</span>
           </label>
-          <select
-            name="roleType"
+          <CustomDropdown
+            options={roleTypeOptions}
             value={formData.roleType}
-            onChange={handleChange}
-            className="w-full p-2 border rounded"
-            required
-          >
-            <option>Select Role Type</option>
-            <option value="IT">IT</option>
-            <option value="Non-IT">Non-IT</option>
-          </select>
+            onChange={(value) => setFormData(prev => ({ ...prev, roleType: value }))}
+            placeholder="Select Role Type"
+            searchPlaceholder="Search type..."
+          />
         </div>
 
         {/* Company */}
@@ -431,33 +460,25 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Years of Experience
               </label>
-              <select
-                name="yearsOfExperience"
+              <CustomDropdown
+                options={yearsOfExperienceOptions}
                 value={formData.yearsOfExperience}
-                onChange={handleChange}
-                className="w-full p-2 border rounded"
-              >
-                <option value="">Select Years</option>
-                {Array.from({ length: 21 }, (_, i) => (
-                  <option key={i} value={i}>{i}</option>
-                ))}
-              </select>
+                onChange={(value) => setFormData(prev => ({ ...prev, yearsOfExperience: value }))}
+                placeholder="Select Years of Experience"
+                searchPlaceholder="Search years..."
+              />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Months of Experience
               </label>
-              <select
-                name="monthsOfExperience"
+              <CustomDropdown
+                options={monthsOfExperienceOptions}
                 value={formData.monthsOfExperience}
-                onChange={handleChange}
-                className="w-full p-2 border rounded"
-              >
-                <option value="">Select Months</option>
-                {Array.from({ length: 12 }, (_, i) => (
-                  <option key={i} value={i}>{i}</option>
-                ))}
-              </select>
+                onChange={(value) => setFormData(prev => ({ ...prev, monthsOfExperience: value }))}
+                placeholder="Select Months of Experience"
+                searchPlaceholder="Search months..."
+              />
             </div>
           </div>
         )}
@@ -467,18 +488,16 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Target Duration
           </label>
-          <select
-            name="targetDuration"
+          <CustomDropdown
+            options={targetDurationOptions.map(duration => ({
+              value: duration.value,
+              label: duration.label,
+            }))}
             value={formData.targetDuration}
-            onChange={handleChange}
-            className="w-full p-2 border rounded"
-          >
-            {targetDurations.map((duration) => (
-              <option key={duration.value} value={duration.value}>
-                {duration.label}
-              </option>
-            ))}
-          </select>
+            onChange={(value) => setFormData(prev => ({ ...prev, targetDuration: value }))}
+            placeholder="Select Trget Duration"
+            searchPlaceholder="Search durations..."
+          />
         </div>
 
         {/* Programming Language (only for IT roles) */}
@@ -487,33 +506,16 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Preferred Language
             </label>
-            <select
-              name="programmingLanguage"
+            <CustomDropdown
+              options={programmingLanguageOptions.map(duration => ({
+                value: duration.value,
+                label: duration.label,
+              }))}
               value={formData.programmingLanguage}
-              onChange={handleChange}
-              className="w-full p-2 border rounded"
-            >
-              <option value="">Select Language</option>
-              <option value="" disabled className="p-2 bg-gray-100">
-                <div className="flex items-center">
-                  <FiSearch className="mr-2 text-gray-400" />
-                  <input
-                    type="text"
-                    placeholder="Search languages..."
-                    className="border-none bg-transparent outline-none w-full text-sm"
-                    value={searchTerm.language}
-                    onChange={(e) => handleSearchChange(e)}
-                    name="language"
-                    onClick={(e) => e.stopPropagation()}
-                  />
-                </div>
-              </option>
-              {filteredLanguages.map((language) => (
-                <option key={language.name} value={language.name}>
-                  {language.name}
-                </option>
-              ))}
-            </select>
+              onChange={(value) => setFormData(prev => ({ ...prev, programmingLanguage: value }))}
+              placeholder="Select Programming Language"
+              searchPlaceholder="Search languages..."
+            />
           </div>
         )}
 
@@ -588,7 +590,7 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
         message="Do not mistake anything in excietment, Please review the provided information:"
         details={renderConfirmationDetails()}
         isWarningAdded={true}
-        warningText = "This will deduct 1 credit from your account"
+        warningText="This will deduct 1 credit from your account"
         confirmText="Create Roadmap"
         cancelText="Go Back"
       />
