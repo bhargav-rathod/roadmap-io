@@ -75,7 +75,7 @@ export default function DashboardPage() {
 
       <div className="text-center pt-6">
         <p className="text-gray-600 text-lg font-semibold">
-          Ready to create your first roadmap and become the main character of your career?
+          Ready to create your new roadmap and become the main character of your career?
         </p>
         {/* <button className="mt-4 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white text-lg rounded-full shadow-lg transition-all duration-200">
           🚀 Create Roadmap Now

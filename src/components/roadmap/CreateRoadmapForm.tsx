@@ -264,7 +264,7 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
             className="w-full p-2 border rounded"
             required
           >
-            <option value="">Select Role Type</option>
+            <option>Select Role Type</option>
             <option value="IT">IT</option>
             <option value="Non-IT">Non-IT</option>
           </select>
