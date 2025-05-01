@@ -19,7 +19,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   roadmaps      Roadmap[]
-  verified          Boolean   @default(false)
+  verified      Boolean   @default(false)
   verificationToken String?
   verificationTokenExpires DateTime?
   createdAt     DateTime  @default(now())
