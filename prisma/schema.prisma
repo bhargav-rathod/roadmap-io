@@ -74,7 +74,7 @@ model Country {
 }
 
 model Roadmap {
-  id                      String           @id @default(cuid())
+  id                      String    @id @default(cuid())
   title                   String
   roleType                String // IT or Non-IT
   company                 String
@@ -84,32 +84,20 @@ model Roadmap {
   yearsOfExperience       String?
   monthsOfExperience      String?
   programmingLanguage     String?
-  targetDuration          String           @default("Any")
-  includeSimilarCompanies Boolean          @default(false)
-  includeCompensationData Boolean          @default(false)
-  includeOtherDetails     Boolean          @default(false)
+  targetDuration          String    @default("Any") // 1, 2, 3, 6, 12 months
+  includeSimilarCompanies Boolean   @default(false)
+  includeCompensationData Boolean   @default(false)
+  includeOtherDetails     Boolean   @default(false)
   otherDetails            String?
-  status                  String           @default("pending")
-  structure               Json? // Stores the initial outline
-  contentSections         Json? // Stores generated sections
+  status                  String    @default("pending")
+  content                 String?
   userId                  String
-  expiresAt               DateTime         @default(now())
-  user                    User             @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt               DateTime         @default(now())
-  updatedAt               DateTime         @updatedAt
+  expiresAt               DateTime  @default(now())
+  user                    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt               DateTime  @default(now())
+  updatedAt               DateTime  @updatedAt
   completedAt             DateTime?
-  countryRef              Country?         @relation(fields: [country], references: [name])
-  RoadmapSection          RoadmapSection[]
-}
-
-model RoadmapSection {
-  id        String   @id @default(cuid())
-  roadmapId String
-  sectionId String // e.g., "interview-questions", "dsa-questions"
-  content   String?
-  status    String   @default("pending") // pending, generating, completed
-  roadmap   Roadmap  @relation(fields: [roadmapId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  expiresAt DateTime @default(now()) // Optional: set expiration for cached content
+  countryRef              Country?  @relation(fields: [country], references: [name])
+  companyId               String?
+  roleId                  String?
 }
