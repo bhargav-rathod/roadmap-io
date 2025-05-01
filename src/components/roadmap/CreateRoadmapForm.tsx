@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import CustomDropdown from '../ui/CustomDropDown';
 import { CREATE_ROADMAP_COMPANY_TOOLTIP, CREATE_ROADMAP_EXTRA_DETAILS_LABEL, CREATE_ROADMAP_EXTRA_DETAILS_LABEL_TOOLTIP, CREATE_ROADMAP_EXTRA_DETAILS_TOOLTIP, CREATE_ROADMAP_FRESHER_LABEL, CREATE_ROADMAP_INCLUDE_COMP_LABEL, CREATE_ROADMAP_INCLUDE_SIMILAR_ROLE_LABEL, CREATE_ROADMAP_ROLE_TOOLTIP, CREATE_ROADMAP_TOP_NOTE_LABEL } from '@/app/data/config';
 import Tooltip from '../ui/Tooltip';
+import ConfirmationModal from '../ui/ConfirmationModal';
 
 export default function CreateRoadmapForm({ onSuccess, onCancel }: {
   onSuccess: (roadmap: any) => void;
@@ -34,6 +35,7 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [countries, setCountries] = useState<{ name: string }[]>([]);
+  const [showConfirmation, setShowConfirmation] = useState(false);
   const [searchTerm, setSearchTerm] = useState({
     company: '',
     role: '',
@@ -84,8 +86,14 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    setLoading(true);
+    //setLoading(true);
+    if (!isFormValid) return;
+    setShowConfirmation(true);
+  };
 
+  const confirmSubmission = async () => {
+    setShowConfirmation(false);
+    setLoading(true);
     try {
       if (!session?.user?.id) {
         throw new Error('User not authenticated');
@@ -218,12 +226,76 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
         {label}
       </label>
       {tooltipContent && (
-        <Tooltip content={tooltipContent}  position='left'>
+        <Tooltip content={tooltipContent} position='left'>
           <FiInfo className="ml-2 text-gray-400 hover:text-gray-600" size={16} />
         </Tooltip>
       )}
     </div>
   );
+
+  // Add this function to render the details for confirmation
+  const renderConfirmationDetails = () => {
+    return (
+      <div className="space-y-2">
+        <div className="flex">
+          <span className="w-1/3 text-gray-600">Company:</span>
+          <span className="w-2/3 font-medium">
+            {formData.company === 'Other' ? formData.companyOther : formData.company}
+          </span>
+        </div>
+        <div className="flex">
+          <span className="w-1/3 text-gray-600">Designation:</span>
+          <span className="w-2/3 font-medium">
+            {formData.role === 'Other' ? formData.roleOther : formData.role}
+          </span>
+        </div>
+        {formData.country && (
+          <div className="flex">
+            <span className="w-1/3 text-gray-600">Country:</span>
+            <span className="w-2/3 font-medium">{formData.country}</span>
+          </div>
+        )}
+        { (formData.isFresher || parseInt(formData.yearsOfExperience, 10) > 0 || parseInt(formData.monthsOfExperience, 10) > 0) && (
+        <div className="flex">
+          <span className="w-1/3 text-gray-600">Work Experience:</span>
+          <span className="w-2/3 font-medium">
+            {formData.isFresher
+              ? 'Fresher'
+              : `${formData.yearsOfExperience || 0} years ${formData.monthsOfExperience || 0} months`}
+          </span>
+        </div>
+        )}
+        {formData.roleType === 'IT' && formData.programmingLanguage && (
+          <div className="flex">
+            <span className="w-1/3 text-gray-600">Language:</span>
+            <span className="w-2/3 font-medium">{formData.programmingLanguage}</span>
+          </div>
+        )}
+        {formData.includeCompensationData && (
+          <div className="flex items-center">
+            <span className="w-1/3 text-gray-600">Includes:</span>
+            <span className="w-2/3 font-medium flex items-center">
+              <span className="text-green-500 mr-1">✓</span> Compensation Data
+            </span>
+          </div>
+        )}
+        {formData.includeSimilarCompanies && (
+          <div className="flex items-center">
+            <span className="w-1/3 text-gray-600"></span>
+            <span className="w-2/3 font-medium flex items-center">
+              <span className="text-green-500 mr-1">✓</span> Similar Roles
+            </span>
+          </div>
+        )}
+        {formData.includeOtherDetails && formData.otherDetails && (
+          <div className="flex">
+            <span className="w-1/3 text-gray-600">Additional Details:</span>
+            <span className="w-2/3 font-medium">{formData.otherDetails}</span>
+          </div>
+        )}
+      </div>
+    );
+  };
 
   return (
     <>
@@ -334,7 +406,7 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
               <FiInfo className="ml-2 inline text-gray-400 hover:text-gray-600" size={16} />
             </Tooltip>
           </label>
-          
+
           <CustomDropdown
             options={countryOptions}
             value={formData.country}
@@ -507,6 +579,19 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
           </button>
         </div>
       </form>
+
+      <ConfirmationModal
+        isOpen={showConfirmation}
+        onClose={() => setShowConfirmation(false)}
+        onConfirm={confirmSubmission}
+        title="Hooray! Your new roadmap is about to generate"
+        message="Do not mistake anything in excietment, Please review the provided information:"
+        details={renderConfirmationDetails()}
+        isWarningAdded={true}
+        warningText = "This will deduct 1 credit from your account"
+        confirmText="Create Roadmap"
+        cancelText="Go Back"
+      />
     </>
   );
 }
