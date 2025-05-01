@@ -18,13 +18,13 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
       {/* Sidebar - Mobile (Full screen overlay) */}
       {sidebarOpen && (
         <div className="fixed inset-0 z-40 lg:hidden">
-          <div 
+          <div
             className="fixed inset-0 bg-gray-600 bg-opacity-75"
             onClick={() => setSidebarOpen(false)}
             aria-hidden="true"
           ></div>
           <div className="fixed inset-y-0 left-0 z-50 w-full max-w-md">
-            <RoadmapSidebar 
+            <RoadmapSidebar
               onClose={() => setSidebarOpen(false)}
               sidebarOpen={sidebarOpen}
               setSidebarOpen={setSidebarOpen}
@@ -37,7 +37,7 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
       <div className={`hidden lg:block lg:flex-shrink-0 ${sidebarOpen ? 'lg:w-[576px]' : 'lg:w-0'} bg-white border-r border-gray-200 transition-all duration-300 ease-in-out`}>
         {sidebarOpen && (
           <div className="h-full overflow-y-auto no-scrollbar">
-            <RoadmapSidebar 
+            <RoadmapSidebar
               onClose={() => setSidebarOpen(false)}
               sidebarOpen={sidebarOpen}
               setSidebarOpen={setSidebarOpen}
@@ -91,7 +91,7 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
         )}
 
         <main className="flex-1 overflow-y-auto focus:outline-none">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="w-full max-w-full xl:max-w-[1600px] 2xl:max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 py-6">
             {children}
           </div>
         </main>

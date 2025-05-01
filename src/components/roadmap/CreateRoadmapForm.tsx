@@ -218,7 +218,7 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
         {label}
       </label>
       {tooltipContent && (
-        <Tooltip content={tooltipContent}>
+        <Tooltip content={tooltipContent}  position='left'>
           <FiInfo className="ml-2 text-gray-400 hover:text-gray-600" size={16} />
         </Tooltip>
       )}
@@ -274,7 +274,7 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Target Company <span className="text-red-500">*</span>
-            <Tooltip content={CREATE_ROADMAP_COMPANY_TOOLTIP}>
+            <Tooltip content={CREATE_ROADMAP_COMPANY_TOOLTIP} position='right'>
               <FiInfo className="ml-2 inline text-gray-400 hover:text-gray-600" size={16} />
             </Tooltip>
           </label>
@@ -302,7 +302,7 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Target Role <span className="text-red-500">*</span>
-            <Tooltip content={CREATE_ROADMAP_ROLE_TOOLTIP}>
+            <Tooltip content={CREATE_ROADMAP_ROLE_TOOLTIP} position='right'>
               <FiInfo className="ml-2 inline text-gray-400 hover:text-gray-600" size={16} />
             </Tooltip>
           </label>
@@ -330,7 +330,7 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Country
-            <Tooltip content="Country at which you are applying for the position">
+            <Tooltip content="Country at which you are applying for the position" position='right'>
               <FiInfo className="ml-2 inline text-gray-400 hover:text-gray-600" size={16} />
             </Tooltip>
           </label>

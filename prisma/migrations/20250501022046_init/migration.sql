@@ -95,16 +95,29 @@ CREATE TABLE "Roadmap" (
     "includeOtherDetails" BOOLEAN NOT NULL DEFAULT false,
     "otherDetails" TEXT,
     "status" TEXT NOT NULL DEFAULT 'pending',
-    "content" TEXT,
+    "structure" JSONB,
+    "contentSections" JSONB,
     "userId" TEXT NOT NULL,
     "expiresAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "completedAt" TIMESTAMP(3),
-    "companyId" TEXT,
-    "roleId" TEXT,
 
     CONSTRAINT "Roadmap_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "RoadmapSection" (
+    "id" TEXT NOT NULL,
+    "roadmapId" TEXT NOT NULL,
+    "sectionId" TEXT NOT NULL,
+    "content" TEXT,
+    "status" TEXT NOT NULL DEFAULT 'pending',
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "expiresAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "RoadmapSection_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -139,3 +152,6 @@ ALTER TABLE "Roadmap" ADD CONSTRAINT "Roadmap_userId_fkey" FOREIGN KEY ("userId"
 
 -- AddForeignKey
 ALTER TABLE "Roadmap" ADD CONSTRAINT "Roadmap_country_fkey" FOREIGN KEY ("country") REFERENCES "Country"("name") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "RoadmapSection" ADD CONSTRAINT "RoadmapSection_roadmapId_fkey" FOREIGN KEY ("roadmapId") REFERENCES "Roadmap"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
