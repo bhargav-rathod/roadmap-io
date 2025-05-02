@@ -1,3 +1,5 @@
+//dashboard/layout.tsx
+
 'use client'
 
 import { SessionProvider, useSession } from 'next-auth/react';
@@ -48,7 +50,7 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
       </div>
 
       {/* Main content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 flex flex-col">
         <nav className="bg-white shadow-sm">
           <div className="px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between h-16 items-center">

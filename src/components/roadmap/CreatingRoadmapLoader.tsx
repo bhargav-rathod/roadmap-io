@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 const messages = [
   "Hang tight, we are creating the best roadmap for you",
@@ -12,15 +13,19 @@ const messages = [
 
 export default function CreatingRoadmapLoader() {
   const [currentMessage, setCurrentMessage] = useState(0);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const interval = setInterval(() => {
       setCurrentMessage((prev) => (prev + 1) % messages.length);
     }, 3000);
     return () => clearInterval(interval);
   }, []);
 
-  return (
+  if (!mounted) return null;
+
+  return createPortal(
     <div className="fixed inset-0 z-[9999] flex items-center justify-center">
       {/* Overlay */}
       <div className="absolute inset-0 bg-black bg-opacity-50" />
@@ -71,6 +76,7 @@ export default function CreatingRoadmapLoader() {
           100% { background-position: 0% 50%; }
         }
       `}</style>
-    </div>
+    </div>,
+    document.body
   );
 }
