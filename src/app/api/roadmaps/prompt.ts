@@ -10,7 +10,7 @@ export async function createPrompt(roadmapData: any): Promise<string> {
         prompt += `The roadmap should be highly structured and tailored to real-world expectations, including the following sections:\n\n\
                     1. Role Overview - Responsibilities, required skills, and tools/technologies commonly used.\n\
                     2. Interview Pattern - Provide a detailed breakdown of the interview process (number of rounds, types of interviews, etc.).\n\
-                    3. Interview Questions & Answers - Include over 150+ recently asked interview questions across all rounds, each with detailed and accurate answers.\n`;
+                    3. Interview Questions - Include over 150+ recently asked interview questions across all rounds.\n`;
 
         if (roadmapData.isFresher) {
             prompt += `\n4. Experience Level - Structure the roadmap specifically for freshers (0 years of experience).\n`;
@@ -19,7 +19,7 @@ export async function createPrompt(roadmapData: any): Promise<string> {
         }
 
         if (roadmapData.roleType === 'IT') {
-            prompt += `\n (If DSA is required and asked in the interview then only add this point 5) 5. DSA & System Design Questions - Include at least **150+ Data Structures and Algorithms (DSA)** and **System Design** questions with clear and appropriate answers.`;
+            prompt += `\n (If DSA is required and asked in the interview then only add this point 5) 5. DSA & System Design Questions - Include at least **150+ Data Structures and Algorithms (DSA)** and **System Design** questions.`;
             if (roadmapData.programmingLanguage) {
                 prompt += ` Ensure all code solutions are in ${roadmapData.programmingLanguage}.`;
             }
