@@ -1,20 +1,35 @@
-//dashboard/layout.tsx
-
 'use client'
 
 import { SessionProvider, useSession } from 'next-auth/react';
 import UserMenu from "@/components/ui/UserMenu";
 import RoadmapSidebar from "@/components/roadmap/RoadmapSidebar";
 import { useState } from 'react';
-import { FiZap, FiMenu } from 'react-icons/fi';
+import { FiZap, FiMenu, FiChevronRight } from 'react-icons/fi';
 import { maintenanceBannerConfig } from '../data/maintenanceBanner';
 import CreatingRoadmapLoader from '@/components/roadmap/CreatingRoadmapLoader';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 function LayoutContent({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [showLoader, setShowLoader] = useState(false); // global loader state
   const { data: session } = useSession();
   const credits = session?.user?.credits ?? 0;
+  const pathname = usePathname();
+
+  // Generate breadcrumbs from pathname
+  const generateBreadcrumbs = () => {
+    console.log('Pathname:', pathname); // Debugging line
+    const paths = pathname.split('/').filter(path => path);
+    const breadcrumbs = paths.map((path, index) => {
+      const href = `/${paths.slice(0, index + 1).join('/')}`;
+      const name = path.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+      return { href, name };
+    });
+    return breadcrumbs;
+  };
+
+  const breadcrumbs = generateBreadcrumbs();
 
   return (
     <div className="min-h-screen h-screen flex relative">
@@ -54,14 +69,40 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
         <nav className="bg-white shadow-sm">
           <div className="px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between h-16 items-center">
-              {!sidebarOpen && (
-                <button
-                  onClick={() => setSidebarOpen(true)}
-                  className="p-2 rounded-md text-gray-500 hover:text-gray-600 hover:bg-gray-100"
-                >
-                  <FiMenu className="h-6 w-6" />
-                </button>
-              )}
+              <div className="flex items-center">
+                {!sidebarOpen && (
+                  <button
+                    onClick={() => setSidebarOpen(true)}
+                    className="p-2 rounded-md text-gray-500 hover:text-gray-600 hover:bg-gray-100 mr-2"
+                  >
+                    <FiMenu className="h-6 w-6" />
+                  </button>
+                )}
+                {/* Breadcrumb Navigation */}
+                <div className="hidden sm:flex items-center text-sm">
+                  <Link 
+                    href="/dashboard" 
+                    className="text-gray-600 hover:text-gray-900"
+                  >
+                    Dashboard
+                  </Link>
+                  {breadcrumbs.map((crumb, index) => (
+                    <div key={index} className="flex items-center">
+                      <FiChevronRight className="mx-2 text-gray-400" />
+                      {index === breadcrumbs.length - 1 ? (
+                        <span className="text-gray-800 font-medium">{crumb.name}</span>
+                      ) : (
+                        <Link 
+                          href={crumb.href}
+                          className="text-gray-600 hover:text-gray-900"
+                        >
+                          {crumb.name}
+                        </Link>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
               <div className="flex items-center space-x-4 ml-auto">
                 <div className="flex items-center bg-yellow-100 px-3 py-1 rounded-full text-sm font-medium text-yellow-800">
                   <FiZap className="mr-1" />

@@ -8,22 +8,24 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String    @unique
-  emailVerified DateTime?
-  password      String?
-  image         String?
-  user_role     String    @default("USER")
-  credits       Int       @default(10)
-  accounts      Account[]
-  sessions      Session[]
-  roadmaps      Roadmap[]
-  verified      Boolean   @default(false)
-  verificationToken String?
+  id                       String    @id @default(cuid())
+  name                     String?
+  email                    String    @unique
+  emailVerified            DateTime?
+  password                 String?
+  image                    String?
+  user_role                String    @default("USER")
+  credits                  Int       @default(10)
+  accounts                 Account[]
+  sessions                 Session[]
+  roadmaps                 Roadmap[]
+  verified                 Boolean   @default(false)
+  verificationToken        String?
   verificationTokenExpires DateTime?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt                DateTime  @default(now())
+  updatedAt                DateTime  @updatedAt
+  sessionToken             String?   @unique
+  lastActive               DateTime?
 }
 
 model Account {

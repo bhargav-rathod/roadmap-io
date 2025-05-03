@@ -18,7 +18,6 @@ export async function sendVerificationEmail(email: string, name: string, token: 
           <p><b><a href="${verificationLink}">Verify Email</a></b></p>
           <p>If you didn't create an account, you can safely ignore this email.</p>
           <br/>
-          <br/>
           <p>Thanks & Regards,</p>
           <p>${COMPANY_NAME} Team</p>
         </div>

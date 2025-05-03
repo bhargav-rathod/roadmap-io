@@ -11,12 +11,14 @@ declare module "next-auth" {
     id: string;
     credits: number;
     user_role: string;
+    sessionToken: string | null;
   }
   interface Session {
     user: User & {
       id: string;
       credits: number;
       user_role: string;
+      sessionToken: string;
     };
   }
 }
@@ -26,6 +28,8 @@ declare module "next-auth/jwt" {
     id: string;
     credits: number;
     user_role: string;
+    sessionToken: string;
+    lastActive: number;
   }
 }
 
@@ -61,16 +65,30 @@ export const authOptions: NextAuthOptions = {
           }
 
           // Check if email is verified
-        if (!user.verified) {
-          throw new Error("Email not verified");
-        }
+          if (!user.verified) {
+            throw new Error("Email not verified");
+          }
+
+          // Generate new session token
+          const sessionToken = require('crypto').randomBytes(32).toString('hex');
+          const lastActive = Math.floor(Date.now() / 1000);
+
+          // Update user with new session token
+          await prisma.user.update({
+            where: { id: user.id },
+            data: {
+              sessionToken,
+              lastActive: new Date(lastActive * 1000)
+            }
+          });
 
           return {
             id: user.id,
             email: user.email,
             name: user.name,
             credits: user.credits,
-            user_role: user.user_role
+            user_role: user.user_role,
+            sessionToken
           };
         } catch (error) {
           return null;
@@ -90,12 +108,57 @@ export const authOptions: NextAuthOptions = {
         token.id = user.id;
         token.credits = user.credits;
         token.user_role = user.user_role;
+        token.sessionToken = user.sessionToken!;
+        token.lastActive = Math.floor(Date.now() / 1000);
       }
 
       // Handle session updates from client-side updates
       if (trigger === "update" && session?.user) {
         token.credits = session.user.credits;
-        // Add any other fields you want to update
+        // Update last active time on any update
+        token.lastActive = Math.floor(Date.now() / 1000);
+      }
+
+      // Check session validity
+      if (token.id) {
+        const dbUser = await prisma.user.findUnique({
+          where: { id: token.id },
+          select: {
+            sessionToken: true,
+            lastActive: true
+          }
+        });
+
+        // If session token doesn't match or user not found, invalidate session
+        if (!dbUser || dbUser.sessionToken !== token.sessionToken) {
+          throw new Error("Session invalid");
+        }
+
+        // Check inactivity (10 minutes)
+        const currentTime = Math.floor(Date.now() / 1000);
+        const lastActive = dbUser.lastActive ? Math.floor(dbUser.lastActive.getTime() / 1000) : 0;
+        
+        if (currentTime - lastActive > 600) { // 10 minutes in seconds
+          // Invalidate session in database
+          await prisma.user.update({
+            where: { id: token.id },
+            data: {
+              sessionToken: null,
+              lastActive: null
+            }
+          });
+          throw new Error("Session expired due to inactivity");
+        }
+
+        // Update last active time in database if more than 1 minute has passed
+        if (currentTime - lastActive > 60) {
+          await prisma.user.update({
+            where: { id: token.id },
+            data: {
+              lastActive: new Date()
+            }
+          });
+        }
       }
 
       return token;
@@ -105,6 +168,7 @@ export const authOptions: NextAuthOptions = {
         session.user.id = token.id;
         session.user.credits = token.credits;
         session.user.user_role = token.user_role;
+        session.user.sessionToken = token.sessionToken;
       }
       return session;
     }
@@ -117,9 +181,22 @@ export const authOptions: NextAuthOptions = {
   debug: process.env.NODE_ENV === "development",
   session: {
     strategy: "jwt",
-    updateAge: 15, // 5 minutes - how often the session is updated
+    updateAge: 60, // 1 minute - how often the session is updated
     maxAge: 60 * 60 * 24 * 7, // 7 days - session max age
   },
+  events: {
+    async signOut({ token }) {
+      if (token?.id) {
+        await prisma.user.update({
+          where: { id: token.id as string },
+          data: {
+            sessionToken: null,
+            lastActive: null
+          }
+        });
+      }
+    }
+  }
 };
 
 export default NextAuth(authOptions);

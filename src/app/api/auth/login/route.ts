@@ -1,4 +1,3 @@
-// app/api/auth/login/route.ts
 import { NextResponse } from "next/server";
 import { authOptions } from "@/auth";
 import { getServerSession } from "next-auth";
@@ -21,8 +20,17 @@ export async function POST(request: Request) {
 
     const session = await getServerSession(authOptions);
     if (session) {
+      // If already logged in, sign out first
+      await prisma.user.update({
+        where: { id: session.user.id },
+        data: {
+          sessionToken: null,
+          lastActive: null
+        }
+      });
+      
       return NextResponse.json(
-        { error: "Already logged in" },
+        { error: "Already logged in. Please log in again." },
         { status: 400 }
       );
     }
@@ -40,7 +48,7 @@ export async function POST(request: Request) {
     }
 
     // Check password
-    const passwordValid = await bcrypt.compare(password, user.password);
+    const passwordValid = await bcrypt.compare(password, user.password ?? "");
     if (!passwordValid) {
       return NextResponse.json(
         { error: "Invalid email or password" },
@@ -72,7 +80,7 @@ export async function POST(request: Request) {
 
       // Send verification email if new token was generated
       if (needsNewToken) {
-        await sendVerificationEmail(user.email, user.name, verificationToken);
+        await sendVerificationEmail(user.email, user.name ?? "", verificationToken ?? "");
       }
 
       return NextResponse.json(
