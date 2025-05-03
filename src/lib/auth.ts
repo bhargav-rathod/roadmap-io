@@ -1,3 +1,5 @@
+// lib/auth.ts
+
 import { authOptions } from '@/auth';
 import { getServerSession } from 'next-auth';
 import prisma from '../lib/prisma';

@@ -1,5 +1,8 @@
 import NextAuth, { type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
+import FacebookProvider from "next-auth/providers/facebook";
+import LinkedInProvider from "next-auth/providers/linkedin";
 import prisma from "./src/lib/prisma";
 import bcrypt from "bcryptjs";
 import { JWT } from "next-auth/jwt";
@@ -12,6 +15,7 @@ declare module "next-auth" {
     credits: number;
     user_role: string;
     sessionToken: string | null;
+    verified?: boolean;
   }
   interface Session {
     user: User & {
@@ -94,15 +98,93 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
       }
-    })
+    }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code"
+        }
+      }
+    }),
+    // FacebookProvider({
+    //   clientId: process.env.FACEBOOK_CLIENT_ID!,
+    //   clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
+    // }),
+    // LinkedInProvider({
+    //   clientId: process.env.LINKEDIN_CLIENT_ID!,
+    //   clientSecret: process.env.LINKEDIN_CLIENT_SECRET!,
+    //   authorization: {
+    //     params: { scope: 'openid profile email' },
+    //   },
+    //   issuer: 'https://www.linkedin.com',
+    //   jwks_endpoint: "https://www.linkedin.com/oauth/openid/jwks",
+    //   profile(profile) {
+    //     return {
+    //       id: profile.sub,
+    //       name: profile.name,
+    //       email: profile.email,
+    //       image: profile.picture,
+    //     };
+    //   },
+    // })
   ],
   callbacks: {
-    async jwt({ token, user, trigger, session }: { 
-      token: JWT; 
-      user?: User; 
-      trigger?: "signIn" | "signUp" | "update"; 
-      session?: any 
-    }) {
+    async signIn({ user, account, profile }) {
+      // Handle social sign in
+      if (account?.provider !== 'credentials') {
+        // Check if user exists in your database
+        const existingUser = await prisma.user.findUnique({
+          where: { email: user.email?.toLowerCase() },
+        });
+
+        if (existingUser) {
+          // If user exists but signed up with credentials, don't allow social login
+          if (existingUser.password) {
+            throw new Error('This email is already registered with email/password. Please sign in that way.');
+          }
+          
+          // Update user with new session token
+          const sessionToken = require('crypto').randomBytes(32).toString('hex');
+          await prisma.user.update({
+            where: { id: existingUser.id },
+            data: {
+              sessionToken,
+              lastActive: new Date()
+            }
+          });
+          
+          user.id = existingUser.id;
+          user.credits = existingUser.credits;
+          user.user_role = existingUser.user_role;
+          user.sessionToken = sessionToken;
+        } else {
+          // Create new user for social login
+          const newUser = await prisma.user.create({
+            data: {
+              email: user.email!.toLowerCase(),
+              name: user.name || profile?.name || '',
+              verified: true, // Social logins are automatically verified
+              credits: 0, // Default credits
+              user_role: 'user', // Default role
+              sessionToken: require('crypto').randomBytes(32).toString('hex'),
+              lastActive: new Date()
+            }
+          });
+          
+          user.id = newUser.id;
+          user.credits = newUser.credits;
+          user.user_role = newUser.user_role;
+          user.sessionToken = newUser.sessionToken;
+        }
+      }
+      
+      return true;
+    },
+    async jwt({ token, user, trigger, session }) {
       // Initial sign in
       if (user) {
         token.id = user.id;
@@ -163,7 +245,7 @@ export const authOptions: NextAuthOptions = {
 
       return token;
     },
-    async session({ session, token }: { session: Session; token: JWT }) {
+    async session({ session, token }) {
       if (token?.id) {
         session.user.id = token.id;
         session.user.credits = token.credits;
