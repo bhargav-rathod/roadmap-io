@@ -39,4 +39,6 @@ Adding more context can help, but it's completely optional—your roadmap will s
 export const CREATE_ROADMAP_EXTRA_DETAILS_LABEL_TOOLTIP = 
     "Not everyone needs this, chill!";
 
+export const CREATE_ROADMAP_TARGET_DURATION_TOOLTIP = "Do you have an estimated timeline in mind for your target roadmap? If not, no worries at all!";
+
 //#endregion

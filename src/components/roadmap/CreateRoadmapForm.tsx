@@ -3,7 +3,7 @@ import { FiSearch, FiInfo } from 'react-icons/fi';
 import CreatingRoadmapLoader from './CreatingRoadmapLoader';
 import { useEffect, useState } from 'react';
 import CustomDropdown from '../ui/CustomDropDown';
-import { CREATE_ROADMAP_COMPANY_TOOLTIP, CREATE_ROADMAP_EXTRA_DETAILS_LABEL, CREATE_ROADMAP_EXTRA_DETAILS_LABEL_TOOLTIP, CREATE_ROADMAP_EXTRA_DETAILS_TOOLTIP, CREATE_ROADMAP_FRESHER_LABEL, CREATE_ROADMAP_INCLUDE_COMP_LABEL, CREATE_ROADMAP_INCLUDE_SIMILAR_ROLE_LABEL, CREATE_ROADMAP_ROLE_TOOLTIP, CREATE_ROADMAP_TOP_NOTE_LABEL } from '@/app/data/config';
+import { CREATE_ROADMAP_COMPANY_TOOLTIP, CREATE_ROADMAP_EXTRA_DETAILS_LABEL, CREATE_ROADMAP_EXTRA_DETAILS_LABEL_TOOLTIP, CREATE_ROADMAP_EXTRA_DETAILS_TOOLTIP, CREATE_ROADMAP_FRESHER_LABEL, CREATE_ROADMAP_INCLUDE_COMP_LABEL, CREATE_ROADMAP_INCLUDE_SIMILAR_ROLE_LABEL, CREATE_ROADMAP_ROLE_TOOLTIP, CREATE_ROADMAP_TARGET_DURATION_TOOLTIP, CREATE_ROADMAP_TOP_NOTE_LABEL } from '@/app/data/config';
 import Tooltip from '../ui/Tooltip';
 import ConfirmationModal from '../ui/ConfirmationModal';
 
@@ -487,6 +487,9 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Target Duration
+            <Tooltip content={CREATE_ROADMAP_TARGET_DURATION_TOOLTIP} position='right'>
+              <FiInfo className="ml-2 inline text-gray-400 hover:text-gray-600" size={16} />
+            </Tooltip>
           </label>
           <CustomDropdown
             options={targetDurationOptions.map(duration => ({

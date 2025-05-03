@@ -3,8 +3,8 @@
 import { SessionProvider, useSession } from 'next-auth/react';
 import UserMenu from "@/components/ui/UserMenu";
 import RoadmapSidebar from "@/components/roadmap/RoadmapSidebar";
-import { useState } from 'react';
-import { FiZap, FiMenu, FiChevronRight } from 'react-icons/fi';
+import { useState, useEffect } from 'react';
+import { FiZap, FiMenu, FiChevronRight, FiHome } from 'react-icons/fi';
 import { maintenanceBannerConfig } from '../data/maintenanceBanner';
 import CreatingRoadmapLoader from '@/components/roadmap/CreatingRoadmapLoader';
 import Link from 'next/link';
@@ -12,20 +12,72 @@ import { usePathname } from 'next/navigation';
 
 function LayoutContent({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [showLoader, setShowLoader] = useState(false); // global loader state
+  const [showLoader, setShowLoader] = useState(false);
+  const [roadmapTitle, setRoadmapTitle] = useState('');
   const { data: session } = useSession();
   const credits = session?.user?.credits ?? 0;
   const pathname = usePathname();
 
-  // Generate breadcrumbs from pathname
+  // Fetch roadmap title when on a roadmap page
+  useEffect(() => {
+    const fetchRoadmapTitle = async () => {
+      const paths = pathname.split('/').filter(path => path);
+      const isRoadmapPage = paths.length >= 2;
+      console.log('Paths:', paths, 'Is Roadmap Page:', isRoadmapPage);
+      if (isRoadmapPage) {
+        const roadmapId = paths[paths.indexOf('roadmaps') + 2];
+        try {
+          const response = await fetch(`/api/roadmaps/title?id=${roadmapId}`);
+          if (response.ok) {
+            const data = await response.json();
+            setRoadmapTitle(data.title);
+          } else {
+            console.error('Failed to fetch roadmap title');
+            setRoadmapTitle('');
+          }
+        } catch (error) {
+          console.error('Error fetching roadmap title:', error);
+          setRoadmapTitle('');
+        }
+      } else {
+        setRoadmapTitle('');
+      }
+    };
+
+    fetchRoadmapTitle();
+  }, [pathname]);
+
   const generateBreadcrumbs = () => {
-    console.log('Pathname:', pathname); // Debugging line
     const paths = pathname.split('/').filter(path => path);
-    const breadcrumbs = paths.map((path, index) => {
-      const href = `/${paths.slice(0, index + 1).join('/')}`;
-      const name = path.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-      return { href, name };
+    const breadcrumbs = [];
+
+    // Always add Dashboard as the first breadcrumb
+    breadcrumbs.push({
+      href: '/dashboard',
+      name: 'Dashboard',
+      icon: <FiHome className="mr-1" />
     });
+
+    // Check if we're on a roadmap page
+    const isRoadmapPage = paths.length >= 2;
+    
+    if (isRoadmapPage) {
+      // Add current roadmap breadcrumb if title exists
+      if (roadmapTitle) {
+        breadcrumbs.push({
+          href: '', // Empty href means it's not clickable
+          name: roadmapTitle
+        });
+      }
+    } else {
+      // For other pages, add their path segments (skip dashboard)
+      paths.slice(1).forEach((path, index) => {
+        const href = `/dashboard/${paths.slice(1, index + 2).join('/')}`;
+        const name = path.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+        breadcrumbs.push({ href, name });
+      });
+    }
+
     return breadcrumbs;
   };
 
@@ -80,24 +132,21 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
                 )}
                 {/* Breadcrumb Navigation */}
                 <div className="hidden sm:flex items-center text-sm">
-                  <Link 
-                    href="/dashboard" 
-                    className="text-gray-600 hover:text-gray-900"
-                  >
-                    Dashboard
-                  </Link>
                   {breadcrumbs.map((crumb, index) => (
                     <div key={index} className="flex items-center">
-                      <FiChevronRight className="mx-2 text-gray-400" />
-                      {index === breadcrumbs.length - 1 ? (
-                        <span className="text-gray-800 font-medium">{crumb.name}</span>
-                      ) : (
-                        <Link 
+                      {index > 0 && <FiChevronRight className="mx-2 text-gray-400" />}
+                      {crumb.href ? (
+                        <Link
                           href={crumb.href}
-                          className="text-gray-600 hover:text-gray-900"
+                          className="flex items-center text-gray-600 hover:text-gray-900"
                         >
+                          {crumb.icon && crumb.icon}
                           {crumb.name}
                         </Link>
+                      ) : (
+                        <span className="text-gray-800 font-medium">
+                          {crumb.name}
+                        </span>
                       )}
                     </div>
                   ))}
