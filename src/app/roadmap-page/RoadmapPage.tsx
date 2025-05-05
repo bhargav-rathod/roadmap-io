@@ -116,7 +116,7 @@ export default function RoadmapPage({ roadmap }: RoadmapPageProps) {
     }
 
     return (
-        <div className={`min-h-screen py-4 md:py-10 px-4 transition-colors duration-300 ${darkMode ? 'bg-gray-900 text-gray-100' : 'bg-gray-50'}`}>
+        <div className={`min-h-screen py-4 md:py-10 px-4 transition-colors duration-300 ${darkMode ? 'bg-white-100 text-gray-100' : 'bg-white-100'}`}>
             {/* Main container with fixed height */}
             <div
                 ref={containerRef}
