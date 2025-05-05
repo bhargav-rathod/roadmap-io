@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/auth';
 import prisma from '../../../lib/prisma';
-import RoadmapPage from '@/components/roadmap/RoadmapPage';
+import RoadmapPage from '@/app/roadmap-page/RoadmapPage';
 
 export default async function Page({ params }: { params: { id: string } }) {
   const session = await getServerSession(authOptions);

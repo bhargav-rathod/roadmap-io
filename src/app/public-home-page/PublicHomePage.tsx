@@ -5,15 +5,14 @@ import { useRef, useState, useEffect, RefObject } from "react";
 import { Button } from "@/components/ui/Button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { FaLinkedin, FaTwitter, FaInstagram, FaGithub } from "react-icons/fa";
-import { testimonials } from "../../app/data/testemonials";
-import { roadMapLabel, roadmaps, roadmapSampleStructureQuestionsText } from "../../app/data/roadmaps";
-import { pricingDescription, pricingPlans, pricingTitlePrefix, pricingTitleSuffix } from "../../app/data/pricingPlans";
-import { features } from "../../app/data/features";
-import { theme } from "../../app/theme";
-import { bannerConfig } from "../../app/data/banner";
-import { COMPANY_NAME, COMPANY_SLOGAN, GET_STARTED_BUTTON_TEXT, PAGE_HEADER_PREFIX } from "../../app/data/config";
-import { DemoModal } from "./DemoModel";
-import { DemoModal_Lazy } from "./DemoModel_Lazy";
+import { testimonials } from "../data/testemonials";
+import { roadMapLabel, roadmaps, roadmapSampleStructureQuestionsText } from "../data/roadmaps";
+import { pricingDescription, pricingPlans, pricingTitlePrefix, pricingTitleSuffix } from "../data/pricingPlans";
+import { features } from "../data/features";
+import { theme } from "../theme";
+import { bannerConfig } from "../data/banner";
+import { COMPANY_NAME, COMPANY_SLOGAN, GET_STARTED_BUTTON_TEXT, PAGE_HEADER_PREFIX } from "../data/config";
+import { DemoModalLazy } from "./DemoModelLazy";
 
 export default function PublicHomePage() {
     const testimonialRef = useRef<HTMLDivElement>(null);
@@ -302,14 +301,16 @@ export default function PublicHomePage() {
                                 </ul>
                                 {/* Button at bottom of card */}
                                 <div className="mt-auto pt-4">
-                                    <Button
-                                        className={`w-full py-3 md:py-4 text-sm md:text-lg ${plan.popular
-                                            ? `${theme.buttons.primary}`
-                                            : "bg-gray-800 hover:bg-gray-900"
-                                            }`}
-                                    >
-                                        {plan.cta}
-                                    </Button>
+                                    <Link href="/signup">
+                                        <Button
+                                            className={`w-full py-3 md:py-4 text-sm md:text-lg ${plan.popular
+                                                ? `${theme.buttons.primary}`
+                                                : "bg-gray-800 hover:bg-gray-900"
+                                                }`}
+                                        >
+                                            {plan.cta}
+                                        </Button>
+                                    </Link>
                                 </div>
                             </div>
                         ))}
@@ -317,7 +318,7 @@ export default function PublicHomePage() {
 
                     <div className={`mt-8 md:mt-12 text-center ${theme.typography.caption}`}>
                         <p>Need help choosing? <a href="#" className={`${theme.colors.primary} hover:underline`}>Contact our team</a></p>
-                        <p className="mt-1 md:mt-2">All plans come with a 7-day money-back guarantee</p>
+                        <p className="mt-1 md:mt-2">All plans come with a dedicated support guarantee</p>
                     </div>
                 </div>
             </section>
@@ -335,7 +336,7 @@ export default function PublicHomePage() {
                                 Get Started Free
                             </Button>
                         </Link>
-                        <DemoModal_Lazy
+                        <DemoModalLazy
                             buttonClassName="px-6 py-4 md:px-8 md:py-6 text-sm md:text-lg bg-transparent border-2 border-white hover:bg-blue-700 rounded-full"
                             buttonText="See Demo"
                         />
@@ -358,15 +359,15 @@ export default function PublicHomePage() {
                             <li><Link href="#features" className="hover:text-white transition-colors">Features</Link></li>
                             <li><Link href="#pricing" className="hover:text-white transition-colors">Pricing</Link></li>
                             <li><Link href="#roadmaps" className="hover:text-white transition-colors">Roadmaps</Link></li>
-                            <li><Link href="#testimonials" className="hover:text-white transition-colors">Updates</Link></li>
+                            <li><Link href="/updates" className="hover:text-white transition-colors">Updates</Link></li>
                         </ul>
                     </div>
                     <div>
                         <h4 className="font-bold text-lg mb-3 md:mb-4 text-white">Support</h4>
                         <ul className={`${theme.typography.caption} space-y-1 md:space-y-2`}>
-                            <li><a href="#" className="hover:text-white transition-colors">FAQs</a></li>
-                            <li><a href="#" className="hover:text-white transition-colors">Contact Us</a></li>
-                            <li><a href="#" className="hover:text-white transition-colors">Terms & Privacy</a></li>
+                            <li><a href="/faqs" className="hover:text-white transition-colors">FAQs</a></li>
+                            <li><a href="/contact" className="hover:text-white transition-colors">Contact Us</a></li>
+                            <li><a href="/terms" className="hover:text-white transition-colors">Terms & Privacy</a></li>
                         </ul>
                     </div>
                     <div>

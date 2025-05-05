@@ -32,7 +32,7 @@ type Position = {
   salary: string;
 };
 
-export const DemoModal_Lazy = ({
+export const DemoModalLazy = ({
   buttonClassName = "px-6 py-4 md:px-8 md:py-6 text-sm md:text-lg bg-transparent border-2 border-white hover:bg-blue-700 rounded-full",
   buttonText = "See Demo",
   buttonProps

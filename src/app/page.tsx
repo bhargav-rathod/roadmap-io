@@ -1,4 +1,4 @@
-import PublicHomePage from "@/components/ui/PublicHomePage";
+import PublicHomePage from "@/app/public-home-page/PublicHomePage";
 
 
 export default function Home() {

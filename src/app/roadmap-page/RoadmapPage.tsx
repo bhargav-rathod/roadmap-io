@@ -5,7 +5,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import { FiChevronLeft, FiChevronRight, FiEye, FiMaximize, FiMinimize, FiMoon, FiSun, FiType, FiZoomIn, FiZoomOut } from 'react-icons/fi';
-import Tooltip from '../ui/Tooltip';
+import Tooltip from '../../components/ui/Tooltip';
 import Link from 'next/link';
 
 interface Roadmap {
