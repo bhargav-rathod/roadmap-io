@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { theme } from "../../app/theme";
-import { COMPANY_NAME } from "../../app/data/config";
+import { COMPANY_NAME, COMPANY_SUPPORT_EMAIL } from "../../app/data/config";
 
 export default function ContactPage() {
     return (
@@ -34,6 +34,9 @@ export default function ContactPage() {
                             <h3 className={`text-xl font-bold mb-4 ${theme.typography.subheading}`}>Get in Touch</h3>
                             <form className="space-y-4">
                                 <div>
+                                    <label htmlFor="name" className={`block mb-1 ${theme.typography.body}`}>For any queries, concerns, suggestions, please drop an email to <b>{COMPANY_SUPPORT_EMAIL}</b> and we will revert you as quickly as possible.</label>
+                                </div>
+                                {/* <div>
                                     <label htmlFor="name" className={`block mb-1 ${theme.typography.body}`}>Name</label>
                                     <input type="text" id="name" className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
                                 </div>
@@ -47,7 +50,7 @@ export default function ContactPage() {
                                 </div>
                                 <Button type="submit" className={`w-full ${theme.buttons.primary}`}>
                                     Send Message
-                                </Button>
+                                </Button> */}
                             </form>
                         </div>
                         
@@ -56,7 +59,7 @@ export default function ContactPage() {
                             <div className="space-y-4">
                                 <div>
                                     <h4 className={`font-semibold ${theme.typography.subheading}`}>Email</h4>
-                                    <p className={`${theme.typography.body}`}>support@roadmap.io</p>
+                                    <p className={`${theme.typography.body}`}>{COMPANY_SUPPORT_EMAIL}</p>
                                 </div>
                                 {/* <div>
                                     <h4 className={`font-semibold ${theme.typography.subheading}`}>Phone</h4>
