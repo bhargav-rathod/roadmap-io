@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/Button";
 import { X } from "lucide-react";
 import { theme } from "@/app/theme";
 import Image from "next/image";
-import { COMPANY_LOGOS } from "@/app/data/companyLogos";
 
 type ButtonProps = ComponentProps<typeof Button>;
 
@@ -249,22 +248,22 @@ export const DemoModal_Lazy = ({
         },
         similarPositions: [
             {
-                company: "Google",
-                companyLogoName: "google",
+                company: "Visa",
+                companyLogoName: "visa",
                 role: "Senior Software Engineer",
                 location: "Bangalore",
                 salary: "₹38,00,000 - ₹50,00,000"
             },
             {
-                company: "Amazon",
-                companyLogoName: "amazon",
+                company: "Tesla",
+                companyLogoName: "tesla",
                 role: "SDE III",
                 location: "Hyderabad",
                 salary: "₹36,00,000 - ₹48,00,000"
             },
             {
-                company: "Adobe",
-                companyLogoName: "adobe",
+                company: "Salesforce",
+                companyLogoName: "salesforce",
                 role: "Senior Computer Scientist",
                 location: "Noida",
                 salary: "₹32,00,000 - ₹42,00,000"
@@ -277,8 +276,8 @@ export const DemoModal_Lazy = ({
                 salary: "₹34,00,000 - ₹46,00,000"
             },
             {
-                company: "Goldman Sachs",
-                companyLogoName: "goldmansachs",
+                company: "Netflix",
+                companyLogoName: "netflix",
                 role: "Vice President - Engineering",
                 location: "Bengaluru",
                 salary: "₹40,00,000 - ₹55,00,000"
@@ -344,8 +343,8 @@ export const DemoModal_Lazy = ({
               {/* Company Header */}
               <div className="flex items-center justify-between mb-6">
                 <Image
-                  src={COMPANY_LOGOS.microsoft.url}
-                  alt={COMPANY_LOGOS.microsoft.alt}
+                  src='icons/logos/microsoft.svg'
+                  alt='Microsoft'
                   width={120}
                   height={40}
                 />
@@ -449,8 +448,8 @@ export const DemoModal_Lazy = ({
                         {modalData.similarPositions.map((position, i) => (
                           <div key={i} className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
                               <Image
-                              src={COMPANY_LOGOS[position.companyLogoName.toLowerCase() as keyof typeof COMPANY_LOGOS]?.url || "/default-company-logo.png"}
-                              alt={COMPANY_LOGOS[position.companyLogoName.toLowerCase() as keyof typeof COMPANY_LOGOS]?.alt || "Company Logo"}
+                              src={"icons/logos/" + position.companyLogoName.toLowerCase() + ".svg" || "/default-company-logo.png"}
+                              alt={"icons/logos/" + position.companyLogoName.toLowerCase() + ".svg" || "Company Logo"}
                               width={50}
                               height={50}
                               className="mx-auto mb-2"

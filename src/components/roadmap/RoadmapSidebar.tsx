@@ -22,7 +22,7 @@ export default function RoadmapSidebar({
 
   return (
     <div className="h-full flex flex-col bg-white/95 backdrop-blur-sm rounded-r-xl border-r border-gray-200/50 shadow-2xl">
-      <div className="flex items-center justify-between px-6 py-5 border-b border-gray-200/50">
+      <div className="flex items-center justify-between px-6 py-4  border-b border-gray-200/50">
         <h2 className="text-xl font-bold text-gray-800">Your Roadmaps</h2>
         <button
           onClick={onClose}

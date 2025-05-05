@@ -97,7 +97,7 @@ export default function PublicHomePage() {
                     <p className="text-lg md:text-xl font-bold italic text-gray-600 mb-4 md:mb-6 px-2 mt-4">
                         {COMPANY_SLOGAN}
                     </p>
-                    <Link href="/app/dashboard">
+                    <Link href="/signup">
                         <Button className={`px-6 py-3 text-sm md:text-base ${theme.colors.primaryBg} ${theme.colors.primaryHoverBg}`}>
                             {GET_STARTED_BUTTON_TEXT}
                         </Button>
@@ -164,7 +164,7 @@ export default function PublicHomePage() {
                             {roadmaps.map((roadmap: any, idx: any) => (
                                 <div key={idx} className={`flex-shrink-0 w-80 sm:w-96 bg-white p-6 md:p-8 rounded-2xl ${theme.shadows.card} ${theme.colors.cardBorder} transition-all`}>                                    <div className="flex flex-col items-center mb-4">
                                     <img
-                                        src={roadmap.company.url}
+                                        src={roadmap.company}
                                         alt={roadmap.company.alt}
                                         className="object-contain mb-3"
                                         style={{ width: theme.sizes.companyLogo.width, height: theme.sizes.companyLogo.height }}
@@ -236,8 +236,8 @@ export default function PublicHomePage() {
                             {testimonials.map((t, i) => (
                                 <div key={i} className={`flex-shrink-0 w-72 sm:w-80 bg-white p-6 md:p-8 rounded-2xl ${theme.shadows.card} ${theme.colors.cardBorder} transition-all flex flex-col items-center text-center`}>
                                     <img
-                                        src={t.company.url}
-                                        alt={t.company.alt}
+                                        src={t.company}
+                                        alt={t.company}
                                         className="object-contain mb-3 md:mb-4"
                                         style={{ width: theme.sizes.companyLogo.width, height: theme.sizes.companyLogo.height }}
                                     />

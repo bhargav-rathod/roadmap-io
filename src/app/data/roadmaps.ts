@@ -1,5 +1,3 @@
-import { COMPANY_LOGOS } from "./companyLogos";
-
 export const roadMapLabel = "The roadmaps below are sample versions provided for demonstration purposes. The actual content offers significantly deeper insights, including previously asked questions, recent interview patterns, and hands-on exercises for thorough preparation.";
 
 export const roadmapSampleStructureQuestionsText = "Recently Asked Questions";
@@ -17,7 +15,7 @@ export const roadmaps = [
         "Microsoft SDE 3, Flipkart Backend Developer, Uber Entry-Level Backend"
       ],
       experience: "Most Amazon interviews start with 1-2 DSA rounds focusing on Leetcode Medium/Hard, followed by a round on system design (even for SDE 1), and a strong focus on Amazon's leadership principles during behavioral rounds.",
-      company: COMPANY_LOGOS.amazon,
+      company: 'icons/logos/amazon.svg',
     },
     {
       title: "Google - Network Engineer",
@@ -31,7 +29,7 @@ export const roadmaps = [
         "Meta Network Developer, Atlassian Network Lead"
       ],
       experience: "Google looks for structured thinkers. Emphasis is on stakeholder alignment, team coordination, and solving ambiguity. Technical depth is tested with architectural discussions and scenario-based questions.",
-      company: COMPANY_LOGOS.google,
+      company: 'icons/logos/google.svg',
     },
     {
       title: "Meta - ML Engineer",
@@ -45,7 +43,7 @@ export const roadmaps = [
         "Google ML Engineer, Amazon Applied Scientist, Apple ML Research"
       ],
       experience: "Meta focuses on practical ML application, clean code, and scaling models. Expect case-study style rounds and in-depth technical discussions. Behavioral questions often involve past collaborations and outcomes.",
-      company: COMPANY_LOGOS.meta,
+      company: 'icons/logos/meta.svg',
     },
     {
       title: "Microsoft - DevOps Engineer",
@@ -60,7 +58,7 @@ export const roadmaps = [
         "Google Support Engineer, Amazon DevOps Lead, Uber DevOps Engineer"
       ],
       experience: "Microsoft interviews focus on clean code, OOP principles, and system design at scale. Behavioral rounds emphasize collaboration and problem-solving approaches.",
-      company: COMPANY_LOGOS.microsoft,
+      company: 'icons/logos/microsoft.svg',
     },
     {
       title: "Apple - Human Resource, Recruiter",
@@ -74,6 +72,6 @@ export const roadmaps = [
         "Spotify IT Recruiter, Netflix HR Department Lead"
       ],
       experience: "Apple HR interviews focus heavily on Recruitment, performance improvement, and attention to detail. HR role often involves Apple-specific behavioural questions.",
-      company: COMPANY_LOGOS.apple,
+      company: 'icons/logos/apple-1.svg',
     },
   ];
