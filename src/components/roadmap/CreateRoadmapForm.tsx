@@ -387,15 +387,25 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
             searchPlaceholder="Search companies..."
           />
           {formData.company === 'Other' && (
-            <input
-              type="text"
-              name="companyOther"
-              value={formData.companyOther}
-              onChange={handleChange}
-              placeholder="Enter company name"
-              className="w-full p-2 border rounded mt-2"
-              required
-            />
+            <div className="mt-2">
+              <input
+                type="text"
+                name="companyOther"
+                value={formData.companyOther}
+                onChange={handleChange}
+                maxLength={50}
+                placeholder="Enter company name"
+                className={`w-full p-2 border rounded ${formData.companyOther.length > 50 ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                required
+              />
+              {/* below is the optional, as of now never executed */}
+              {formData.companyOther.length > 50 && (
+                <p className="text-red-500 text-xs mt-1">
+                  Company name cannot exceed 50 characters
+                </p>
+              )}
+            </div>
           )}
         </div>
 
@@ -415,15 +425,25 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
             searchPlaceholder="Search roles..."
           />
           {formData.role === 'Other' && (
-            <input
-              type="text"
-              name="roleOther"
-              value={formData.roleOther}
-              onChange={handleChange}
-              placeholder="Enter role name"
-              className="w-full p-2 border rounded mt-2"
-              required
-            />
+            <div className="mt-2">
+              <input
+                type="text"
+                name="roleOther"
+                value={formData.roleOther}
+                onChange={handleChange}
+                maxLength={50}
+                placeholder="Enter role name"
+                className={`w-full p-2 border rounded ${formData.roleOther.length > 50 ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                required
+              />
+              {/* below is the optional, as of now never executed */}
+              {formData.roleOther.length > 50 && (
+                <p className="text-red-500 text-xs mt-1">
+                  Role name cannot exceed 50 characters
+                </p>
+              )}
+            </div>
           )}
         </div>
 
@@ -558,10 +578,29 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
               name="otherDetails"
               value={formData.otherDetails}
               onChange={handleChange}
+              maxLength={1000}
               placeholder="Any additional things that might help us create a better roadmap for you..."
-              className="w-full p-2 border rounded h-32 resize-y"
+              className={`w-full p-2 border rounded h-32 resize-y ${formData.otherDetails.length > 1000 ? 'border-red-500' : 'border-gray-300'
+                }`}
               rows={4}
             />
+            <div className="flex justify-between items-center mt-1">
+              
+              {/* below is the optional, as of now never executed */}
+              {formData.otherDetails.length > 1000 ? (
+                <p className="text-red-500 text-xs">
+                  Maximum 1000 characters exceeded ({formData.otherDetails.length}/1000)
+                </p>
+              ) : (
+                // empty div to maintain space
+                <div></div>
+              )}
+
+              <p className={`text-xs ${formData.otherDetails.length > 1000 ? 'text-red-500' : 'text-gray-500'
+                }`}>
+                {formData.otherDetails.length}/1000
+              </p>
+            </div>
           </div>
         )}
 
