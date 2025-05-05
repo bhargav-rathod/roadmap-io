@@ -78,26 +78,26 @@ export default function RoadmapList({ onClose }: { onClose?: () => void }) {
   }
 
   return (
-    <DndContext 
+    <DndContext
       sensors={sensors}
       collisionDetection={closestCenter}
       onDragEnd={handleDragEnd}
     >
-      <SortableContext 
+      <SortableContext
         items={roadmaps}
         strategy={verticalListSortingStrategy}
       >
         <div className="space-y-4 p-4">
           {roadmaps.map((roadmap, index) => (
-            <div 
+            <div
               key={roadmap.id}
               style={{ touchAction: 'none' }} // Prevent touch scrolling during drag
             >
-              <SortableItem 
-                id={roadmap.id} 
+              <SortableItem
+                id={roadmap.id}
                 onClose={onClose}
               >
-                <div 
+                <div
                   className={`rounded-xl p-5 shadow-md transition-all duration-300 border ${cardColors[index % cardColors.length]}`}
                   onDragStart={(e) => {
                     e.preventDefault();
@@ -106,10 +106,31 @@ export default function RoadmapList({ onClose }: { onClose?: () => void }) {
                 >
                   <h3 className="text-xl font-semibold text-gray-800">{roadmap.title}</h3>
                   <div className="text-sm text-gray-700 mt-3 space-y-1">
-                    {roadmap.company && <div>📌 Company: {roadmap.company}</div>}
-                    {roadmap.role && <div>💼 Role: {roadmap.role}</div>}
+                    {roadmap.company && (
+                      <div className="flex items-center gap-2">
+                        <svg className="w-4 h-4 text-black" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M3 13h18v8H3v-8zm2 2v4h2v-4H5zm4 0v4h6v-4H9zm8 0v4h2v-4h-2zM3 3h18v8H3V3zm2 2v4h2V5H5zm4 0v4h6V5H9zm8 0v4h2V5h-2z" />
+                        </svg>
+                        <span>Company: {roadmap.company}</span>
+                      </div>
+                    )}
+                    {roadmap.role && (
+                      <div className="flex items-center gap-2">
+                        <svg className="w-4 h-4 text-black" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M12 12c2.21 0 4-1.79 4-4S14.21 4 12 4 8 5.79 8 8s1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                        </svg>
+                        <span>Role: {roadmap.role}</span>
+                      </div>
+                    )}
                     {(roadmap.yearsOfExperience || roadmap.monthsOfExperience) && (
-                      <div>🧭 Experience: {roadmap.yearsOfExperience} yr {roadmap.monthsOfExperience} mo</div>
+                      <div className="flex items-center gap-2">
+                        <svg className="w-4 h-4 text-black" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M12 8V4l8 8-8 8v-4H4V8z" />
+                        </svg>
+                        <span>
+                          Experience: {roadmap.yearsOfExperience || 0} yr {roadmap.monthsOfExperience || 0} mo
+                        </span>
+                      </div>
                     )}
                   </div>
                 </div>

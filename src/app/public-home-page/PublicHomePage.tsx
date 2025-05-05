@@ -245,9 +245,17 @@ export default function PublicHomePage() {
                                         alt={t.name}
                                         className="w-12 h-12 md:w-16 md:h-16 rounded-full mb-3 md:mb-4 object-cover border-2 border-blue-100"
                                     />
+
                                     <p className={`italic mb-3 md:mb-4 ${theme.typography.body} text-sm md:text-base`}>"{t.message}"</p>
                                     <p className={`font-semibold ${theme.typography.subheading} text-sm md:text-base`}>{t.name}</p>
                                     <p className={`${theme.typography.caption}`}>{t.role}</p>
+                                    {t.domain && (
+                                        <div className="mt-2">
+                                            <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium text-black bg-white-500`}>
+                                                {t.domain}
+                                            </span>
+                                        </div>
+                                    )}
                                 </div>
                             ))}
                         </div>
@@ -317,7 +325,7 @@ export default function PublicHomePage() {
                     </div>
 
                     <div className={`mt-8 md:mt-12 text-center ${theme.typography.caption}`}>
-                        <p>Need help choosing? <a href="#" className={`${theme.colors.primary} hover:underline`}>Contact our team</a></p>
+                        <p>Need help choosing? <a href="/contact" className={`${theme.colors.primary} hover:underline`}>Contact our team</a></p>
                         <p className="mt-1 md:mt-2">All plans come with a dedicated support guarantee</p>
                     </div>
                 </div>
