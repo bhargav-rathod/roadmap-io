@@ -1,0 +1,757 @@
+companies:
+  - name: Adidas
+  - name: Adobe
+  - name: Accenture
+  - name: Airbnb
+  - name: Amazon
+  - name: Apple
+  - name: Audi
+  - name: Atlassian
+  - name: Bank of America
+  - name: Barclays
+  - name: BBC
+  - name: Bloomberg
+  - name: Booking.com
+  - name: Bosch
+  - name: Capgemini
+  - name: Cisco
+  - name: Citibank
+  - name: Cognizant
+  - name: Deloitte
+  - name: Deutsche Bank
+  - name: Disney
+  - name: Dropbox
+  - name: eBay
+  - name: Electronic Arts
+  - name: Ericsson
+  - name: EY
+  - name: Facebook
+  - name: Fidelity
+  - name: Ford
+  - name: GE
+  - name: Goldman Sachs
+  - name: Google
+  - name: HCL
+  - name: HP
+  - name: HSBC
+  - name: IBM
+  - name: Infosys
+  - name: Intel
+  - name: JPMorgan Chase
+  - name: KPMG
+  - name: LinkedIn
+  - name: Lyft
+  - name: Mastercard
+  - name: McKinsey
+  - name: Meta
+  - name: Microsoft
+  - name: Morgan Stanley
+  - name: Netflix
+  - name: Nokia
+  - name: Oracle
+  - name: PayPal
+  - name: PwC
+  - name: Qualcomm
+  - name: Salesforce
+  - name: Samsung
+  - name: SAP
+  - name: Siemens
+  - name: Slack
+  - name: Snapchat
+  - name: Spotify
+  - name: Stripe
+  - name: Tata Consultancy Services
+  - name: Tech Mahindra
+  - name: Tesla
+  - name: ThoughtWorks
+  - name: TCS
+  - name: Uber
+  - name: Unisys
+  - name: Verizon
+  - name: Visa
+  - name: VMware
+  - name: Wipro
+  - name: Workday
+  - name: Yahoo
+  - name: Yandex
+  - name: Zalando
+  - name: Zomato
+  - name: Zscaler
+  - name: ZTE
+  - name: Nasdaq
+  - name: Zerodha
+  - name: Boat
+  - name: Byju's
+  - name: CRED
+  - name: Cred
+  - name: Delhivery
+  - name: Dream11
+  - name: Dunzo
+  - name: Flipkart
+  - name: Freshworks
+  - name: Groww
+  - name: Haptik
+  - name: HDFC Bank
+  - name: HSBC
+  - name: IndusInd Bank
+  - name: InMobi
+  - name: Lenskart
+  - name: Meesho
+  - name: Ola
+  - name: Paytm
+  - name: Razorpay
+  - name: RedBus
+  - name: Rivigo
+  - name: Swiggy
+  - name: TCS
+  - name: Turing
+  - name: Udaan
+  - name: UPI
+  - name: Urban Company
+  - name: UrbanClap
+  - name: Vedantu
+  - name: Zomato
+  - name: Agoda
+  - name: Alteryx
+  - name: Mackenzie
+  - name: MakeMyTrip
+  - name: Mindtree
+  - name: Mu Sigma
+  - name: Naukri
+  - name: EdgeVerve
+  - name: IQVIA
+  - name: McKinsey
+  - name: Shopify
+  - name: Flexport
+  - name: FedEx
+  - name: McDonalds
+    type: Non-IT
+  - name: Starbucks
+    type: Non-IT
+  - name: Subway
+    type: Non-IT
+  - name: Dominos
+    type: Non-IT
+  - name: KFC
+    type: Non-IT
+  - name: Pizza Hut
+    type: Non-IT
+  - name: Taco Bell
+    type: Non-IT
+  - name: Dunkin Donuts
+    type: Non-IT
+  - name: Burger King
+    type: Non-IT
+  - name: Wendy's
+    type: Non-IT
+  - name: Chipotle
+    type: Non-IT
+  - name: Papa John's
+    type: Non-IT
+  - name: Baskin Robbins
+    type: Non-IT
+  - name: Baskin Robbins
+    type: Non-IT
+  - name: Dairy Queen
+    type: Non-IT
+  - name: Cold Stone Creamery
+    type: Non-IT
+  - name: Five Guys
+    type: Non-IT
+  - name: Shake Shack
+    type: Non-IT
+  - name: Wingstop
+    type: Non-IT
+  - name: Panera Bread
+    type: Non-IT
+  - name: Jimmy John's
+    type: Non-IT
+  - name: Auntie Anne's
+    type: Non-IT
+  - name: Cinnabon
+    type: Non-IT
+  - name: Jamba Juice
+    type: Non-IT
+  - name: Pret A Manger
+    type: Non-IT
+  - name: Tim Hortons
+    type: Non-IT
+  - name: Peet's Coffee
+    type: Non-IT
+  - name: Caribou Coffee
+    type: Non-IT
+  - name: Dutch Bros Coffee
+    type: Non-IT
+  - name: Einstein Bros Bagels
+    type: Non-IT
+  - name: Corner Bakery Cafe
+    type: Non-IT
+  - name: Caffe Nero
+    type: Non-IT
+  - name: Costa Coffee
+    type: Non-IT
+  - name: Lavazza
+    type: Non-IT
+  - name: Illy
+    type: Non-IT
+  - name: Starbucks Reserve
+    type: Non-IT
+  - name: Blue Bottle Coffee
+    type: Non-IT
+  - name: Stumptown Coffee Roasters
+    type: Non-IT
+  - name: Intelligentsia Coffee
+    type: Non-IT
+  - name: Verve Coffee Roasters
+    type: Non-IT
+  - name: Philz Coffee
+    type: Non-IT
+  - name: Peet's Coffee & Tea
+    type: Non-IT
+  - name: Coffee Bean & Tea Leaf
+    type: Non-IT
+  - name: Tully's Coffee
+    type: Non-IT
+  - name: Seattle's Best Coffee
+    type: Non-IT
+  - name: Caribou Coffee & Tea
+    type: Non-IT
+  - name: Timely Coffee
+    type: Non-IT
+  - name: Coffee Republic
+    type: Non-IT
+  - name: Coffee Culture
+    type: Non-IT
+  - name: Coffee Connection
+    type: Non-IT
+  - name: Coffee Time
+    type: Non-IT
+  - name: Coffee House
+    type: Non-IT
+  - name: Coffee Planet
+    type: Non-IT
+  - name: Coffee Emporium
+    type: Non-IT
+  - name: Coffee Society
+    type: Non-IT
+  - name: Coffee District
+    type: Non-IT
+  - name: Coffee Collective
+    type: Non-IT
+  - name: Coffee Culture Cafe & Eatery
+    type: Non-IT
+  - name: Coffee & Bagel Brands
+    type: Non-IT
+  - name: Coffee & Tea Exchange
+    type: Non-IT
+  - name: Coffee & Spice
+    type: Non-IT
+  - name: Coffee & Co.
+    type: Non-IT
+  - name: Coffee & Co. Cafe, Roasters, Bakery, Roastery, Tea House, Bistro, Deli, Lounge, Restaurant, Bar, Grill, Pub
+    type: Non-IT
+  - name: Freshii
+    type: Non-IT
+  - name: Jamba Juice Company
+    type: Non-IT
+  - name: Smoothie King
+    type: Non-IT
+  - name: Tropical Smoothie Cafe
+    type: Non-IT
+  - name: Robeks Fresh Juices & Smoothies
+    type: Non-IT
+  - name: Juice It Up!
+    type: Non-IT
+  - name: Pressed Juicery
+    type: Non-IT
+  - name: Juice Land, Juice Press, Juice Bar, Juice Generation, Juice Shop, Juice Factory, Juice Kitchen, Juice Lab, Juice Works, Juice Stop, Juice Zone, Juice House, Juice Hut, Juice Station, Juice Express, Juice Bar & Grill, Juice Bar & Cafe
+    type: Non-IT
+  - name: Kombucha
+    type: Non-IT
+  - name: Health-Ade Kombucha
+    type: Non-IT
+  - name: GT's Kombucha
+    type: Non-IT
+  - name: Brew Dr. Kombucha
+    type: Non-IT
+  - name: KeVita
+    type: Non-IT
+  - name: Humm Kombucha
+    type: Non-IT  
+  - name: Applebee's
+    type: Non-IT
+  - name: Olive Garden
+    type: Non-IT
+  - name: Red Lobster
+    type: Non-IT
+  - name: Outback Steakhouse
+    type: Non-IT
+  - name: Chili's Grill & Bar
+    type: Non-IT
+  - name: TGI Fridays
+    type: Non-IT
+  - name: LongHorn Steakhouse
+    type: Non-IT
+  - name: Carrabba's Italian Grill
+    type: Non-IT
+  - name: Bonefish Grill
+    type: Non-IT
+  - name: Maggiano's Little Italy
+    type: Non-IT
+  - name: BJ's Restaurant & Brewhouse
+    type: Non-IT
+  - name: Yard House
+    type: Non-IT
+  - name: Seasons 52
+    type: Non-IT
+  - name: Bahama Breeze
+    type: Non-IT
+  - name: Romano's Macaroni Grill
+    type: Non-IT
+  - name: P.F. Chang's China Bistro
+    type: Non-IT
+  - name: The Cheesecake Factory
+    type: Non-IT
+  - name: Cheesecake Factory Bakery
+    type: Non-IT
+  - name: The Capital Grille
+    type: Non-IT
+  - name: Morton's The Steakhouse
+    type: Non-IT
+  - name: Sullivan's Steakhouse
+
+    type: Non-IT
+  - name: McCormick & Schmick's Seafood & Steaks
+    type: Non-IT
+  - name: The Palm Restaurant
+    type: Non-IT
+  - name: Smith & Wollensky
+    type: Non-IT
+  - name: Ruth's Chris Steak House
+    type: Non-IT
+  - name: Flemings Prime Steakhouse & Wine Bar
+    type: Non-IT
+  - name: Capital Grille
+    type: Non-IT
+  - name: Morton's
+    type: Non-IT
+  - name: Smith & Wollensky Restaurant Group
+    type: Non-IT
+  - name: Smith & Wollensky Restaurant Group, Inc.
+    type: Non-IT  
+  - name: Appolo
+  - name: Siemens Healthcare
+  - name: Detol
+  - name: Philips
+  - name: GE Healthcare
+  - name: Johnson & Johnson
+  - name: Medtronic
+  - name: Abbott Laboratories
+  - name: Boston Scientific
+  - name: Stryker Corporation
+  - name: Becton Dickinson
+  - name: Baxter International
+  - name: Thermo Fisher Scientific
+  - name: Cardinal Health
+  - name: Zimmer Biomet
+  - name: Edwards Lifesciences
+  - name: Hologic
+  - name: Illumina
+  - name: Agilent Technologies
+  - name: PerkinElmer
+  - name: Bio-Rad Laboratories
+  - name: Thermo Fisher Scientific, Inc.
+  - name: Beckman Coulter
+  - name: Sysmex Corporation
+  - name: Roche Diagnostics
+  - name: Siemens Healthineers
+  - name: Abbott Point of Care
+  - name: Ortho Clinical Diagnostics
+  - name: Sysmex
+  - name: Mindray
+  - name: Nihon Kohden
+  - name: Philips Healthcare
+  - name: GE Healthcare Life Sciences
+  - name: Fujifilm
+  - name: Hitachi High-Technologies
+  - name: Olympus Corporation
+  - name: Canon Medical Systems
+  - name: Toshiba Medical Systems
+  - name: Siemens Medical Solutions
+  - name: Agfa HealthCare
+  - name: Carestream Health
+  - name: Konica Minolta Healthcare
+  - name: Samsung Medison
+  - name: Fujifilm Medical Systems
+  - name: Hitachi Medical Corporation
+  - name: Canon Medical Systems
+  - name: Alibaba
+  - name: Baidu
+  - name: Tencent
+  - name: Huawei
+  - name: Xiaomi
+  - name: ZTE
+  - name: Lenovo
+  - name: Meituan
+  - name: JD.com
+  - name: Pinduoduo
+  - name: ByteDance
+  - name: Didi Chuxing
+  - name: Weibo
+  - name: Sina
+  - name: Netease
+  - name: Sohu
+  - name: Qihoo 360
+  - name: Ctrip
+  - name: Youku Tudou
+  - name: iQIYI
+  - name: Kuaishou
+  - name: Douyin
+  - name: Toutiao
+  - name: Xiaohongshu
+  - name: WeChat
+  - name: QQ
+  - name: Weibo
+  - name: Baidu
+  - name: Dell
+  - name: Lenovo
+  - name: HP
+  - name: Acer
+  - name: Asus
+  - name: MSI
+  - name: Razer
+  - name: Gigabyte
+  - name: Alienware
+  - name: Corsair
+  - name: Kingston
+  - name: Crucial
+  - name: SanDisk
+  - name: Seagate
+  - name: Western Digital
+  - name: Toshiba
+  - name: Hitachi
+  - name: Fujitsu
+  - name: NEC
+  - name: Panasonic
+  - name: Sony
+  - name: Sharp
+  - name: Mitsubishi
+  - name: Canon
+  - name: Nikon
+  - name: Olympus
+  - name: Ricoh
+  - name: Casio
+  - name: JVC
+  - name: Fujifilm
+  - name: Konica Minolta
+  - name: Epson
+  - name: Brother
+  - name: Lexmark
+  - name: Xerox
+  - name: Canon
+  - name: Ferrari
+  - name: Lamborghini
+  - name: Maserati
+  - name: Bugatti
+  - name: Aston Martin
+  - name: Bentley
+  - name: Rolls Royce
+  - name: McLaren
+  - name: Pagani
+  - name: Koenigsegg
+  - name: Rimac
+  - name: Pininfarina
+  - name: Lotus
+  - name: Pagani Automobili
+  - name: Koenigsegg Automotive AB
+  - name: Rimac Automobili
+  - name: Pininfarina S.p.A.
+  - name: Lotus Cars
+  - name: Ferrari N.V.
+  - name: Lamborghini S.p.A.
+  - name: Maserati S.p.A.
+  - name: Bugatti Automobiles S.A.S.
+  - name: Aston Martin Lagonda Global Holdings plc
+  - name: Bentley Motors Limited
+  - name: Rolls-Royce Motor Cars Limited
+  - name: McLaren Automotive Limited
+  - name: Tata Motors
+  - name: Mahindra & Mahindra
+  - name: Bajaj Auto
+  - name: Hero MotoCorp
+  - name: TVS Motor Company
+  - name: Royal Enfield
+  - name: Honda Motorcycle & Scooter India
+  - name: Suzuki Motorcycle India
+  - name: Yamaha Motor India
+  - name: Kawasaki Heavy Industries
+  - name: Piaggio Vehicles Pvt. Ltd.
+  - name: KTM Sportmotorcycle AG
+  - name: Bajaj Auto Ltd.
+  - name: Hero MotoCorp Ltd.
+  - name: mercedes-Benz
+  - name: BMW
+  - name: Audi
+  - name: Volkswagen
+  - name: Porsche
+  - name: Land Rover
+  - name: Jaguar
+  - name: Volvo
+  - name: Tesla
+  - name: Rivian
+  - name: Lucid Motors
+  - name: Faraday Future
+  - name: Fisker Inc.
+  - name: Canoo
+  - name: Lordstown Motors
+  - name: Arrival
+  - name: Polestar
+  - name: NIO
+  - name: Xpeng Motors
+  - name: Li Auto
+  - name: BYD Auto
+  - name: Geely
+  - name: Great Wall Motors
+  - name: Changan Automobile
+  - name: SAIC Motor Corporation
+  - name: Dongfeng Motor Corporation
+  - name: FAW Group Corporation
+  - name: Chery Automobile Company
+  - name: BAIC Group
+  - name: GAC Group
+  - name: Haval
+  - name: Wey
+  - name: Ora
+  - name: Tank
+  - name: Great Wall Pickup
+  - name: Great Wall Motors Company Limited
+  - name: Nasa
+  - name: SpaceX
+  - name: Blue Origin
+  - name: Boeing
+  - name: Lockheed Martin
+  - name: Northrop Grumman
+  - name: Raytheon Technologies
+  - name: Airbus
+  - name: Virgin Galactic
+  - name: Rocket Lab
+  - name: Sierra Nevada Corporation
+  - name: Planet Labs
+  - name: OneWeb
+  - name: Iridium Communications
+  - name: SES S.A.
+  - name: Intelsat
+  - name: Eutelsat
+  - name: Inmarsat
+  - name: Hughes Network Systems
+  - name: Viasat
+  - name: SES Networks
+  - name: Telesat
+  - name: Hispasat
+  - name: Arabsat
+  - name: Eutelsat Communications
+  - name: Intelsat General Corporation
+  - name: SES
+  - name: ISRO
+  - name: CNSA
+  - name: JAXA
+  - name: ESA
+  - name: Roscosmos
+  - name: Colors TV
+  - name: Sony TV
+  - name: Star Plus
+  - name: Zee TV
+  - name: Colors Infinity
+  - name: HBO
+  - name: Star World
+  - name: Disney Channel
+  - name: EPIX
+  - name: Starz
+  - name: Showtime
+  - name: AMC
+  - name: FX
+  - name: BBC America
+  - name: BBC
+  - name: ITV
+  - name: MTV
+  - name: VH1
+  - name: Comedy Central
+  - name: Nickelodeon
+  - name: Cartoon Network
+  - name: Sonic
+  - name: National Geographic
+  - name: Nat Geo Wild
+  - name: Animal Planet
+  - name: Discovery Channel
+  - name: TLC
+  - name: HGTV
+  - name: Food Network
+  - name: Travel Channel
+  - name: DIY Network
+  - name: Cooking Channel
+  - name: Oprah Winfrey Network
+  - name: OWN
+  - name: Hallmark Channel
+  - name: Hallmark Movies & Mysteries
+  - name: ABP News
+  - name: Aaj Tak
+  - name: India TV
+  - name: Zee News
+  - name: Republic TV
+  - name: Times Now
+  - name: NDTV
+  - name: CNN News18
+  - name: India Today
+  - name: News18
+  - name: WION
+  - name: Firstpost
+  - name: The Quint
+  - name: The Wire
+  - name: Scroll.in
+  - name: The Print
+  - name: The News Minute
+  - name: The Week
+  - name: The Hindu
+  - name: The Indian Express
+  - name: Hindustan Times
+  - name: The Times of India
+  - name: The Economic Times
+  - name: The Financial Express
+  - name: The Business Standard
+  - name: The Financial Times
+  - name: The Wall Street Journal
+  - name: The New York Times
+  - name: The Washington Post
+  - name: The Guardian
+  - name: The Independent
+  - name: The Telegraph
+  - name: The Sun
+  - name: The Daily Mail
+  - name: The Mirror
+  - name: The Express
+  - name: The Star
+  - name: The Globe and Mail
+  - name: The Toronto Star
+  - name: The National Post
+  - name: The Vancouver Sun
+  - name: The Calgary Herald
+  - name: The Edmonton Journal
+  - name: The Ottawa Citizen
+  - name: The Montreal Gazette
+  - name: The Winnipeg Free Press
+  - name: The Halifax Chronicle-Herald
+  - name: The St. John's Telegram
+  - name: The Regina Leader-Post
+  - name: The Saskatoon StarPhoenix
+  - name: The Victoria Times Colonist
+  - name: The London Free Press
+  - name: The Windsor Star
+  - name: The Kingston Whig-Standard
+  - name: The Sudbury Star
+  - name: The Peterborough Examiner
+  - name: The Kitchener-Waterloo Record
+  - name: The Guelph Mercury
+  - name: The Cambridge Times
+  - name: The Brantford Expositor
+  - name: The Barrie Examiner
+
+  - name: The Orillia Packet & Times
+  - name: The Owen Sound Sun Times
+  - name: The Collingwood Enterprise-Bulletin
+  - name: The Midland Free Press
+  - name: The Alliston Herald
+  - name: The New Tecumseth Free Press
+  - name: The Bradford West Gwillimbury Topic
+  - name: The Innisfil Journal
+  - name: The Georgina Advocate
+  - name: The East Gwillimbury Express
+  - name: The King Weekly Sentinel
+  - name: The Vaughan Citizen
+  - name: The Richmond Hill
+  - name: The Markham Economist & Sun
+  - name: The Stouffville Sun-Tribune
+  - name: The Aurora Banner
+  - name: The Newmarket Era-Banner
+  - name: The East York Mirror
+  - name: The North York Mirror
+  - name: The Scarborough Mirror
+  - name: The York Region
+  - name: The Toronto Star
+  - name: The Globe and Mail
+  - name: The National Post
+  - name: The Financial Post
+  - name: The Toronto Sun
+  - name: The Ottawa Sun
+  - name: The Calgary Sun
+  - name: The Edmonton Sun
+  - name: The Winnipeg Sun
+  - name: The London Free Press
+  - name: The Kingston Whig-Standard
+  - name: OpenAI
+  - name: Deepseek
+  - name: Preplexity
+  - name: Claude
+  - name: ChatSonic
+  - name: Jasper
+  - name: Roadmap.IO
+  - name: Udemy
+  - name: Coursera
+  - name: edX
+  - name: Khan Academy
+  - name: Udacity
+  - name: Skillshare
+  - name: Pluralsight
+  - name: LinkedIn Learning
+  - name: Codecademy
+  - name: DataCamp
+  - name: Treehouse
+  - name: FutureLearn
+  - name: Alison
+  - name: Skillshare
+  - name: MasterClass
+  - name: Hotstar
+  - name: Netflix
+  - name: Amazon Prime Video
+  - name: Hulu
+  - name: Disney+
+  - name: HBO Max
+  - name: Apple TV+
+  - name: Peacock
+  - name: Paramount+
+  - name: YouTube Premium
+  - name: Sling TV
+  - name: FuboTV
+  - name: Philo
+  - name: YouTube TV
+  - name: Roku Channel
+  - name: Pluto TV
+  - name: Tubi
+  - name: Crackle
+  - name: IMDb TV
+  - name: Vudu
+  - name: Popcornflix
+  - name: Kanopy
+  - name: Hoopla
+  - name: Plex
+  - name: Xumo
+  - name: IMDb TV
+  - name: Sony Crackle
+
+  - name: Jio
+  - name: Airtel
+  - name: Vodafone
+  - name: Idea
+  - name: BSNL
+  - name: Reliance Communications
+  - name: Tata Teleservices
+  - name: Aircel
+  - name: MTS
+  - name: Uninor
+  - name: Videocon
+  - name: MTNL
+  - name: BSNL
+  - name: Airtel
+  - name: Reliance
+
+  - name: Other
+    type: Both

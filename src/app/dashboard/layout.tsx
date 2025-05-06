@@ -87,16 +87,9 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
 
   // Fetch roadmap title when on a roadmap page
   useEffect(() => {
-    const query = new URLSearchParams(window.location.search);
-    if (query.get('payment') === 'success') {
-      // You might want to show a success message here
-      console.log('Payment successful!');
-      // Refresh user data to show updated credits
-    }
     const fetchRoadmapTitle = async () => {
       const paths = pathname.split('/').filter(path => path);
       const isRoadmapPage = paths.length >= 2;
-      console.log('Paths:', paths, 'Is Roadmap Page:', isRoadmapPage);
       if (isRoadmapPage) {
         const roadmapId = paths[paths.indexOf('roadmaps') + 2];
         try {

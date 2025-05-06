@@ -10,57 +10,14 @@ users:
     password: User@123
     user_role: User
     credits: 10
-
-companies:
-  - name: Google
-    type: Both
-  - name: Microsoft
-    type: Both
-  - name: Amazon
-    type: Both
-  - name: Netflix
-    type: Both
-  - name: Meta
-    type: Both
-  - name: Apple
-    type: Both
-  - name: Infosys
-    type: Both
-  - name: Tata Consultancy Services 
-    type: Both
-  - name: Cognizant
-    type: Both
-  - name: Capgemini
-    type: Both
-  - name: Nasdaq
-    type: Both
-  - name: EdgeVerve
-    type: Both
-  - name: IQVIA
-    type: IT
-  - name: McKinsey
-    type: Both
-  - name: Goldman Sachs
-    type: Both
-  - name: Adobe
-    type: Both
-  - name: Flipkart
-    type: Both
-  - name: Shopify
-    type: Both
-  - name: Flexport
-    type: Both
-  - name: FedEx
-    type: Both
-  - name: Other
-    type: Both
-
 roles:
   - name: Software Engineer
     type: IT
   - name: Senior Software Engineer
     type: IT
   - name: Staff Software Engineer
+    type: IT
+  - name: SDE Intern
     type: IT
   - name: SDE
     type: IT
@@ -201,21 +158,13 @@ roles:
   - name: Senior Data Engineer
     type: IT
   - name: Product Manager
-    type: Both
   - name: Senior Product Manager
-    type: Both
   - name: Associate Director
-    type: Both
   - name: Associate Vice President
-    type: Both
   - name: Director
-    type: Both
   - name: Senior Director
-    type: Both
   - name: President
-    type: Both
   - name: Support Engineer
-    type: Both
   - name: Senior Support Scientist
     type: IT
   - name: L1 Support Engineer
@@ -227,15 +176,11 @@ roles:
   - name: L4 Support Engineer
     type: IT
   - name: Consultant
-    type: Both
   - name: Senior Consultant
-    type: Both
   - name: Management Consultant
-    type: Both
   - name: Investment Banker
     type: Non-IT
   - name: Technical Recruiter
-    type: Both
   - name: Non IT Recruiter 
     type: Non-IT
   - name: Human Resource Management
@@ -250,18 +195,15 @@ roles:
     type: Non-IT
   - name: Talent Acquisition
     type: Non-IT
+  - name: Intern
   - name: Process Analyst
-    type: Both
   - name: Senior Process Analyst
-    type: Both
   - name: Payroll Associate
     type: Non-IT
   - name: Senior Payroll Associate
     type: Non-IT
   - name: Associate
-    type: Both
   - name: Senior Associate
-    type: Both
   - name: Gym Trainer
     type: Non-IT
   - name: Gym Coach 
@@ -281,7 +223,6 @@ roles:
   - name: State Government Officer
     type: Non-IT 
   - name: Other
-    type: Both
 
 programmingLanguages:
   - name: JavaScript
