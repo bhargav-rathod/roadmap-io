@@ -100,3 +100,102 @@ mydb2=# SELECT * FROM "rm"."User";
 
 mydb2=# UPDATE "rm"."User" SET "credits" = 1;
 UPDATE 1
+
+
+## Payment Integration
+
+npx ts-node scripts/initializePaymentPlans.ts
+
+
+Use an Indian test card:
+
+4000 0035 6000 0008 (Successful payment)
+
+4000 0000 0000 0069 (Expired card)
+
+Implementation Steps
+Set up Stripe Account:
+
+  - Create a Stripe account at https://stripe.com
+
+  - Get your API keys from the Stripe Dashboard
+
+Configure Environment Variables:
+
+  - Add the Stripe keys to your .env.local file
+
+Initialize Payment Plans:
+
+  - Run the initialization script: npx ts-node scripts/initializePaymentPlans.ts
+
+Set up Stripe Webhook:
+
+  - In Stripe Dashboard, go to Developers → Webhooks
+
+  - Add a new endpoint with your production URL (or use Stripe CLI for local testing)
+
+  - Set the endpoint to https://yourdomain.com/api/webhook
+
+  - Select these events: checkout.session.completed | checkout.session.async_payment_failed
+
+Test the Integration:
+
+Use Stripe test cards (like 4242 4242 4242 4242) for testing
+
+Test successful and failed payment scenarios
+
+Testing Instructions
+
+  - Local Testing with Stripe CLI:
+
+  - Install Stripe CLI: https://stripe.com/docs/stripe-cli
+
+  - Run: stripe listen --forward-to localhost:3000/api/webhook
+
+  - This will give you a webhook signing secret to use in your .env.local
+
+  - Test Payment Flow:
+
+  - Click on the credits button in the dashboard
+
+  - Select a plan and click "Pay"
+
+    - Use test card 4242 4242 4242 4242 with any future expiry and CVC
+
+    - Verify the transaction appears in history after completion
+
+    - Verify credits are added to your account
+
+Test Webhooks:
+
+  - Check the Stripe CLI logs for webhook events
+
+  - Verify the database updates correctly for both success and failure cases
+
+Troubleshooting
+
+Payments not completing:
+
+  -  Check browser console for errors
+
+  - Verify Stripe keys are correct in environment variables
+
+  - Ensure NEXT_PUBLIC_BASE_URL is set correctly
+
+Webhooks not working:
+
+  - Verify the webhook secret matches what Stripe provides
+
+  - Check your server logs for errors
+
+  - Test with Stripe CLI locally first
+
+Credits not updating:
+
+  - Verify the session update is working in the webhook
+
+  - Check the user record in the database directly
+
+  - Ensure you're calling update() after payment success
+
+This complete implementation should give you a fully functional payment system with credit purchases, transaction history, and proper error handling.

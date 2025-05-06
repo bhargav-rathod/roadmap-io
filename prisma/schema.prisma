@@ -8,24 +8,26 @@ datasource db {
 }
 
 model User {
-  id                       String    @id @default(cuid())
+  id                       String        @id @default(cuid())
   name                     String?
-  email                    String    @unique
+  email                    String        @unique
   emailVerified            DateTime?
   password                 String?
   image                    String?
-  user_role                String    @default("USER")
-  credits                  Int       @default(10)
+  user_role                String        @default("USER")
+  credits                  Int           @default(10)
   accounts                 Account[]
   sessions                 Session[]
   roadmaps                 Roadmap[]
-  verified                 Boolean   @default(false)
+  verified                 Boolean       @default(false)
   verificationToken        String?
   verificationTokenExpires DateTime?
-  createdAt                DateTime  @default(now())
-  updatedAt                DateTime  @updatedAt
-  sessionToken             String?   @unique
+  createdAt                DateTime      @default(now())
+  updatedAt                DateTime      @updatedAt
+  sessionToken             String?       @unique
   lastActive               DateTime?
+  Transaction              Transaction[]
+  address                  Json?         @default("{}")
 }
 
 model Account {
@@ -105,4 +107,34 @@ model Roadmap {
   countryRef              Country?  @relation(fields: [country], references: [name])
   companyId               String?
   roleId                  String?
+}
+
+model PaymentPlan {
+  id          String        @id @default(cuid())
+  name        String
+  price       Int
+  credits     Int
+  description String?
+  active      Boolean       @default(true)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  Transaction Transaction[]
+}
+
+model Transaction {
+  id              String       @id @default(cuid())
+  userId          String
+  user            User         @relation(fields: [userId], references: [id])
+  amount          Int
+  currency        String       @default("INR")
+  credits         Int
+  status          String // 'pending', 'completed', 'failed', 'refunded'
+  paymentMethod   String? // 'card', 'upi', etc.
+  transactionId   String? // Stripe transaction ID
+  stripeSessionId String?
+  paymentPlanId   String?
+  paymentPlan     PaymentPlan? @relation(fields: [paymentPlanId], references: [id])
+  metadata        Json?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
 }
