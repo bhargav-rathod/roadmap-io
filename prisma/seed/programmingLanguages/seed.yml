@@ -1,0 +1,21 @@
+programmingLanguages:
+  - name: JavaScript
+    type: IT
+  - name: Python
+    type: IT
+  - name: Java
+    type: IT
+  - name: C++
+    type: IT
+  - name: C#
+    type: IT
+  - name: C
+    type: IT
+  - name: Go
+    type: IT
+  - name: F#
+    type: IT
+  - name: Ruby
+    type: IT
+  - name: PHP
+    type: IT

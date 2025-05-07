@@ -2,48 +2,94 @@
 import { PrismaClient } from '@prisma/client';
 import * as fs from 'fs';
 import * as yaml from 'js-yaml';
+import bcrypt from 'bcryptjs';
 
 const prisma = new PrismaClient();
 
 async function main() {
   // Load YAML data
-  const data = yaml.load(fs.readFileSync('prisma/seed.yml', 'utf8')) as any;
-  const companiesData = yaml.load(fs.readFileSync('prisma/companies.yml', 'utf8')) as any;
+  console.log('Data loading...');
   
+  const companiesData = yaml.load(fs.readFileSync('prisma/seed/companies/seed.yml', 'utf8')) as any;
+  console.log('Companies Data Loaded');
+  
+  const userData = yaml.load(fs.readFileSync('prisma/seed/users/seed.yml', 'utf8')) as any;
+  console.log('Users Data Loaded');
+  
+  const rolesData = yaml.load(fs.readFileSync('prisma/seed/roles/seed.yml', 'utf8')) as any;
+  console.log('Roles Data Loaded');
+  
+  const programmingLanguagesData = yaml.load(fs.readFileSync('prisma/seed/programmingLanguages/seed.yml', 'utf8')) as any;
+  console.log('Programming Languages Data Loaded');
+  
+  const countriesData = yaml.load(fs.readFileSync('prisma/seed/countries/seed.yml', 'utf8')) as any;
+  console.log('Countries Data Loaded');
+  
+  console.log('All data loaded. Seeding data...');
+
+  // seed initial users
+  console.log('Seeding users...');
+  await prisma.user.createMany({
+    data: userData.users.map((user: any) => ({
+      email: user.email.toLowerCase(),
+      name: user.name,
+      password: user.password ? bcrypt.hashSync(user.password, 12) : null,
+      verified: user.verified || false,
+      credits: user.credits || 0,
+      user_role: user.user_role || 'USER',
+      sessionToken: user.sessionToken || null,
+      lastActive: new Date(user.lastActive || Date.now()),
+    })),
+    skipDuplicates: true,
+  });
+  console.log('Users seeded successfully.');
+
   // Seed companies
+  console.log('Seeding companies...');
   await prisma.company.createMany({
-    data: companiesData.companies.map((company: { name: string; type: 'IT' | 'Non-IT' | 'Both' | undefined | null; })=> ({
+    data: companiesData.companies.map((company: any)=> ({
       name: company.name,
       type: company.type || 'Both', // Default to 'Both' if type not specified
     })),
     skipDuplicates: true,
   });
+  console.log('Companies seeded successfully.');
 
   // Seed roles
+  console.log('Seeding roles...');
   await prisma.role.createMany({
-    data: data.companies.map((role: { name: string; type: 'IT' | 'Non-IT' | 'Both' | undefined | null; })=> ({
+    data: rolesData.roles.map((role: any)=> ({
       name: role.name,
       type: role.type || 'Both', // Default to 'Both' if type not specified
     })),
     skipDuplicates: true,
   });
+  console.log('Roles seeded successfully.');
 
   // Seed programming languages
+  console.log('Seeding programming languages...');
   await prisma.programmingLanguage.createMany({
-    data: data.programmingLanguages,
+    data: programmingLanguagesData.programmingLanguages,
     skipDuplicates: true,
   });
+  console.log('Programming languages seeded successfully.');
 
+  // Seed countries
+  console.log('Seeding countries...');
   await prisma.country.createMany({
-    data: data.countries.map((name: string) => ({ name })),
+    data: countriesData.countries.map((name: string) => ({ name })),
     skipDuplicates: true,
   });
+  console.log('Countries seeded successfully.');
+
 }
 
 main()
   .catch(e => {
+    console.error('Error occurred while seeding data ::', e);
     process.exit(1);
   })
   .finally(async () => {
     await prisma.$disconnect();
+    console.log('All data seeded successfully.');
   });

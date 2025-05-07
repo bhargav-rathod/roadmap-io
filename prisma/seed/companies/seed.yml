@@ -595,14 +595,23 @@ companies:
   - name: Hallmark Movies & Mysteries
   - name: ABP News
   - name: Aaj Tak
+    type: Non-IT
   - name: India TV
+    type: Non-IT
   - name: Zee News
+    type: Non-IT
   - name: Republic TV
+    type: Non-IT
   - name: Times Now
+    type: Non-IT
   - name: NDTV
+    type: Non-IT
   - name: CNN News18
+    type: Non-IT
   - name: India Today
+    type: Non-IT
   - name: News18
+    type: Non-IT
   - name: WION
   - name: Firstpost
   - name: The Quint
