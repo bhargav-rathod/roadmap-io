@@ -2,7 +2,7 @@ export const COMPANY_NAME = "My-Roadmap.io";
 export const COMPANY_SUPPORT_EMAIL = "support@roadmap.io";
 
 export const COMPANY_SLOGAN = 
-    "Personalized interview preparation roadmaps - Most trusted and efficient!";
+    "Your personalized preparation roadmaps for your dream company in just few minutes Most trusted, accurate & efficient!";
 
 export const GET_STARTED_BUTTON_TEXT = "Get Started - Click Here to Explore";
 
@@ -29,6 +29,12 @@ export const CREATE_ROADMAP_COMPANY_TOOLTIP =
 
 export const CREATE_ROADMAP_ROLE_TOOLTIP = 
   "If your preferred role isn't listed, no worries! we have got you covered - Just select 'Other' and enter the exact designation or role title.";
+
+export const CREATE_ROADMAP_COUNTRY_TOOLTIP =
+  "The country where you're applying for the position. This field is completely optional—if location isn’t a limiting factor for you, feel free to leave it blank.";  
+
+export const CREATE_ROADMAP_PROGRAMMING_LANGAGE_TOOLTOP =
+  "If your role doesn't require any programming language skills or if you're unsure or yet to decide, you may leave this field empty or select 'Not Applicable'.";
 
 export const CREATE_ROADMAP_EXTRA_DETAILS_LABEL = 
   "Would you like to add any additional information for your roadmap? This can include job requirements, keywords, a job description, or anything specific you want covered.";

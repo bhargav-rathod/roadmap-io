@@ -5,42 +5,59 @@ export const pricingTitleSuffix = "Pricing";
 export const pricingDescription = "Choose the plan that fits your preparation needs";
 
 export const pricingPlans = [
-    {
-      name: "Starter",
-      price: "₹ 350",
-      description: "Perfect for trying out one company",
-      features: [
-        "1 Roadmap",
-        "Basic resources",
-        "15-day access"
-      ],
-      cta: "Get Started"
-    },
-    {
-      name: "Popular",
-      price: "₹ 1000",
-      description: "Best for focused preparation",
-      features: [
-        "5 Roadmaps",
-        "Priority resources",
-        "30-day access",
-        "Basic interview tips"
-      ],
-      cta: "Most Popular",
-      popular: true
-    },
-    {
-      name: "Professional",
-      price: "₹ 7000",
-      description: "For serious job seekers",
-      features: [
-        "50 Roadmaps",
-        "Premium resources",
-        "1-year access",
-        "Advanced interview strategies",
-        "Advanced Support",
-        "Basic and advanced interview tips"
-      ],
-      cta: "Get Premium"
-    }
-  ];
+  {
+    name: "Starter",
+    price: "₹ 350",
+    description: "Ideal for exploring one company",
+    features: [
+      "1 Roadmap",
+      "Access to advanced preparation resources",
+      "Accurate data tailored to your target company",
+      "Latest interview patterns",
+      "Recently asked interview questions",
+      "Insights into recent compensation trends",
+      "Suggestions for similar roles at other companies",
+      "1-year access to generated roadmap",
+      "Dedicated support"
+    ],
+    cta: "Get Started"
+  },
+  {
+    name: "Popular",
+    price: "₹ 1000",
+    description: "Perfect for focused interview preparation",
+    features: [
+      "5 Roadmaps",
+      "Access to advanced preparation resources",
+      "Accurate data tailored to your target companies",
+      "Latest interview patterns",
+      "Recently asked interview questions",
+      "Insights into recent compensation trends",
+      "Suggestions for similar roles at other companies",
+      "1-year access to generated roadmaps",
+      "Priority support",
+      "20% discount"
+    ],
+    cta: "Most Popular",
+    popular: true
+  },
+  {
+    name: "Professional",
+    price: "₹ 7000",
+    description: "Designed for dedicated job seekers",
+    features: [
+      "50 Roadmaps",
+      "Premium and advanced preparation resources",
+      "Aaccurate data for your target companies",
+      "Latest interview patterns",
+      "Recently asked interview questions",
+      "Insights into recent compensation trends",
+      "Suggestions for similar roles at other companies",
+      "1-year access to generated roadmaps",
+      "Advanced and dedicated support",
+      "Exclusive interview tips and strategies",
+      "30% discount"
+    ],
+    cta: "Get Premium"
+  }
+];

@@ -489,7 +489,7 @@ companies:
   - name: KTM Sportmotorcycle AG
   - name: Bajaj Auto Ltd.
   - name: Hero MotoCorp Ltd.
-  - name: mercedes-Benz
+  - name: Mercedes-Benz
   - name: BMW
   - name: Audi
   - name: Volkswagen
@@ -594,6 +594,7 @@ companies:
   - name: Hallmark Channel
   - name: Hallmark Movies & Mysteries
   - name: ABP News
+    type: Non-IT
   - name: Aaj Tak
     type: Non-IT
   - name: India TV
@@ -761,6 +762,194 @@ companies:
   - name: BSNL
   - name: Airtel
   - name: Reliance
+
+  - name: Hike
+  - name: WeChat
+  - name: WhatsApp
+  - name: Telegram
+  - name: Signal
+  - name: Viber
+  - name: Line
+  - name: KakaoTalk
+  - name: Weibo
+  - name: QQ
+  - name: Baidu Tieba
+  - name: Douyin
+  - name: Xiaohongshu
+  - name: ShareChat
+  - name: Koo
+  - name: Chingari
+  - name: Moj
+  - name: Roposo
+  - name: Tiki
+  - name: Josh
+  - name: MX TakaTak
+  - name: Zili
+  - name: Snack Video
+  - name: TikTok
+  - name: Triller
+  - name: Dubsmash
+  - name: Byte
+  - name: Vigo Video
+  - name: Funimate
+  - name: Lomotif
+  - name: Cheez
+  - name: Kwai
+  - name: Likee
+  - name: Bigo Live
+  - name: Tango
+  - name: Helo
+  - name: Pratilipi
+
+  - name: Tiger Analytics
+  - name: Mu Sigma
+  - name: Fractal Analytics
+  - name: LatentView Analytics
+
+  - name: ZS Associates
+  - name: Cognizant
+  - name: WNS Global Services
+  - name: Genpact
+  - name: EXL Service
+  - name: Infosys BPM
+  - name: TCS BPS
+  - name: Saviom
+
+  - name: Phinolex
+    type: Non-IT
+  - name: Finolex
+    type: Non-IT
+  - name: Tata Power
+    type: Non-IT
+  - name: Adani Power
+    type: Non-IT
+  - name: NTPC
+    type: Non-IT
+  - name: Reliance Power
+    type: Non-IT
+  - name: JSW Energy
+    type: Non-IT
+  - name: GMR Energy
+    type: Non-IT
+  - name: Torrent Power
+    type: Non-IT
+  - name: CESC
+    type: Non-IT
+  - name: Hindustan Zinc
+    type: Non-IT
+  - name: Hindalco Industries
+    type: Non-IT
+  - name: Vedanta
+    type: Non-IT
+  - name: Tata Steel
+    type: Non-IT
+  - name: JSW Steel
+    type: Non-IT
+  - name: Steel Authority of India
+    type: Non-IT
+  - name: Jindal Steel and Power
+    type: Non-IT
+  - name: Essar Steel
+    type: Non-IT
+  - name: Bhushan Steel
+    type: Non-IT
+  - name: Rashtriya Ispat Nigam
+    type: Non-IT
+  - name: Steel Authority of India Limited
+    type: Non-IT  
+
+  - name: Lakme
+  - name: L'Oreal
+  - name: Maybelline
+  - name: Revlon
+  - name: MAC Cosmetics
+  - name: Clinique
+  - name: Estée Lauder
+  - name: Bobbi Brown
+  - name: Smashbox
+  - name: NARS
+  - name: Urban Decay
+  - name: Too Faced
+  - name: Tarte Cosmetics
+  - name: Benefit Cosmetics
+  - name: Fenty Beauty
+  - name: Huda Beauty
+  - name: Kylie Cosmetics
+  - name: ColourPop Cosmetics
+  - name: Jeffree Star Cosmetics
+  - name: Morphe
+  - name: BH Cosmetics
+  - name: e.l.f. Cosmetics
+  - name: NYX Cosmetics
+  - name: Milani Cosmetics
+  - name: Wet n Wild
+  - name: Physicians Formula
+  - name: CoverGirl
+  - name: L'Oreal Paris
+  - name: Maybelline New York
+  - name: Revlon ColorStay
+  - name: Almay
+  - name: Neutrogena
+  - name: Aveeno
+  - name: Cetaphil
+  - name: CeraVe
+  - name: La Roche-Posay
+  - name: Vichy
+  - name: Bioderma
+  - name: Eucerin
+  - name: Avene
+  - name: Kiehl's
+  - name: Origins
+  - name: Clinique
+  - name: Estée Lauder Companies
+  - name: Coty Inc.
+  - name: Revlon Inc.
+  - name: Procter & Gamble
+  - name: Unilever
+  - name: Johnson & Johnson
+  - name: Colgate-Palmolive
+  - name: Henkel
+  - name: Beiersdorf
+  - name: Shiseido
+  - name: Kao Corporation
+  - name: Amway
+  - name: Herbalife
+  - name: Avon Products
+  - name: Mary Kay
+  - name: Tupperware Brands
+  - name: Nu Skin Enterprises
+  - name: Rodan + Fields
+  - name: Arbonne International
+  - name: Beautycounter
+  - name: It Works! Global
+  - name: Younique
+  - name: Jamberry
+  - name: Scentsy
+  - name: Pampered Chef
+  - name: Thirty-One Gifts
+  - name: Origami Owl
+  - name: LuLaRoe
+  - name: Stella & Dot
+  - name: Color Street
+  - name: Paparazzi Accessories
+  - name: Poshmark
+  - name: Mercari
+  - name: Depop
+  - name: Vinted
+  - name: Grailed
+  - name: Poshmark
+  - name: ThredUp
+  - name: Tradesy
+  - name: The RealReal
+  - name: Vestiaire Collective
+  - name: Rebag
+  - name: Fashionphile
+  - name: StockX
+  - name: GOAT
+  - name: Grailed
+  - name: Stadium Goods
+  - name: Flight Club
+
 
   - name: Other
     type: Both

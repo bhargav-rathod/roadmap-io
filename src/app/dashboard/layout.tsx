@@ -13,7 +13,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { paymentPlans } from '../data/paymentConfig';
 import toast, { Toaster } from 'react-hot-toast';
-import { loadStripe } from '@stripe/stripe-js';
 
 function LayoutContent({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -49,18 +48,34 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
         throw new Error(await response.text());
       }
 
-      const { id } = await response.json();
-      const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
-      
-      if (!stripe) {
-        throw new Error('Stripe failed to initialize');
-      }
+      const options = await response.json();
+      console.log(`options: ` + JSON.stringify(options));
 
-      const { error } = await stripe.redirectToCheckout({ sessionId: id });
-      
-      if (error) {
-        throw error;
-      }
+      // Load Razorpay script dynamically
+      const script = document.createElement('script');
+      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      script.async = true;
+      script.onload = () => {
+        const rzp = new (window as any).Razorpay({
+          ...options,
+          order_id: options.orderId,
+          handler: async function(response: any) {
+            // This will be handled by webhook, but we can show success message
+            toast.success('Payment successful! Credits will be added shortly.');
+            update();
+            setShowPaymentModal(false);
+          },
+          modal: {
+            ondismiss: function() {
+              toast.error('Payment was canceled.');
+              setShowPaymentModal(false);
+            }
+          }
+        });
+        rzp.open();
+      };
+      document.body.appendChild(script);
+
     } catch (error: any) {
       console.error('Payment error:', error);
       toast.error(error.message || 'Payment failed. Please try again.');
@@ -68,6 +83,7 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
       setShowLoader(false);
     }
   };
+
 
   // Check for successful payments
   useEffect(() => {

@@ -1,4 +1,6 @@
 programmingLanguages:
+  - name: Not Applicable
+    type: IT
   - name: JavaScript
     type: IT
   - name: Python
@@ -18,4 +20,130 @@ programmingLanguages:
   - name: Ruby
     type: IT
   - name: PHP
+    type: IT
+  - name: TypeScript
+    type: IT
+  - name: Swift
+    type: IT
+  - name: Kotlin
+    type: IT
+  - name: Dart
+    type: IT
+  - name: R
+    type: IT
+  - name: Rust
+    type: IT
+  - name: Scala
+    type: IT
+  - name: Elixir
+    type: IT
+  - name: Erlang
+    type: IT
+  - name: Haskell
+    type: IT
+  - name: Julia
+    type: IT
+  - name: Groovy
+    type: IT
+  - name: Objective-C
+    type: IT
+  - name: Assembly
+    type: IT
+  - name: Shell
+    type: IT
+  - name: HTML
+    type: IT
+  - name: CSS
+    type: IT
+  - name: SQL
+    type: IT
+  - name: Bash
+    type: IT
+  - name: MATLAB
+    type: IT
+  - name: Visual Basic
+    type: IT
+  - name: COBOL
+    type: IT
+  - name: Fortran
+    type: IT
+  - name: Lisp
+    type: IT
+  - name: Prolog
+    type: IT
+  - name: Ada
+    type: IT
+  - name: Pascal
+    type: IT
+  - name: Tcl
+    type: IT
+  - name: Smalltalk
+    type: IT
+  - name: Crystal
+    type: IT
+  - name: Nim
+    type: IT
+  - name: OCaml
+    type: IT
+  - name: Apex
+    type: IT
+  - name: ABAP
+    type: IT
+  - name: ActionScript
+    type: IT
+  - name: ColdFusion
+    type: IT
+  - name: Dart
+    type: IT
+  - name: VHDL
+    type: IT
+  - name: Verilog
+    type: IT
+  - name: XSLT
+    type: IT
+  - name: QML 
+    type: IT
+  - name: Solidity
+    type: IT
+  - name: Elm
+    type: IT
+  - name: Crystal
+    type: IT
+  - name: Forth 
+    type: IT
+  - name: D
+    type: IT
+  - name: Racket
+    type: IT
+  - name: Scheme
+    type: IT
+  - name: PureScript
+    type: IT
+  - name: Clojure
+    type: IT
+  - name: ClojureScript
+    type: IT
+  - name: Pony  
+    type: IT    
+  - name: Nim
+    type: IT
+  - name: ReasonML
+    type: IT
+  - name: Hack
+    type: IT
+  - name: Pony
+    type: IT  
+  - name: Crystal
+    type: IT
+  - name: Idris
+    type: IT
+  - name: Agda
+    type: IT
+  - name: Mercury
+    type: IT
+  - name: Xojo
+    type: IT
+  - name: LiveCode
+    type: IT
+  - name: AutoIt
     type: IT

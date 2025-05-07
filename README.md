@@ -33,6 +33,7 @@ npx prisma migrate dev --name init
 npx prisma db seed
 npx ts-node prisma/seed.ts
 
+-- npx tsx src/scripts/initializePaymentPlans.ts
 # cloud providers (Third party logins)
 
 To set up the social providers, you'll need to create developer accounts with each platform and get the required client IDs and secrets. Each platform has slightly different setup processes:
@@ -101,8 +102,7 @@ mydb2=# SELECT * FROM "rm"."User";
 mydb2=# UPDATE "rm"."User" SET "credits" = 1;
 UPDATE 1
 
-
-## Payment Integration
+## Payment Integration - Stripe
 
 npx ts-node scripts/initializePaymentPlans.ts
 
@@ -199,3 +199,32 @@ Credits not updating:
   - Ensure you're calling update() after payment success
 
 This complete implementation should give you a fully functional payment system with credit purchases, transaction history, and proper error handling.
+
+## Payment Integration - Razor Pay
+
+Set up Razorpay Account:
+
+  - Create a Razorpay account at https://razorpay.com/
+
+  - Get your API keys from the dashboard
+
+  - Set up webhooks in the Razorpay dashboard (point to your /api/webhook endpoint)
+
+Test in Development:
+
+  - Use Razorpay test mode (test API keys)
+
+  - Test cards:
+
+      - Success: 4111 1111 1111 1111
+
+      - Failure: 4111 1111 1111 1112
+
+  - Test UPI ID: success@razorpay
+
+ ### RazorPay Local Testing For Windows
+
+ - Download ngrok for windows
+ - Fire command http 3000 --log=stdout
+ - Copy the response URI from above command and add that URI into Razorpay dashboard with appended '/api/webhook'
+ - With Logs: ngrok http 3000 --log=stdout

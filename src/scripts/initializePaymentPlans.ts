@@ -1,3 +1,5 @@
+// scrips/initializePaymentPlans.ts
+
 import { initializePaymentPlans } from '@/app/data/paymentConfig';
 import prisma from '../lib/prisma';
 

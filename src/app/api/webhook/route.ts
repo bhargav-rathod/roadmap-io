@@ -1,79 +1,87 @@
-// qwebhook/route.ts
-
+// api/webhook/route.ts
 import { NextResponse } from 'next/server';
-import { stripe } from '../../../lib/stripe';
 import prisma from '../../../lib/prisma';
-import Stripe from 'stripe';
+import crypto from 'crypto';
 
 export async function POST(req: Request) {
-  const sig = req.headers.get('stripe-signature')!;
   const body = await req.text();
+  console.log(`body:` + JSON.stringify(body));
+  const signature = req.headers.get('x-razorpay-signature') || '';
+  const webhookSecret = process.env.RAZORPAY_WEBHOOK_SECRET || '';
 
-  let event: Stripe.Event;
+  // Verify signature
+  const expectedSignature = crypto
+    .createHmac('sha256', webhookSecret)
+    .update(body)
+    .digest('hex');
+
+  if (signature !== expectedSignature) {
+    return NextResponse.json({ error: 'Invalid signature' }, { status: 401 });
+  }
 
   try {
-    event = stripe.webhooks.constructEvent(
-      body,
-      sig,
-      process.env.STRIPE_WEBHOOK_SECRET!
+    const payload = JSON.parse(body);
+    const payment = payload.payload?.payment?.entity;
+
+    // Extract metadata from payment.notes (not receipt)
+    const metadata = {
+      txnId: payment.notes?.txnId,
+      userId: payment.notes?.userId,
+      credits: parseInt(payment.notes?.credits || '0', 10),
+    };
+
+    if (!metadata.txnId || !metadata.userId || isNaN(metadata.credits)) {
+      console.error('Invalid or missing metadata in notes:', payment.notes);
+      throw new Error('Invalid metadata in payment notes');
+    }
+
+    console.log('Processing payment with metadata:', metadata);
+
+    switch (payload.event) {
+      case 'payment.captured': {
+        await prisma.$transaction([
+          prisma.transaction.update({
+            where: { id: metadata.txnId },
+            data: {
+              status: 'completed',
+              transactionId: payment.id,
+              paymentMethod: payment.method,
+              metadata: payment,
+            },
+          }),
+          prisma.user.update({
+            where: { id: metadata.userId },
+            data: {
+              credits: {
+                increment: metadata.credits,
+              },
+            },
+          }),
+        ]);
+        break;
+      }
+
+      case 'payment.failed': {
+        await prisma.transaction.update({
+          where: { id: metadata.txnId },
+          data: {
+            status: 'failed',
+            metadata: payment,
+          },
+        });
+        break;
+      }
+
+      default:
+        console.log('Unhandled event:', payload.event);
+    }
+
+    return NextResponse.json({ success: true });
+  } catch (error: any) {
+    console.error('Webhook error:', error);
+    return NextResponse.json(
+      { error: error.message || 'Processing failed' },
+      { status: 500 }
     );
-  } catch (err: any) {
-    console.error(`Webhook Error: ${err.message}`);
-    return NextResponse.json({ error: `Webhook Error: ${err.message}` }, { status: 400 });
   }
-
-  // Handle successful payment
-  if (event.type === 'checkout.session.completed') {
-    const session = event.data.object as Stripe.Checkout.Session;
-    
-    try {
-      debugger;
-      // Update transaction status
-      await prisma.transaction.update({
-        where: { id: session.metadata?.transactionId },
-        data: { 
-          status: 'completed',
-          transactionId: session.payment_intent as string,
-          paymentMethod: session.payment_method_types[0],
-          metadata: session as any
-        }
-      });
-
-      // Add credits to user
-
-      const updatedUser = await prisma.user.update({
-        where: { id: session.metadata?.userId },
-        data: { credits: { increment: parseInt(session.metadata?.credits ?? "", 10) || 0 } },
-      });
-      
-      console.log("Updated User: ", updatedUser);
-
-      // await prisma.user.update({
-      //   where: { id: session.metadata?.userId },
-      //   data: {
-      //     credits: {
-      //       increment: parseInt(session.metadata?.credits || '0')
-      //     }
-      //   }
-      // });
-    } catch (error) {
-      console.error('Failed to update transaction:', error);
-    }
-  }
-
-  // Handle failed payment
-  if (event.type === 'checkout.session.async_payment_failed') {
-    const session = event.data.object as Stripe.Checkout.Session;
-    
-    try {
-      await prisma.transaction.update({
-        where: { id: session.metadata?.transactionId },
-        data: { status: 'failed' }
-      });
-    } catch (error) {
-      console.error('Failed to update failed transaction:', error);
-    }
-  }
-
-  return NextResponse.json({ received: true });
 }

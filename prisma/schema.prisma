@@ -130,8 +130,8 @@ model Transaction {
   credits         Int
   status          String // 'pending', 'completed', 'failed', 'refunded'
   paymentMethod   String? // 'card', 'upi', etc.
-  transactionId   String? // Stripe transaction ID
-  stripeSessionId String?
+  transactionId   String? // Razorpay payment ID
+  razorpayOrderId String? // Razorpay order ID
   paymentPlanId   String?
   paymentPlan     PaymentPlan? @relation(fields: [paymentPlanId], references: [id])
   metadata        Json?

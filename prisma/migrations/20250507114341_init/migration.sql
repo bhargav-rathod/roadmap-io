@@ -137,7 +137,7 @@ CREATE TABLE "Transaction" (
     "status" TEXT NOT NULL,
     "paymentMethod" TEXT,
     "transactionId" TEXT,
-    "stripeSessionId" TEXT,
+    "razorpayOrderId" TEXT,
     "paymentPlanId" TEXT,
     "metadata" JSONB,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

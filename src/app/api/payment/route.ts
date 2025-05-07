@@ -1,27 +1,51 @@
-// payment/route.ts
+// api/payment/route.ts
 
 import { NextResponse } from 'next/server';
 import prisma from '../../../lib/prisma';
-import { stripe } from '../../../lib/stripe';
+import Razorpay from 'razorpay';
+
+const razorpay = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID!,
+  key_secret: process.env.RAZORPAY_KEY_SECRET!,
+});
 
 export async function POST(req: Request) {
   try {
     const { planId, userId } = await req.json();
 
-    // 1. Fetch user and plan data
+    // Validate input
+    if (!planId || !userId) {
+      return NextResponse.json(
+        { error: 'Plan ID and User ID are required' },
+        { status: 400 }
+      );
+    }
+
+    // Fetch user and plan data in parallel
     const [user, plan] = await Promise.all([
       prisma.user.findUnique({
         where: { id: userId },
-        select: { email: true, name: true, address: true }
+        select: { email: true, name: true },
       }),
       prisma.paymentPlan.findUnique({ where: { id: planId } }),
     ]);
 
-    if (!user || !plan) {
-      return NextResponse.json({ error: 'Invalid user or plan' }, { status: 400 });
+    if (!user) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
-    // 2. Create transaction record
+    if (!plan) {
+      return NextResponse.json({ error: 'Plan not found' }, { status: 404 });
+    }
+
+    if (!plan.active) {
+      return NextResponse.json(
+        { error: 'This plan is not currently available' },
+        { status: 400 }
+      );
+    }
+
+    // Create transaction record
     const transaction = await prisma.transaction.create({
       data: {
         userId,
@@ -29,57 +53,53 @@ export async function POST(req: Request) {
         credits: plan.credits,
         status: 'pending',
         paymentPlanId: plan.id,
+        currency: 'INR',
+        paymentMethod: 'razorpay',
       },
     });
 
-    // 3. Create Stripe Customer with Address
-    const customer = await stripe.customers.create({
-      name: user.name || 'Anonymous',
-      email: user.email,
-      address: {
-        line1: user.address?.line1 || 'Not Provided',
-        line2: user.address?.line2 || '',
-        city: user.address?.city || 'Not Provided',
-        state: user.address?.state || 'Not Provided',
-        postal_code: user.address?.postalCode || '000000',
-        country: 'IN',
-      },
-      metadata: { userId },
-    });
+    console.log(`txn:` + JSON.stringify(transaction));
 
-    // 4. Create Checkout Session
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      customer: customer.id,
-      line_items: [{
-        price_data: {
-          currency: 'inr',
-          product_data: {
-            name: `${plan.name} - ${plan.description}`,
-          },
-          unit_amount: plan.price * 100,
-        },
-        quantity: 1,
-      }],
-      mode: 'payment',
-      billing_address_collection: 'required',
-      metadata: {
-        userId,
-        planId: plan.id,
+    // Create Razorpay Order with notes in RECEIPT field
+    const options = {
+      amount: plan.price * 100,
+      currency: 'INR',
+      receipt: `${transaction.id}`, // Keep this short (under 40 chars)
+      notes: {
+        txnId: transaction.id,
+        userId: userId,
         credits: plan.credits.toString(),
-        transactionId: transaction.id,
       },
-      success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard?payment=success&session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard?payment=canceled&session_id={CHECKOUT_SESSION_ID}`,
-    });
+      
+      payment_capture: 1,
+    };
+    console.log(`notes`+ JSON.stringify(options.notes));
 
-    // 5. Update transaction
+    const order = await razorpay.orders.create(options);
+    console.log(`order`+ JSON.stringify(order));
+
+
+    // Update transaction with Razorpay order ID
     await prisma.transaction.update({
       where: { id: transaction.id },
-      data: { stripeSessionId: session.id },
+      data: { razorpayOrderId: order.id },
     });
 
-    return NextResponse.json({ id: session.id });
+    return NextResponse.json({
+      orderId: order.id,
+      amount: order.amount,
+      currency: order.currency,
+      key: process.env.RAZORPAY_KEY_ID,
+      name: "ROADMAP.IO",
+      description: plan.description || `${plan.name} - ${plan.credits} credits`,
+      prefill: {
+        name: user.name || 'Customer',
+        email: user.email,
+      },
+      theme: {
+        color: '#2563eb', // blue-600
+      },
+    });
   } catch (error: any) {
     console.error('Payment error:', error);
     return NextResponse.json(

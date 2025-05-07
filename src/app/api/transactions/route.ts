@@ -1,4 +1,4 @@
-// transactions/route.ts
+// api/transactions/route.ts
 
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
