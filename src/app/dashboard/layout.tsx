@@ -13,10 +13,12 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { paymentPlans } from '../data/paymentConfig';
 import toast, { Toaster } from 'react-hot-toast';
+import ClassicLoader from '@/components/ui/ClassicLoader';
 
 function LayoutContent({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [showLoader, setShowLoader] = useState(false);
+  const [showRoadmapLoader, setShowRoadmapLoader] = useState(false);
+  const [showClassicLoader, setShowClassicLoader] = useState(false);
   const [roadmapTitle, setRoadmapTitle] = useState('');
   const { data: session, update } = useSession();
   const credits = session?.user?.credits ?? 0;
@@ -38,9 +40,9 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
   const handlePayment = async (planId: string) => {
     const plan = paymentPlans.find(p => p.id === planId);
     if (!plan || !session?.user) return;
-
-    setShowLoader(true);
-
+  
+    setShowClassicLoader(true);
+  
     try {
       const response = await fetch('/api/payment', {
         method: 'POST',
@@ -52,44 +54,54 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
           userId: session.user.id
         })
       });
-
+  
       if (!response.ok) {
         throw new Error(await response.text());
       }
-
+  
       const options = await response.json();
-
-      // Load Razorpay script dynamically
-      const script = document.createElement('script');
-      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-      script.async = true;
-      script.onload = () => {
-        const rzp = new (window as any).Razorpay({
-          ...options,
-          handler: async function(response: any) {
-            // Immediately update the session after successful payment
-            await update();
-            toast.success('Payment successful! Credits will be added shortly.');
-            setShowPaymentModal(false);
-          },
-          modal: {
-            ondismiss: function() {
-              toast.error('Payment was canceled.');
-              setShowPaymentModal(false);
-            }
-          }
-        });
-        rzp.open();
-      };
-      if (!document.querySelector('script[src="https://checkout.razorpay.com/v1/checkout.js"]')) {
+  
+      // Check if Razorpay is already loaded
+      if (!(window as any).Razorpay) {
+        const script = document.createElement('script');
+        script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+        script.async = true;
+        script.onload = () => initializeRazorpay(options);
         document.body.appendChild(script);
+      } else {
+        initializeRazorpay(options);
       }
-
+  
     } catch (error: any) {
       console.error('Payment error:', error);
       toast.error(error.message || 'Payment failed. Please try again.');
-    } finally {
-      setShowLoader(false);
+      setShowClassicLoader(false);
+    }
+  };
+  
+  const initializeRazorpay = (options: any) => {
+    try {
+      const rzp = new (window as any).Razorpay({
+        ...options,
+        handler: async function(response: any) {
+          await update();
+          toast.success('Payment successful! Credits added or will be added shortly.');
+          setShowPaymentModal(false);
+          setShowClassicLoader(false);
+        },
+        modal: {
+          ondismiss: () => {
+            toast.error('Payment was canceled.');
+            setShowPaymentModal(false);
+            setShowClassicLoader(false);
+          }
+        }
+      });
+      rzp.open();
+    } catch (error) {
+      console.error('Razorpay initialization error:', error);
+      toast.error('Failed to initialize payment gateway.');
+      setShowClassicLoader(false);
     }
   };
 
@@ -177,7 +189,8 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
       <Toaster position="top-center" />
 
       {/* Full-page Loader */}
-      {showLoader && <CreatingRoadmapLoader />}
+      {showRoadmapLoader && <CreatingRoadmapLoader />}
+      {showClassicLoader && <ClassicLoader />}
 
       {/* Sidebar - Mobile */}
       {sidebarOpen && (
@@ -277,7 +290,7 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
         {/* Payment Section */}
         {/* Payment Modal */}
         {showPaymentModal && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999]">
             <div className="bg-white rounded-lg p-6 w-full max-w-md">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-lg font-medium">Buy Credits</h3>
