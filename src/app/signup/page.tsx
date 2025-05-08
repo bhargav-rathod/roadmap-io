@@ -5,6 +5,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { signIn } from 'next-auth/react'
 import { FiEye, FiEyeOff } from 'react-icons/fi';
+import Tooltip from '@/components/ui/Tooltip'
 
 export default function SignupPage() {
   const router = useRouter()
@@ -156,7 +157,7 @@ export default function SignupPage() {
 
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                  Email Address
+                  Email
                 </label>
                 <input
                   id="email"
@@ -174,6 +175,7 @@ export default function SignupPage() {
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                   Password
                 </label>
+                
                 <div className="relative mt-1 rounded-md shadow-sm">
                   <input
                     id="password"

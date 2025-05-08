@@ -2,7 +2,7 @@
 
 import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 
@@ -10,7 +10,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState('');
+  const [message, setMessage] = useState<{text: string, type: 'error' | 'success'} | null>(null);
   const [loading, setLoading] = useState(false);
   const [unverifiedEmail, setUnverifiedEmail] = useState<string | null>(null);
   const [resentVerification, setResentVerification] = useState(false);
@@ -18,9 +18,23 @@ export default function LoginPage() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
 
+  useEffect(() => {
+    // Handle error from query params
+    const errorParam = searchParams.get('error');
+    if (errorParam) {
+      setMessage({text: decodeURIComponent(errorParam), type: 'error'});
+    }
+
+    // Handle logout success message
+    const logoutParam = searchParams.get('logout');
+    if (logoutParam === 'success') {
+      setMessage({text: 'You have been successfully logged out.', type: 'success'});
+    }
+  }, [searchParams]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setMessage(null);
     setLoading(true);
     setUnverifiedEmail(null);
     setResentVerification(false);
@@ -57,12 +71,15 @@ export default function LoginPage() {
       });
 
       if (result?.error) {
-        setError(result.error);
+        setMessage({text: result.error, type: 'error'});
       } else if (result?.ok) {
         router.push(callbackUrl);
       }
     } catch (error) {
-      setError(error instanceof Error ? error.message : 'An unexpected error occurred. Please try again.');
+      setMessage({
+        text: error instanceof Error ? error.message : 'An unexpected error occurred. Please try again.',
+        type: 'error'
+      });
     } finally {
       setLoading(false);
     }
@@ -71,19 +88,22 @@ export default function LoginPage() {
   const handleSocialSignIn = async (provider: string) => {
     try {
       setLoading(true);
-      setError('');
+      setMessage(null);
       const result = await signIn(provider, {
         redirect: false,
         callbackUrl
       });
 
       if (result?.error) {
-        setError(result.error);
+        setMessage({text: result.error, type: 'error'});
       } else if (result?.ok) {
         router.push(callbackUrl);
       }
     } catch (error) {
-      setError(error instanceof Error ? error.message : 'Failed to sign in with social provider');
+      setMessage({
+        text: error instanceof Error ? error.message : 'Failed to sign in with social provider',
+        type: 'error'
+      });
     } finally {
       setLoading(false);
     }
@@ -108,7 +128,10 @@ export default function LoginPage() {
       
       setResentVerification(true);
     } catch (error) {
-      setError(error instanceof Error ? error.message : 'Failed to resend verification email');
+      setMessage({
+        text: error instanceof Error ? error.message : 'Failed to resend verification email',
+        type: 'error'
+      });
     } finally {
       setLoading(false);
     }
@@ -119,9 +142,9 @@ export default function LoginPage() {
       <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
         <h1 className="text-2xl font-bold mb-6 text-center">Login</h1>
         
-        {error && (
-          <div className="mb-4 p-2 bg-red-100 text-red-700 rounded">
-            {error}
+        {message && (
+          <div className={`mb-4 p-2 rounded ${message.type === 'error' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'}`}>
+            {message.text}
           </div>
         )}
 
@@ -201,7 +224,7 @@ export default function LoginPage() {
 
               <div className="flex items-center justify-between">
                 <div className="text-sm">
-                  <Link href="/auth/forgot-password" className="font-medium text-indigo-600 hover:text-indigo-500">
+                  <Link href="/forgot-password" className="font-medium text-indigo-600 hover:text-indigo-500">
                     Forgot password?
                   </Link>
                 </div>

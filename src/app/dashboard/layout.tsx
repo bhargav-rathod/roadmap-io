@@ -14,6 +14,7 @@ import { usePathname } from 'next/navigation';
 import { paymentPlans } from '../data/paymentConfig';
 import toast, { Toaster } from 'react-hot-toast';
 import ClassicLoader from '@/components/ui/ClassicLoader';
+import TransactionHistory from './transaction-history/page';
 
 function LayoutContent({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -24,11 +25,14 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
   const credits = session?.user?.credits ?? 0;
   const pathname = usePathname();
 
+  const [showTransactions, setShowTransactions] = useState(false);
+
+
   // Add polling to check for credit updates
   useEffect(() => {
     const interval = setInterval(() => {
-      update(); // Refresh session every 30 seconds
-    }, 30000);
+      update(); // Refresh session every 900 seconds (15 Minutes)
+    }, 900000);
 
     return () => clearInterval(interval);
   }, [update]);
@@ -40,9 +44,9 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
   const handlePayment = async (planId: string) => {
     const plan = paymentPlans.find(p => p.id === planId);
     if (!plan || !session?.user) return;
-  
+
     setShowClassicLoader(true);
-  
+
     try {
       const response = await fetch('/api/payment', {
         method: 'POST',
@@ -54,13 +58,13 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
           userId: session.user.id
         })
       });
-  
+
       if (!response.ok) {
         throw new Error(await response.text());
       }
-  
+
       const options = await response.json();
-  
+
       // Check if Razorpay is already loaded
       if (!(window as any).Razorpay) {
         const script = document.createElement('script');
@@ -71,19 +75,19 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
       } else {
         initializeRazorpay(options);
       }
-  
+
     } catch (error: any) {
       console.error('Payment error:', error);
       toast.error(error.message || 'Payment failed. Please try again.');
       setShowClassicLoader(false);
     }
   };
-  
+
   const initializeRazorpay = (options: any) => {
     try {
       const rzp = new (window as any).Razorpay({
         ...options,
-        handler: async function(response: any) {
+        handler: async function (response: any) {
           await update();
           toast.success('Payment successful! Credits added or will be added shortly.');
           setShowPaymentModal(false);
@@ -182,6 +186,10 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
 
   const breadcrumbs = generateBreadcrumbs();
 
+  const handleTransactionHistoryClick = () => {
+    setShowTransactions(true);
+  };
+
   return (
     <div className="min-h-screen h-screen flex relative">
 
@@ -264,7 +272,7 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
                   <FiZap className="mr-1" />
                   Credits: <span className="font-bold ml-1">{credits}</span>
                 </div>
-                <UserMenu />
+                <UserMenu onTransactionHistoryClick={handleTransactionHistoryClick}/>
               </div>
             </div>
           </div>
@@ -307,8 +315,8 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
                   <div
                     key={plan.id}
                     className={`border rounded-lg p-4 cursor-pointer transition-colors ${selectedPlan.id === plan.id
-                        ? 'border-blue-500 bg-blue-50 ring-2 ring-blue-200'
-                        : 'border-gray-200 hover:bg-gray-50'
+                      ? 'border-blue-500 bg-blue-50 ring-2 ring-blue-200'
+                      : 'border-gray-200 hover:bg-gray-50'
                       }`}
                     onClick={() => setSelectedPlan(plan)}
                   >
@@ -350,6 +358,40 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
                   <FiCheck className="mr-2" />
                   Pay ₹{selectedPlan.price.toLocaleString()}
                 </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Transaction History Modal */}
+        {showTransactions && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-[9999]">
+            <div className="bg-white rounded-lg w-full max-w-2xl max-h-[80vh] overflow-y-auto shadow-xl">
+              <div className="sticky top-0 bg-white border-b px-6 py-4 flex justify-between items-center">
+                <h2 className="text-xl font-semibold">Transaction History</h2>
+                <button
+                  onClick={() => setShowTransactions(false)}
+                  className="text-gray-500 hover:text-gray-700 p-1 rounded-full hover:bg-gray-100"
+                >
+                  <FiX className="h-5 w-5" />
+                </button>
+              </div>
+              <div className="p-6">
+                <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
+                  <div className="flex">
+                    <div className="flex-shrink-0">
+                      <svg className="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <div className="ml-3">
+                      <p className="text-sm text-yellow-700">
+                        Recent transactions may take some time to reflect here.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <TransactionHistory />
               </div>
             </div>
           </div>

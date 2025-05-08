@@ -117,11 +117,13 @@ export async function POST(request: Request) {
 
     // Generate content with OpenAI (simplified example)
     var prompt = await createPrompt(roadmapData);
-    const content = await generateRoadmapContent(prompt); // Implement this function
+    console.log(`prompt is:` + prompt);
+    const content = await generateRoadmapContent(prompt);
+    console.log(`content is: ` + content);
 
-    // Calculate expiry date (30 days from now)
+    // Calculate expiry date (365 days from now)
     const expiresAt = new Date();
-    expiresAt.setDate(expiresAt.getDate() + 30);
+    expiresAt.setDate(expiresAt.getDate() + 365);
 
     // Create roadmap - only include fields that exist in the schema
     const roadmap = await prisma.roadmap.create({
@@ -168,10 +170,10 @@ export async function POST(request: Request) {
 }
 
 async function generateRoadmapContent(prompt: string): Promise<string> {
-
+  console.log('calling ai endpoint');
     try {
       const response = await openai.chat.completions.create({
-        model: 'llama-3.3-70b-versatile',
+        model: 'compound-beta',
         messages: [
           { role: 'system', content: 'You are an expert career counselor who generates detailed, actionable roadmaps for users based on their career goals.' },
           { role: 'user', content: prompt },
@@ -179,12 +181,14 @@ async function generateRoadmapContent(prompt: string): Promise<string> {
         temperature: 0.7,
         max_tokens: 2000,
       });
-  
+      
+      console.log(`response from model is:` + response);
       const content = response.choices[0]?.message?.content;
       if (!content) throw new Error('No content received from OpenAI');
       
       return content.trim();
     } catch (error: any) {
+      console.log('calling ai endpoint failed: ', error);
       throw new Error('Failed to generate roadmap content');
     }
   }

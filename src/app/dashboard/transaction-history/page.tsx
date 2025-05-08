@@ -1,3 +1,6 @@
+// dashboard/transaction-history/page.tsx
+'use client'
+
 import { useState, useEffect } from 'react';
 import { FiCreditCard, FiCheckCircle, FiXCircle, FiClock } from 'react-icons/fi';
 import { useSession } from 'next-auth/react';
@@ -46,7 +49,7 @@ export default function TransactionHistory() {
   };
 
   return (
-    <div className="bg-white rounded-lg">
+    <div>
       {loading ? (
         <div className="flex justify-center py-8">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-400"></div>
@@ -96,7 +99,7 @@ export default function TransactionHistory() {
             <button
               key={p}
               onClick={() => setPage(p)}
-              className={`px-3 py-1 rounded ${page === p ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'}`}
+              className={`px-3 py-1 rounded text-sm ${page === p ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'}`}
             >
               {p}
             </button>

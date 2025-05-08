@@ -70,7 +70,7 @@ export default function ForgotPasswordPage() {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                  {COMPANY_NAME} Account Email
+                  Account Email
                 </label>
                 <input
                   id="email"
