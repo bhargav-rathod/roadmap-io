@@ -7,7 +7,6 @@ export async function sendVerificationEmail(email: string, name: string, token: 
   try {
     const verificationLink = `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/verify-email?token=${token}`
     await resend.emails.send({
-      // from: 'no-reply@yourdomain.com',
       from: `${process.env.NEXT_PUBLIC_EMAIL_VERIFICATION_FROM_ADDRESS}`,
       to: email,
       subject: `Welcome to ${COMPANY_NAME} - Verify your email address`,
@@ -25,6 +24,34 @@ export async function sendVerificationEmail(email: string, name: string, token: 
     })
   } catch (error) {
     console.error('Error sending verification email:', error)
+    throw error
+  }
+}
+
+export async function sendPasswordResetEmail(email: string, name: string, token: string) {
+  try {
+    const resetUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/auth/reset-password?token=${token}`
+    
+    await resend.emails.send({
+      from: `${process.env.NEXT_PUBLIC_EMAIL_VERIFICATION_FROM_ADDRESS}`,
+      to: email,
+      subject: `Reset Your ${COMPANY_NAME} Password`,
+      html: `
+        <div>
+          <h1>Hi ${name},</h1>
+          <p>We received a request to reset your password for your ${COMPANY_NAME} account.</p>
+          <p>Click the link below to reset your password:</p>
+          <p><b><a href="${resetUrl}">Reset Password</a></b></p>
+          <p>This link will expire in 1 hour.</p>
+          <p>If you didn't request a password reset, you can safely ignore this email.</p>
+          <br/>
+          <p>Thanks & Regards,</p>
+          <p>${COMPANY_NAME} Team</p>
+        </div>
+      `,
+    })
+  } catch (error) {
+    console.error('Error sending password reset email:', error)
     throw error
   }
 }

@@ -11,6 +11,8 @@ CREATE TABLE "User" (
     "verified" BOOLEAN NOT NULL DEFAULT false,
     "verificationToken" TEXT,
     "verificationTokenExpires" TIMESTAMP(3),
+    "resetToken" TEXT,
+    "resetTokenExpires" TIMESTAMP(3),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "sessionToken" TEXT,
