@@ -208,6 +208,7 @@ export const authOptions: NextAuthOptions = {
         const dbUser = await prisma.user.findUnique({
           where: { id: token.id },
           select: {
+            credits: true,
             sessionToken: true,
             lastActive: true
           }
@@ -217,6 +218,9 @@ export const authOptions: NextAuthOptions = {
         if (!dbUser || dbUser.sessionToken !== token.sessionToken) {
           throw new Error("Session invalid");
         }
+
+        // Always sync credits from database
+        token.credits = dbUser.credits;
 
         // Check inactivity (10 minutes)
         const currentTime = Math.floor(Date.now() / 1000);
@@ -247,6 +251,7 @@ export const authOptions: NextAuthOptions = {
 
       return token;
     },
+    
     async session({ session, token }) {
       if (token?.id) {
         session.user.id = token.id;

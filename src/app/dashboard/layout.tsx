@@ -22,6 +22,15 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
   const credits = session?.user?.credits ?? 0;
   const pathname = usePathname();
 
+  // Add polling to check for credit updates
+  useEffect(() => {
+    const interval = setInterval(() => {
+      update(); // Refresh session every 30 seconds
+    }, 30000);
+
+    return () => clearInterval(interval);
+  }, [update]);
+
   /* SECTION: PAYMENT */
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(paymentPlans[0]);
@@ -49,7 +58,6 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
       }
 
       const options = await response.json();
-      console.log(`options: ` + JSON.stringify(options));
 
       // Load Razorpay script dynamically
       const script = document.createElement('script');
@@ -58,11 +66,10 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
       script.onload = () => {
         const rzp = new (window as any).Razorpay({
           ...options,
-          order_id: options.orderId,
           handler: async function(response: any) {
-            // This will be handled by webhook, but we can show success message
+            // Immediately update the session after successful payment
+            await update();
             toast.success('Payment successful! Credits will be added shortly.');
-            update();
             setShowPaymentModal(false);
           },
           modal: {
@@ -74,7 +81,9 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
         });
         rzp.open();
       };
-      document.body.appendChild(script);
+      if (!document.querySelector('script[src="https://checkout.razorpay.com/v1/checkout.js"]')) {
+        document.body.appendChild(script);
+      }
 
     } catch (error: any) {
       console.error('Payment error:', error);
@@ -84,22 +93,18 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
     }
   };
 
-
   // Check for successful payments
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
     if (query.get('payment') === 'success') {
       toast.success('Payment successful! Credits added to your account.');
-      // Refresh session to update credits
-      update();
-      // Clean up URL
+      update(); // Refresh session to update credits
       window.history.replaceState({}, document.title, window.location.pathname);
     } else if (query.get('payment') === 'canceled') {
       toast.error('Payment was canceled.');
       window.history.replaceState({}, document.title, window.location.pathname);
     }
   }, [update]);
-  /* END SECTION: PAYMENT */
 
   // Fetch roadmap title when on a roadmap page
   useEffect(() => {

@@ -86,7 +86,7 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json({
-      orderId: order.id,
+      order_id: order.id, //required
       amount: order.amount,
       currency: order.currency,
       key: process.env.RAZORPAY_KEY_ID,
