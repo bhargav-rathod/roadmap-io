@@ -8,11 +8,13 @@ import { FaLinkedin, FaTwitter, FaInstagram, FaGithub } from "react-icons/fa";
 import { testimonials } from "../data/testemonials";
 import { roadMapLabel, roadmaps, roadmapSampleStructureQuestionsText } from "../data/roadmaps";
 import { pricingDescription, pricingPlans, pricingTitlePrefix, pricingTitleSuffix } from "../data/pricingPlans";
-import { features } from "../data/features";
 import { theme } from "../theme";
 import { COMPANY_NAME, COMPANY_SLOGAN, GET_STARTED_BUTTON_TEXT, PAGE_HEADER_PREFIX } from "../data/config";
 import { DemoModalLazy } from "./DemoModelLazy";
 import { getConfig } from "../../lib/config";
+import { getFeaturesConfig } from "../../lib/publicHomePageFeatures";
+import { PublicHomePageFeatures } from "../../../types/public-home-page-features";
+
 export default function PublicHomePage() {
     // Refs and state
     const testimonialRef = useRef<HTMLDivElement>(null);
@@ -29,6 +31,7 @@ export default function PublicHomePage() {
         isActive: false,
         text: ''
     });
+    const [features, setFeatures] = useState([]);
     type ScrollableRef = React.RefObject<HTMLDivElement>;
 
 
@@ -55,6 +58,15 @@ export default function PublicHomePage() {
         };
 
         fetchBannerConfig();
+    }, []);
+
+    // Fetch features on mount
+    useEffect(() => {
+        const fetchFeatures = async () => {
+            const loadedFeatures = await getFeaturesConfig();
+            setFeatures(loadedFeatures);
+        };
+        fetchFeatures();
     }, []);
 
     // Scroll handlers
@@ -144,9 +156,7 @@ export default function PublicHomePage() {
             {/* Banner Section */}
             {bannerConfig.isActive && bannerConfig.text && (
                 <div className="bg-yellow-400 text-gray-900 animate-pulse py-2 px-4 text-center font-medium">
-
                     {bannerConfig.text}
-
                 </div>
             )}
 
@@ -156,18 +166,29 @@ export default function PublicHomePage() {
                     <h2 className={`text-3xl md:text-4xl font-bold text-center mb-8 ${theme.typography.heading}`}>
                         Platform <span className={theme.colors.primary}>Features</span>
                     </h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-                        {features.map((feature, idx) => (
-                            <div key={idx} className={`p-5 md:p-6 rounded-xl bg-white ${theme.shadows.card} ${theme.colors.cardBorder} transition-shadow`}>                                {feature.icon && (
-                                <div className={`${theme.colors.primary} mb-3 text-2xl`}>
-                                    {feature.icon}
+                    {features.length > 0 ? (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                            {features.map((feature: PublicHomePageFeatures, idx) => (
+                                <div key={idx} className={`p-5 md:p-6 rounded-xl bg-white ${theme.shadows.card} ${theme.colors.cardBorder} transition-shadow`}>
+                                    {feature.icon && (
+                                        <div className={`${theme.colors.primary} mb-3 text-2xl`}>
+                                            {feature.icon}
+                                        </div>
+                                    )}
+                                    <h3 className={`text-lg md:text-xl font-bold mb-2 md:mb-3 ${theme.typography.subheading}`}>
+                                        {feature.title}
+                                    </h3>
+                                    <p className={`${theme.typography.body} text-sm md:text-base`}>
+                                        {feature.description}
+                                    </p>
                                 </div>
-                            )}
-                                <h3 className={`text-lg md:text-xl font-bold mb-2 md:mb-3 ${theme.typography.subheading}`}>{feature.title}</h3>
-                                <p className={`${theme.typography.body} text-sm md:text-base`}>{feature.description}</p>
-                            </div>
-                        ))}
-                    </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="text-center py-8">
+                            <p>Loading features...</p>
+                        </div>
+                    )}
                 </div>
             </section>
 
