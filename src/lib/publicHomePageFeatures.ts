@@ -1,4 +1,4 @@
-// lib/config.ts
+// lib/publicHomePageFeatures.ts
 export async function getFeaturesConfig() {
   try {
     const response = await fetch('/api/config?key=publicHomePageFeatures');

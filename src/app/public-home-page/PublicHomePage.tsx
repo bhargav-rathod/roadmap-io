@@ -5,15 +5,15 @@ import { useRef, useState, useEffect, RefObject } from "react";
 import { Button } from "@/components/ui/Button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { FaLinkedin, FaTwitter, FaInstagram, FaGithub } from "react-icons/fa";
-import { testimonials } from "../data/testemonials";
 import { roadMapLabel, roadmaps, roadmapSampleStructureQuestionsText } from "../data/roadmaps";
 import { pricingDescription, pricingPlans, pricingTitlePrefix, pricingTitleSuffix } from "../data/pricingPlans";
 import { theme } from "../theme";
 import { COMPANY_NAME, COMPANY_SLOGAN, GET_STARTED_BUTTON_TEXT, PAGE_HEADER_PREFIX } from "../data/config";
 import { DemoModalLazy } from "./DemoModelLazy";
-import { getConfig } from "../../lib/config";
 import { getFeaturesConfig } from "../../lib/publicHomePageFeatures";
 import { PublicHomePageFeatures } from "../../../types/public-home-page-features";
+import { getTestimonialsConfig } from "../../lib/publicHomePageTestimonials";
+import { PublicHomePageTestimonials } from "../../../types/public-home-page-testimonials";
 
 export default function PublicHomePage() {
     // Refs and state
@@ -32,6 +32,7 @@ export default function PublicHomePage() {
         text: ''
     });
     const [features, setFeatures] = useState([]);
+    const [testimonials, setTestemonials] = useState([]);
     type ScrollableRef = React.RefObject<HTMLDivElement>;
 
 
@@ -67,6 +68,15 @@ export default function PublicHomePage() {
             setFeatures(loadedFeatures);
         };
         fetchFeatures();
+    }, []);
+
+    // Fetch testemonials on mount
+    useEffect(() => {
+        const fetchTestemonials = async () => {
+            const loadedTestimonials = await getTestimonialsConfig();
+            setTestemonials(loadedTestimonials);
+        };
+        fetchTestemonials();
     }, []);
 
     // Scroll handlers
@@ -186,7 +196,7 @@ export default function PublicHomePage() {
                         </div>
                     ) : (
                         <div className="text-center py-8">
-                            <p>Loading features...</p>
+                            {/* <p>Loading features...</p> */}
                         </div>
                     )}
                 </div>
@@ -281,8 +291,7 @@ export default function PublicHomePage() {
                         <button
                             onClick={() => scroll(testimonialRef as ScrollableRef, "left")}
                             disabled={testimonialScroll.isStart}
-                            className={`hidden sm:block absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-6 z-10 bg-white p-2 md:p-3 rounded-full ${theme.shadows.card} transition-all ${testimonialScroll.isStart ? 'opacity-30 cursor-not-allowed' : ''
-                                }`}
+                            className={`hidden sm:block absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-6 z-10 bg-white p-2 md:p-3 rounded-full ${theme.shadows.card} transition-all ${testimonialScroll.isStart ? 'opacity-30 cursor-not-allowed' : ''}`}
                         >
                             <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-gray-700" />
                         </button>
@@ -292,27 +301,26 @@ export default function PublicHomePage() {
                             className="flex overflow-x-auto gap-4 sm:gap-6 md:gap-8 pb-6 md:pb-8 scroll-smooth px-2"
                             style={{ scrollbarWidth: 'none' }}
                         >
-                            {testimonials.map((t, i) => (
+                            {testimonials.map((testemony: PublicHomePageTestimonials, i) => (
                                 <div key={i} className={`flex-shrink-0 w-72 sm:w-80 bg-white p-6 md:p-8 rounded-2xl ${theme.shadows.card} ${theme.colors.cardBorder} transition-all flex flex-col items-center text-center`}>
                                     <img
-                                        src={t.company}
-                                        alt={t.company}
+                                        src={testemony.company}
+                                        alt={testemony.company}
                                         className="object-contain mb-3 md:mb-4"
                                         style={{ width: theme.sizes.companyLogo.width, height: theme.sizes.companyLogo.height }}
                                     />
                                     <img
-                                        src={t.avatar}
-                                        alt={t.name}
+                                        src={testemony.avatar}
+                                        alt={testemony.name}
                                         className="w-12 h-12 md:w-16 md:h-16 rounded-full mb-3 md:mb-4 object-cover border-2 border-blue-100"
                                     />
-
-                                    <p className={`italic mb-3 md:mb-4 ${theme.typography.body} text-sm md:text-base`}>"{t.message}"</p>
-                                    <p className={`font-semibold ${theme.typography.subheading} text-sm md:text-base`}>{t.name}</p>
-                                    <p className={`${theme.typography.caption}`}>{t.role}</p>
-                                    {t.domain && (
+                                    <p className={`italic mb-3 md:mb-4 ${theme.typography.body} text-sm md:text-base`}>"{testemony.message}"</p>
+                                    <p className={`font-semibold ${theme.typography.subheading} text-sm md:text-base`}>{testemony.name}</p>
+                                    <p className={`${theme.typography.caption}`}>{testemony.role}</p>
+                                    {testemony.domain && (
                                         <div className="mt-2">
                                             <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium text-black bg-white-500`}>
-                                                {t.domain}
+                                                {testemony.domain}
                                             </span>
                                         </div>
                                     )}
@@ -323,8 +331,7 @@ export default function PublicHomePage() {
                         <button
                             onClick={() => scroll(testimonialRef as ScrollableRef, "right")}
                             disabled={testimonialScroll.isEnd}
-                            className={`hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-6 z-10 bg-white p-2 md:p-3 rounded-full ${theme.shadows.card} transition-all ${testimonialScroll.isEnd ? 'opacity-30 cursor-not-allowed' : ''
-                                }`}
+                            className={`hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-6 z-10 bg-white p-2 md:p-3 rounded-full ${theme.shadows.card} transition-all ${testimonialScroll.isEnd ? 'opacity-30 cursor-not-allowed' : ''}`}
                         >
                             <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-gray-700" />
                         </button>

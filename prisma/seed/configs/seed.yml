@@ -59,3 +59,89 @@ configs:
       ]
     isActive: true
     isProtected: false
+  - key: "publicHomePageTestimonials"
+    value: >
+      [
+        {
+          "name": "Mehul Vyas",
+          "role": "MTS-2 at Salesforce",
+          "message": "This helped me structure my prep and land my dream job!",
+          "avatar": "icons/users/male_1.jpg",
+          "company": "icons/logos/salesforce.svg",
+          "domain": "IT - Software Engineering"
+        },
+        {
+          "name": "Rohan Mehta",
+          "role": "Applied Scientist at Amazon",
+          "message": "The roadmap and resources saved me weeks of effort.",
+          "avatar": "icons/users/male_12.jpg",
+          "company": "icons/logos/amazon.svg",
+          "domain": "IT - Data Engineering"
+        },
+        {
+          "name": "Anjali Verma",
+          "role": "Technical Recruiter at Flipkart",
+          "message": "Super helpful and beginner-friendly. Highly recommended.",
+          "avatar": "icons/users/female_2.jpg",
+          "company": "icons/logos/flipkart.svg",
+          "domain": "Human Resources - Technical Recruiter"
+        },
+        {
+          "name": "Vaibhav Gupta",
+          "role": "Senior Mechanical Engineer at Hyundai",
+          "message": "The patterns & compensation insights are 100% accurate.",
+          "avatar": "icons/users/male_10.jpg",
+          "company": "icons/logos/hyundai.svg",
+          "domain": "Mechanical - Designer"
+        },
+        {
+          "name": "Nikhil Rao",
+          "role": "ML Engineer at Meta",
+          "message": "Loved the UI and clarity. Worth every second!",
+          "avatar": "icons/users/male_11.jpg",
+          "company": "icons/logos/meta.svg",
+          "domain": "IT - Machine Learning"
+        },
+        {
+          "name": "Arjun Patel",
+          "role": "Product Manager at Tinder",
+          "message": "The behavioral section was spot on for PM interviews.",
+          "avatar": "icons/users/male_5.jpg",
+          "company": "icons/logos/tinder.svg",
+          "domain": "IT - Product Management"
+        },
+        {
+          "name": "Sachin Kapoor",
+          "role": "Backend SDE Intern at Swiggy",
+          "message": "Clear, clean and curated. I would say, 10/10.",
+          "avatar": "icons/users/male_8.jpg",
+          "company": "icons/logos/swiggy.svg",
+          "domain": "IT - Software Engineering"
+        },
+        {
+          "name": "Juhi Patel",
+          "role": "Marketing Manager at Netflix",
+          "message": "Best roadmap I have ever seen. It helped me a lot.",
+          "avatar": "icons/users/female_5.jpg",
+          "company": "icons/logos/netflix.svg",
+          "domain": "Marketing"
+        },
+        {
+          "name": "Shikha Jain",
+          "role": "Payroll Associate at Levi's",
+          "message": "Best roadmap I have ever seen. It helped me a lot.",
+          "avatar": "icons/users/female_6.jpg",
+          "company": "icons/logos/levis.svg",
+          "domain": "People Management"
+        },
+        {
+          "name": "Vivek Chand",
+          "role": "Specialist Programmer at Infosys",
+          "message": "Best roadmap I have ever seen. It helped me a lot.",
+          "avatar": "icons/users/male_9.jpg",
+          "company": "icons/logos/infosys.svg",
+          "domain": "IT - Software Engineering & Services"
+        }
+      ]
+    isActive: true
+    isProtected: false

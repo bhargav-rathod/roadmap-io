@@ -102,6 +102,9 @@ mydb2=# SELECT * FROM "rm"."User";
 mydb2=# UPDATE "rm"."User" SET "credits" = 1;
 UPDATE 1
 
+Disconnect all connections:
+SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'mydb2' AND leader_pid IS NULL;
+
 ## Payment Integration - Stripe
 
 npx ts-node scripts/initializePaymentPlans.ts
