@@ -183,6 +183,9 @@ CREATE UNIQUE INDEX "ProgrammingLanguage_name_key" ON "ProgrammingLanguage"("nam
 -- CreateIndex
 CREATE UNIQUE INDEX "Country_name_key" ON "Country"("name");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "Config_key_key" ON "Config"("key");
+
 -- AddForeignKey
 ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 

@@ -10,19 +10,56 @@ import { roadMapLabel, roadmaps, roadmapSampleStructureQuestionsText } from "../
 import { pricingDescription, pricingPlans, pricingTitlePrefix, pricingTitleSuffix } from "../data/pricingPlans";
 import { features } from "../data/features";
 import { theme } from "../theme";
-import { bannerConfig } from "../data/banner";
 import { COMPANY_NAME, COMPANY_SLOGAN, GET_STARTED_BUTTON_TEXT, PAGE_HEADER_PREFIX } from "../data/config";
 import { DemoModalLazy } from "./DemoModelLazy";
-
+import { getConfig } from "../../lib/config";
 export default function PublicHomePage() {
+    // Refs and state
     const testimonialRef = useRef<HTMLDivElement>(null);
     const roadmapRef = useRef<HTMLDivElement>(null);
-    const [testimonialScroll, setTestimonialScroll] = useState({ isStart: true, isEnd: false });
-    const [roadmapScroll, setRoadmapScroll] = useState({ isStart: true, isEnd: false });
-
+    const [testimonialScroll, setTestimonialScroll] = useState({
+        isStart: true,
+        isEnd: false
+    });
+    const [roadmapScroll, setRoadmapScroll] = useState({
+        isStart: true,
+        isEnd: false
+    });
+    const [bannerConfig, setBannerConfig] = useState({
+        isActive: false,
+        text: ''
+    });
     type ScrollableRef = React.RefObject<HTMLDivElement>;
 
-    const checkScrollPosition = (ref: React.RefObject<HTMLDivElement>, setState: React.Dispatch<React.SetStateAction<any>>) => {
+
+    // Fetch configs on mount
+    useEffect(() => {
+        const fetchBannerConfig = async () => {
+            try {
+                const [isActiveRes, textRes] = await Promise.all([
+                    fetch('/api/config?key=publicHomePageBannerIsActive').then(res => res.json()),
+                    fetch('/api/config?key=publicHomePageBannerText').then(res => res.json())
+                ]);
+
+                setBannerConfig({
+                    isActive: isActiveRes.publicHomePageBannerIsActive === 'true',
+                    text: textRes.publicHomePageBannerText || ''
+                });
+            } catch (error) {
+                console.error('Failed to load banner config:', error);
+                setBannerConfig({
+                    isActive: false,
+                    text: ''
+                });
+            }
+        };
+
+        fetchBannerConfig();
+    }, []);
+
+    // Scroll handlers
+    const checkScrollPosition = (ref: React.RefObject<HTMLDivElement>,
+        setState: React.Dispatch<React.SetStateAction<any>>) => {
         if (ref.current) {
             const { scrollLeft, scrollWidth, clientWidth } = ref.current;
             const isStart = scrollLeft === 0;
@@ -105,9 +142,11 @@ export default function PublicHomePage() {
             </section>
 
             {/* Banner Section */}
-            {bannerConfig.isEnabled && (
-                <div className={`${bannerConfig.content.bgColor} ${bannerConfig.content.textColor} ${bannerConfig.content.animation} py-2 px-4 text-center font-medium`}>
-                    {bannerConfig.content.text}
+            {bannerConfig.isActive && bannerConfig.text && (
+                <div className="bg-yellow-400 text-gray-900 animate-pulse py-2 px-4 text-center font-medium">
+
+                    {bannerConfig.text}
+
                 </div>
             )}
 
