@@ -24,6 +24,9 @@ async function main() {
   
   const countriesData = yaml.load(fs.readFileSync('prisma/seed/countries/seed.yml', 'utf8')) as any;
   console.log('Countries Data Loaded');
+
+  const configsData = yaml.load(fs.readFileSync('prisma/seed/configs/seed.yml', 'utf8')) as any;
+  console.log('Configs Data Loaded');
   
   console.log('All data loaded. Seeding data...');
 
@@ -78,6 +81,24 @@ async function main() {
   console.log('Seeding countries...');
   await prisma.country.createMany({
     data: countriesData.countries.map((name: string) => ({ name })),
+    skipDuplicates: true,
+  });
+  console.log('Countries seeded successfully.');
+
+  // Seed config data
+  console.log('Seeding configs...');
+  await prisma.config.createMany({
+    data: configsData.configs.map((config: { 
+      key: string;
+      value: any;
+      isActive: boolean;
+      isProtected: boolean;
+    }) => ({
+      key: config.key,
+      value: String(config.value), // Ensure value is always a string
+      isActive: config.isActive,
+      isProtected: config.isProtected
+    })),
     skipDuplicates: true,
   });
   console.log('Countries seeded successfully.');

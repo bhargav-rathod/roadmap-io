@@ -1,0 +1,25 @@
+configs:
+  - key: "companyName"
+    value: "Roadmap.IO"
+    isActive: true
+    isProtected: false
+  - key: "maintenanceBannerIsActive"
+    value: false
+    isActive: true
+    isProtected: true
+  - key: "maintenanceBannerText"
+    value: "The portal is currently undergoing maintenance. We kindly request that you refrain from making any transactions or creating new roadmaps at this time to avoid potential errors. However, you can still browse and explore existing roadmaps without any issues."
+    isActive: true
+    isProtected: true
+  - key: "publicHomePageBannerIsActive"
+    value: true
+    isActive: true
+    isProtected: false
+  - key: "publicHomePageBannerText"
+    value: ""
+    isActive: true
+    isProtected: true
+  - key: "supportEmailId"
+    value: "support@roadmap.io"
+    isActive: true
+    isProtected: false

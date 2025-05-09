@@ -2,28 +2,35 @@ users:
   # Admin user
   - name: Roadmap Admin
     email: admin@roadmap.io
-    password: Admin@123
+    password: RM#Admin@55tUIop
     user_role: ADMIN
     credits: 100
     verified: true
   # User with 10 credits (for testing, ideal user)
   - name: Roadmap User1
     email: testuser@roadmap.io
-    password: rm#User@123
+    password: RM#User@eeR98Gh
     user_role: USER
     credits: 10
     verified: true
   # User with 1000 credits (for testing, especially roadmap generation with 1000 credits)
   - name: Roadmap User2
     email: testuser2@roadmap.io
-    password: rm#User2@123
+    password: RM#User2@rf725PiL
     user_role: USER
     credits: 1000
     verified: true
   # User with 0 credits (for testing, user with 0 credits, payment testing etc.)
   - name: Roadmap User3
     email: testuser3@roadmap.io
-    password: rm#User3@123
+    password: rm#User3@fVVdgGG9
     user_role: USER
     credits: 0
     verified: true
+ # User with email not verified (for testing, user with 0 credits, non verified testing, etc.)
+  - name: Roadmap User4
+    email: testuser4@roadmap.io
+    password: rm#User4@bLL9jHr
+    user_role: USER
+    credits: 0
+    verified: false
