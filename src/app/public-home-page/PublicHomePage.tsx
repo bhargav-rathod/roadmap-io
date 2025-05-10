@@ -19,6 +19,7 @@ export default function PublicHomePage() {
     // Refs and state
     const testimonialRef = useRef<HTMLDivElement>(null);
     const roadmapRef = useRef<HTMLDivElement>(null);
+    // Update the state declarations
     const [testimonialScroll, setTestimonialScroll] = useState({
         isStart: true,
         isEnd: false
@@ -33,6 +34,8 @@ export default function PublicHomePage() {
     });
     const [features, setFeatures] = useState([]);
     const [testimonials, setTestemonials] = useState([]);
+    const [isTestimonialsLoaded, setIsTestimonialsLoaded] = useState(false);
+    const [isRoadmapsLoaded, setIsRoadmapsLoaded] = useState(false);
     type ScrollableRef = React.RefObject<HTMLDivElement>;
 
 
@@ -75,9 +78,30 @@ export default function PublicHomePage() {
         const fetchTestemonials = async () => {
             const loadedTestimonials = await getTestimonialsConfig();
             setTestemonials(loadedTestimonials);
+            setIsTestimonialsLoaded(true);
         };
         fetchTestemonials();
     }, []);
+
+    useEffect(() => {
+        setIsRoadmapsLoaded(true);
+    }, []);
+
+    useEffect(() => {
+        if (isTestimonialsLoaded) {
+            setTimeout(() => {
+                checkScrollPosition(testimonialRef as RefObject<HTMLDivElement>, setTestimonialScroll);
+            }, 100);
+        }
+    }, [isTestimonialsLoaded]);
+
+    useEffect(() => {
+        if (isRoadmapsLoaded) {
+            setTimeout(() => {
+                checkScrollPosition(roadmapRef as RefObject<HTMLDivElement>, setRoadmapScroll);
+            }, 100);
+        }
+    }, [isRoadmapsLoaded]);
 
     // Scroll handlers
     const checkScrollPosition = (ref: React.RefObject<HTMLDivElement>,
@@ -268,14 +292,24 @@ export default function PublicHomePage() {
                             ))}
                         </div>
 
-                        <button
-                            onClick={() => scroll(roadmapRef as ScrollableRef, "right")}
-                            disabled={roadmapScroll.isEnd}
-                            className={`hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-6 z-10 bg-white p-2 md:p-3 rounded-full ${theme.shadows.card} transition-all ${roadmapScroll.isEnd ? 'opacity-30 cursor-not-allowed' : ''
-                                }`}
-                        >
-                            <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-gray-700" />
-                        </button>
+                        {isRoadmapsLoaded && (
+                            <>
+                                <button
+                                    onClick={() => scroll(roadmapRef as ScrollableRef, "left")}
+                                    disabled={roadmapScroll.isStart}
+                                    className={`hidden sm:block absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-6 z-10 bg-white p-2 md:p-3 rounded-full ${theme.shadows.card} transition-all ${roadmapScroll.isStart ? 'opacity-30 cursor-not-allowed' : ''}`}
+                                >
+                                    <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-gray-700" />
+                                </button>
+                                <button
+                                    onClick={() => scroll(roadmapRef as ScrollableRef, "right")}
+                                    disabled={roadmapScroll.isEnd}
+                                    className={`hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-6 z-10 bg-white p-2 md:p-3 rounded-full ${theme.shadows.card} transition-all ${roadmapScroll.isEnd ? 'opacity-30 cursor-not-allowed' : ''}`}
+                                >
+                                    <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-gray-700" />
+                                </button>
+                            </>
+                        )}
                     </div>
                 </div>
             </section>
@@ -328,13 +362,24 @@ export default function PublicHomePage() {
                             ))}
                         </div>
 
-                        <button
-                            onClick={() => scroll(testimonialRef as ScrollableRef, "right")}
-                            disabled={testimonialScroll.isEnd}
-                            className={`hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-6 z-10 bg-white p-2 md:p-3 rounded-full ${theme.shadows.card} transition-all ${testimonialScroll.isEnd ? 'opacity-30 cursor-not-allowed' : ''}`}
-                        >
-                            <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-gray-700" />
-                        </button>
+                        {isTestimonialsLoaded && (
+                            <>
+                                <button
+                                    onClick={() => scroll(testimonialRef as ScrollableRef, "left")}
+                                    disabled={testimonialScroll.isStart}
+                                    className={`hidden sm:block absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-6 z-10 bg-white p-2 md:p-3 rounded-full ${theme.shadows.card} transition-all ${testimonialScroll.isStart ? 'opacity-30 cursor-not-allowed' : ''}`}
+                                >
+                                    <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-gray-700" />
+                                </button>
+                                <button
+                                    onClick={() => scroll(testimonialRef as ScrollableRef, "right")}
+                                    disabled={testimonialScroll.isEnd}
+                                    className={`hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-6 z-10 bg-white p-2 md:p-3 rounded-full ${theme.shadows.card} transition-all ${testimonialScroll.isEnd ? 'opacity-30 cursor-not-allowed' : ''}`}
+                                >
+                                    <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-gray-700" />
+                                </button>
+                            </>
+                        )}
                     </div>
                 </div>
             </section>
