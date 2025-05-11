@@ -365,7 +365,6 @@ companies:
   - name: Sysmex Corporation
   - name: Roche Diagnostics
   - name: Siemens Healthineers
-  - name: Abbott Point of Care
   - name: Ortho Clinical Diagnostics
   - name: Sysmex
   - name: Mindray
@@ -445,7 +444,6 @@ companies:
   - name: Fujifilm
   - name: Konica Minolta
   - name: Epson
-  - name: Brother
   - name: Lexmark
   - name: Xerox
   - name: Canon
@@ -593,13 +591,11 @@ companies:
   - name: OWN
   - name: Hallmark Channel
   - name: Hallmark Movies & Mysteries
-  - name: ABP News
-    type: Non-IT
-  - name: Aaj Tak
+  - name: ABP
     type: Non-IT
   - name: India TV
     type: Non-IT
-  - name: Zee News
+  - name: Zee
     type: Non-IT
   - name: Republic TV
     type: Non-IT
@@ -607,11 +603,9 @@ companies:
     type: Non-IT
   - name: NDTV
     type: Non-IT
-  - name: CNN News18
+  - name: CNN
     type: Non-IT
   - name: India Today
-    type: Non-IT
-  - name: News18
     type: Non-IT
   - name: WION
   - name: Firstpost
@@ -721,18 +715,16 @@ companies:
   - name: MasterClass
   - name: Hotstar
   - name: Netflix
-  - name: Amazon Prime Video
   - name: Hulu
   - name: Disney+
   - name: HBO Max
   - name: Apple TV+
   - name: Peacock
   - name: Paramount+
-  - name: YouTube Premium
+  - name: YouTube
   - name: Sling TV
   - name: FuboTV
   - name: Philo
-  - name: YouTube TV
   - name: Roku Channel
   - name: Pluto TV
   - name: Tubi
@@ -748,7 +740,6 @@ companies:
   - name: Sony Crackle
 
   - name: Jio
-  - name: Airtel
   - name: Vodafone
   - name: Idea
   - name: BSNL
@@ -907,6 +898,7 @@ companies:
   - name: Procter & Gamble
   - name: Unilever
   - name: Johnson & Johnson
+  - name: John Deere
   - name: Colgate-Palmolive
   - name: Henkel
   - name: Beiersdorf
@@ -950,6 +942,91 @@ companies:
   - name: Stadium Goods
   - name: Flight Club
 
+  - name: Zepto
+  - name: BookMyShow
+  - name: Stealth Startup
+  - name: Neilsen
+  - name: CoinSwitch
+  - name: CoinDCX
+  - name: Coinbase
+  - name: Delta Exchange
+  - name: Delta Airlines
+  - name: Bayers CropScience Ltd
+  - name: Binance
+  - name: WazirX
+  - name: Tinder
+  - name: Bumble
+  - name: Grindr
+  - name: KuCoin
+  - name: Bitget
+  - name: JioHotstar
+  - name: Nike
+  - name: Puma
+  - name: Titan
+  - name: Rolex
+  - name: Soroco
+  - name: Nagarro
+  - name: Zeus Learning
+  - name: EPAM
+  - name: Telstra
+  - name: Epsilon
+  - name: Intuit
+  - name: Google Cloud Center (GCC
+  - name: DBS
+  
+  - name: ICICI
+  - name: Axis
+  - name: HDFC
+  - name: IDFC
+  - name: State Bank Of India (SBI)
+  - name: Bank of India (BOI)
+  - name: Reserve Bank of India (RBI)
+  - name: ZS
+  
+  - name: Nestlé
+  - name: PepsiCo
+  - name: Coca-Cola
+  - name: Mondelez
+  - name: General Mills
+    type: Non-IT
+  
+  - name: Amul
+    type: Non-IT
+  - name: Britannia
+    type: Non-IT
+  - name: Haldiram
+    type: Non-IT
+  - name: Parle 
+    type: Non-IT
+  - name: Kellog's
+    type: Non-IT
+  
+  - name: Gracenote
+  - name: Groffers
+  - name: BigBasket
+  
+  - name: Infogain
+  - name: Nomura 
+
+  - name: L&T (Larsen & Turbo)
+  - name: Yelp
+  - name: Zoho
+  - name: PhonePe
+  - name: First American
+  - name: Tekion
+  - name: Sapient
+  - name: OpenText
+  - name: Bizongo
+  - name: Magicbricks
+  - name: FIS
+  - name: Databricks
+  - name: Cloudera
+  - name: Splunk
+  - name: Numerator
+  - name: Slice
+  - name: Wise
+  - name: Finserv
+  - name: Experian
 
   - name: Other
     type: Both

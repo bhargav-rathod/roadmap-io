@@ -5,7 +5,7 @@ import { useRef, useState, useEffect, RefObject } from "react";
 import { Button } from "@/components/ui/Button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { FaLinkedin, FaTwitter, FaInstagram, FaGithub } from "react-icons/fa";
-import { roadMapLabel, roadmaps, roadmapSampleStructureQuestionsText } from "../data/roadmaps";
+import { roadMapLabel } from "../data/roadmaps";
 import { pricingDescription, pricingPlans, pricingTitlePrefix, pricingTitleSuffix } from "../data/pricingPlans";
 import { theme } from "../theme";
 import { COMPANY_NAME, COMPANY_SLOGAN, GET_STARTED_BUTTON_TEXT, PAGE_HEADER_PREFIX } from "../data/config";
@@ -14,6 +14,7 @@ import { getFeaturesConfig } from "../../lib/publicHomePageFeatures";
 import { PublicHomePageFeatures } from "../../../types/public-home-page-features";
 import { getTestimonialsConfig } from "../../lib/publicHomePageTestimonials";
 import { PublicHomePageTestimonials } from "../../../types/public-home-page-testimonials";
+import { getRoadmapsConfig } from "../../lib/publicHomePageRoadmaps";
 
 export default function PublicHomePage() {
     // Refs and state
@@ -34,6 +35,7 @@ export default function PublicHomePage() {
     });
     const [features, setFeatures] = useState([]);
     const [testimonials, setTestemonials] = useState([]);
+    const [roadmaps, setRoadmaps] = useState([]);
     const [isTestimonialsLoaded, setIsTestimonialsLoaded] = useState(false);
     const [isRoadmapsLoaded, setIsRoadmapsLoaded] = useState(false);
     type ScrollableRef = React.RefObject<HTMLDivElement>;
@@ -84,16 +86,21 @@ export default function PublicHomePage() {
     }, []);
 
     useEffect(() => {
-        setIsRoadmapsLoaded(true);
-    }, []);
-
-    useEffect(() => {
         if (isTestimonialsLoaded) {
             setTimeout(() => {
                 checkScrollPosition(testimonialRef as RefObject<HTMLDivElement>, setTestimonialScroll);
             }, 100);
         }
     }, [isTestimonialsLoaded]);
+
+    useEffect(() => {
+        const fetchRoadmaps = async () => {
+            const loadedRoadmaps = await getRoadmapsConfig();
+            setRoadmaps(loadedRoadmaps);
+            setIsRoadmapsLoaded(true);
+        };
+        fetchRoadmaps();
+    }, []);
 
     useEffect(() => {
         if (isRoadmapsLoaded) {
@@ -240,15 +247,6 @@ export default function PublicHomePage() {
                         </p>
                     </div>
                     <div className="relative">
-                        <button
-                            onClick={() => scroll(roadmapRef as ScrollableRef, "left")}
-                            disabled={roadmapScroll.isStart}
-                            className={`hidden sm:block absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-6 z-10 bg-white p-2 md:p-3 rounded-full ${theme.shadows.card} transition-all ${roadmapScroll.isStart ? 'opacity-30 cursor-not-allowed' : ''
-                                }`}
-                        >
-                            <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-gray-700" />
-                        </button>
-
                         <div
                             ref={roadmapRef}
                             className="flex overflow-x-auto gap-4 sm:gap-6 md:gap-8 pb-6 md:pb-8 scroll-smooth px-2"
@@ -267,7 +265,7 @@ export default function PublicHomePage() {
                                     <p className={`${theme.typography.caption} text-center mb-4`}>{roadmap.pattern}</p>
 
                                     <div className="mb-4">
-                                        <h5 className={`mb-2 text-sm md:text-base ${theme.typography.subheading}`}>{roadmapSampleStructureQuestionsText}:</h5>
+                                        <h5 className={`mb-2 text-sm md:text-base ${theme.typography.subheading}`}>Recently Asked Questions:</h5>
                                         <ul className={`list-disc list-inside text-xs md:text-sm ${theme.typography.body} space-y-1`}>
                                             {roadmap.questions.map((q: string, i: number) => (
                                                 <li key={i}>{q}</li>
@@ -322,14 +320,6 @@ export default function PublicHomePage() {
                     </h2>
 
                     <div className="relative">
-                        <button
-                            onClick={() => scroll(testimonialRef as ScrollableRef, "left")}
-                            disabled={testimonialScroll.isStart}
-                            className={`hidden sm:block absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-6 z-10 bg-white p-2 md:p-3 rounded-full ${theme.shadows.card} transition-all ${testimonialScroll.isStart ? 'opacity-30 cursor-not-allowed' : ''}`}
-                        >
-                            <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-gray-700" />
-                        </button>
-
                         <div
                             ref={testimonialRef}
                             className="flex overflow-x-auto gap-4 sm:gap-6 md:gap-8 pb-6 md:pb-8 scroll-smooth px-2"
