@@ -34,9 +34,9 @@ async function main() {
   console.log('Seeding users...');
   await prisma.user.createMany({
     data: userData.users.map((user: any) => ({
-      email: user.email.trim().toLowerCase(),
-      name: user.name.trim(),
-      password: user.password.trim() ? bcrypt.hashSync(user.password.trim(), 12) : null,
+      email: user.email?.trim().toLowerCase(),
+      name: user.name?.trim(),
+      password: user.password?.trim() ? bcrypt.hashSync(user.password?.trim(), 12) : null,
       verified: user.verified || false,
       credits: user.credits || 0,
       user_role: user.user_role || 'USER',
@@ -51,8 +51,8 @@ async function main() {
   console.log('Seeding companies...');
   await prisma.company.createMany({
     data: companiesData.companies.map((company: any)=> ({
-      name: company.name.trim(),
-      type: company.type.trim() || 'Both', // Default to 'Both' if type not specified
+      name: company.name?.trim(),
+      type: company.type?.trim() || 'Both', // Default to 'Both' if type not specified
     })),
     skipDuplicates: true,
   });
@@ -62,8 +62,8 @@ async function main() {
   console.log('Seeding roles...');
   await prisma.role.createMany({
     data: rolesData.roles.map((role: any)=> ({
-      name: role.name.trim(),
-      type: role.type.trim() || 'Both', // Default to 'Both' if type not specified
+      name: role.name?.trim(),
+      type: role.type?.trim() || 'Both', // Default to 'Both' if type not specified
     })),
     skipDuplicates: true,
   });
@@ -72,7 +72,7 @@ async function main() {
   // Seed programming languages
   console.log('Seeding programming languages...');
   await prisma.programmingLanguage.createMany({
-    data: programmingLanguagesData.programmingLanguages.trim(),
+    data: programmingLanguagesData.programmingLanguages,
     skipDuplicates: true,
   });
   console.log('Programming languages seeded successfully.');
@@ -94,8 +94,8 @@ async function main() {
       isActive: boolean;
       isProtected: boolean;
     }) => ({
-      key: config.key.trim(),
-      value: String(config.value.trim()), // Ensure value is always a string
+      key: config.key,
+      value: String(config.value), // Ensure value is always a string
       isActive: config.isActive,
       isProtected: config.isProtected
     })),
