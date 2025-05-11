@@ -1028,5 +1028,79 @@ companies:
   - name: Finserv
   - name: Experian
 
+
+  - name: TestGorilla
+  - name: airspace-link
+  - name: Pearson
+  - name: Confluent
+  - name: Cengage Group
+  - name: Quest Software
+  - name: Kforce
+  - name: Upstart
+  - name: hims & hers
+  - name: UserGems
+  - name: blackbaud
+  - name: Abnormal Security
+  - name: Cash App
+  - name: LogicGate
+  - name: Faire
+  - name: GitHub
+  - name: Aurora Solar
+  - name: Renaissanc
+  - name: Rec Room
+  - name: VGS
+  - name: Patreon
+  - name: Beekeeper
+  - name: Upwork
+  - name: DocuSign
+  - name: DealHub.io
+  - name: Census
+  - name: Intrado
+  - name: Cloudflare
+  - name: Funded. club
+  - name: Workiva
+  - name: MissionWired
+  - name: Workera
+  - name: Jenius Bank
+  - name: Goinstacare
+  - name: Uplers
+  - name: Quantum
+  - name: Canonical
+  - name: Kemecon
+  - name: DigitalOcean
+  - name: Gitlab
+  - name: AngelOne
+  - name: Help Scout
+  - name: Appcues
+  - name: Arkency
+  - name: Automattic
+  - name: Awesomemotive
+  - name: Buffer
+  - name: apartment-list
+  - name: Constructor
+  - name: Fleetio
+  - name: Agency Analytics
+  - name: Contra
+  - name: Doist
+  - name: Taskrabbit
+  - name: DuckDuckGo
+  - name: aquia-inc
+  - name: Bold
+  - name: Akamai Technologies
+  - name: iVisa
+  - name: Affordmate
+  - name: Xapobank
+  - name: Symetra
+  - name: pagerduty
+  - name: Docker, Inc
+  - name: Citizens Bank
+
+  - name: UiPath
+  - name: Automation Anywhere
+  - name: Pega
+  - name: Blue Prism
+  - name: Kofex
+  - name: Nintex
+
   - name: Other
     type: Both
