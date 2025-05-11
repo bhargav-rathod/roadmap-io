@@ -1102,5 +1102,84 @@ companies:
   - name: Kofex
   - name: Nintex
 
+  - name: Postman
+  - name: Service Now
+  - name: Indeed
+  - name: Glassdoor
+  - name: Idealist
+  - name: Internshala
+  - name: LookSharp
+  - name: Alma Mater
+  - name: Absolute Internship
+  - name: Cutshort
+  - name: Naukri
+  - name: EaseMyTrip
+  - name: fiverr
+  - name: Snowflake
+  - name: DigitalOcean
+  - name: Palo Alto Networks
+  - name: Tejas Networks
+  - name: McAfee
+  - name: CrowdStrike
+  - name: HelloFresh
+  - name: Celonis
+  - name: INFARM
+  - name: PayFit
+  - name: BharatPe
+  - name: Zalando
+  - name: Ubisoft
+  - name: Klarna
+  - name: Delivery Hero
+  - name: Adnymics
+  - name: Hive.app
+  - name: N26
+  - name: Signavio
+  - name: Wayfair
+  - name: Free Now
+  - name: Trivago
+  - name: Babbel
+  - name: Personio
+  - name: RapidAPI
+  - name: HelloFresh
+  - name: PayFit
+  - name: SumUp
+  - name: Taxfix
+  - name: Blinkist
+  - name: SoundCloud
+  - name: Pitch
+  - name: Qonto
+  - name: Gorillas
+  - name: Hashicorp
+  - name: Project44
+  - name: TradeRepublic
+  - name: Immobilienscout24
+  - name: Clark
+  - name: Forto
+  - name: Raisin
+  - name: InVision
+  - name: Tipico
+  - name: Container xChange
+  - name: Celus
+  - name: Civey GmbH
+  - name: Back Market
+  - name: Navvis
+  - name: e-Bot7
+  - name: Bigpoint
+  - name: Faishon Cloud
+  - name: Flaconi
+  - name: OneFootball
+  - name: Jam City
+  - name: Mister Spex
+  - name: Getir
+  - name: Capmo
+  - name: OneFootball
+  - name: Project Plato
+  - name: Contentful
+  - name: Diet Doctor
+  - name: Bending Spoons
+  - name: Agentur Loop
+  - name: Glovo
+  - name: DataDog
+
   - name: Other
     type: Both
