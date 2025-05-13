@@ -34,6 +34,7 @@ export default function AboutModal({ isOpen, onClose }: AboutModalProps) {
                                 <p><span className="font-medium">Version:</span> 1.0.0 (Stable)</p>
                                 <p><span className="font-medium">Release Date:</span> January 2025</p>
                                 <p><span className="font-medium">API Version:</span> v1.7.0</p>
+                                <p><span className='font-medium'>AI Models integrated:</span> <b>llama-3.3-70b-versatile</b> | qwen-qwq-32b | whisper-large-v3-turbo</p>
                             </div>
                         </div>
 

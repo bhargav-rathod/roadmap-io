@@ -39,8 +39,13 @@ export default function RoadmapPage({ roadmap }: RoadmapPageProps) {
     useEffect(() => {
         setIsClient(true);
         if (roadmap?.content) {
-            const contentSections = roadmap.content.split(/(?=^##\s)/gm);
-            setPages(contentSections);
+            // Enhanced splitting logic to properly handle section dividers
+            const contentSections = roadmap.content
+                .split(/\n-{3,}\n|\n\n---+\n\n/) // Split by horizontal rules or section dividers
+                .filter(section => section.trim().length > 0); // Remove empty sections
+
+            // If we have sections, use them; otherwise use the full content as a single page
+            setPages(contentSections.length > 1 ? contentSections : [roadmap.content]);
         }
 
         // Check for saved preferences
@@ -116,7 +121,7 @@ export default function RoadmapPage({ roadmap }: RoadmapPageProps) {
     }
 
     return (
-        <div className={`min-h-screen py-4 md:py-10 px-4 transition-colors duration-300 ${darkMode ? 'bg-white-100 text-gray-100' : 'bg-white-100'}`}>
+        <div className={`min-h-screen py-4 md:py-10 px-4 transition-colors duration-300 ${darkMode ? 'bg-gray-900 text-gray-100' : 'bg-gray-50'}`}>
             {/* Main container with fixed height */}
             <div
                 ref={containerRef}
@@ -298,6 +303,11 @@ export default function RoadmapPage({ roadmap }: RoadmapPageProps) {
                                             darkMode ? 'text-indigo-200' : 'text-indigo-600'
                                         }`} {...props} />
                                     ),
+                                    h4: ({ node, ...props }) => (
+                                        <h4 className={`text-base md:text-xl font-medium mt-3 md:mt-5 mb-2 md:mb-3 ${
+                                            darkMode ? 'text-indigo-200' : 'text-indigo-600'
+                                        }`} {...props} />
+                                    ),
                                     p: ({ node, ...props }) => (
                                         <p className={`leading-relaxed mb-3 md:mb-4 ${
                                             darkMode ? 'text-gray-300' : 'text-gray-700'
@@ -329,10 +339,35 @@ export default function RoadmapPage({ roadmap }: RoadmapPageProps) {
                                     ul: ({ node, ...props }) => (
                                         <ul className="list-disc ml-4 md:ml-6 mb-3 md:mb-4 space-y-1" {...props} />
                                     ),
+                                    ol: ({ node, ...props }) => (
+                                        <ol className="list-decimal ml-4 md:ml-6 mb-3 md:mb-4 space-y-1" {...props} />
+                                    ),
+                                    table: ({ node, ...props }) => (
+                                        <div className="overflow-x-auto">
+                                            <table className={`min-w-full border-collapse my-4 ${
+                                                darkMode ? 'border-gray-600' : 'border-gray-300'
+                                            }`} {...props} />
+                                        </div>
+                                    ),
+                                    th: ({ node, ...props }) => (
+                                        <th className={`p-2 md:p-3 border ${
+                                            darkMode ? 'border-gray-600 bg-gray-700' : 'border-gray-300 bg-gray-100'
+                                        }`} {...props} />
+                                    ),
+                                    td: ({ node, ...props }) => (
+                                        <td className={`p-2 md:p-3 border ${
+                                            darkMode ? 'border-gray-600' : 'border-gray-300'
+                                        }`} {...props} />
+                                    ),
                                     a: ({ node, ...props }) => (
                                         <a className={`${
                                             darkMode ? 'text-indigo-400 hover:text-indigo-300' : 'text-indigo-600 hover:text-indigo-500'
                                         } underline`} {...props} />
+                                    ),
+                                    hr: ({ node, ...props }) => (
+                                        <hr className={`my-4 md:my-6 ${
+                                            darkMode ? 'border-gray-700' : 'border-gray-200'
+                                        }`} {...props} />
                                     ),
                                 }}
                             >

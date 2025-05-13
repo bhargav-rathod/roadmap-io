@@ -18,7 +18,7 @@ export async function GET(request: Request) {
 
   try {
     const roadmaps = await prisma.roadmap.findMany({
-      where: { 
+      where: {
         userId,
         expiresAt: { gt: new Date() } // Only non-expired roadmaps
       },
@@ -51,12 +51,12 @@ export async function POST(request: Request) {
   }
 
   try {
-    const { 
-      language, 
+    const {
+      language,
       targetDuration,
       companyOther,
       roleOther,
-      ...roadmapData 
+      ...roadmapData
     } = await request.json();
 
     // Validate required fields
@@ -71,17 +71,16 @@ export async function POST(request: Request) {
     let companyName = roadmapData.company;
     if (roadmapData.company === 'Other' && companyOther) {
       companyName = companyOther;
-      if(process.env.PUSH_OTHER_ENTRY_IN_DB === "true")
-      {
-          // Create new company if it doesn't exist
-          await prisma.company.upsert({
-            where: { name: companyName },
-            update: {},
-            create: { 
-              name: companyName, 
-              type: roadmapData.roleType === 'Non-IT' ? 'Non-IT' : 'IT' 
-            }
-          });
+      if (process.env.PUSH_OTHER_ENTRY_IN_DB === "true") {
+        // Create new company if it doesn't exist
+        await prisma.company.upsert({
+          where: { name: companyName },
+          update: {},
+          create: {
+            name: companyName,
+            type: roadmapData.roleType === 'Non-IT' ? 'Non-IT' : 'IT'
+          }
+        });
       }
     }
 
@@ -89,15 +88,14 @@ export async function POST(request: Request) {
     let roleName = roadmapData.role;
     if (roadmapData.role === 'Other' && roleOther) {
       roleName = roleOther;
-      if(process.env.PUSH_OTHER_ENTRY_IN_DB === "true")
-      {
+      if (process.env.PUSH_OTHER_ENTRY_IN_DB === "true") {
         // Create new role if it doesn't exist
         await prisma.role.upsert({
           where: { name: roleName },
           update: {},
-          create: { 
-            name: roleName, 
-            type: roadmapData.roleType === 'Non-IT' ? 'Non-IT' : 'IT' 
+          create: {
+            name: roleName,
+            type: roadmapData.roleType === 'Non-IT' ? 'Non-IT' : 'IT'
           }
         });
       }
@@ -108,18 +106,27 @@ export async function POST(request: Request) {
       await prisma.programmingLanguage.upsert({
         where: { name: language },
         update: {},
-        create: { 
-          name: language, 
-          type: roadmapData.roleType === 'Non-IT' ? 'Non-IT' : 'IT' 
+        create: {
+          name: language,
+          type: roadmapData.roleType === 'Non-IT' ? 'Non-IT' : 'IT'
         }
       });
     }
 
     // Generate content with OpenAI (simplified example)
-    var prompt = await createPrompt(roadmapData);
-    console.log(`prompt is:` + prompt);
-    const content = await generateRoadmapContent(prompt);
-    console.log(`content is: ` + content);
+    const prompts = await createPrompt(roadmapData);
+    var fullRoadmap: string = '';
+
+    for (let i = 0; i < prompts.length; i++) {
+      console.log(`Processing prompt ${i + 1} of ${prompts.length}`);
+      try {
+        const response = await generateRoadmapContent(prompts[i]);
+        fullRoadmap += `\n\n---\n\n${response}`;
+      } catch (error) {
+        console.error(`Error on prompt ${i + 1}:`, error);
+        fullRoadmap += `\n\n---\n\n[Failed to fetch this section\n\n`;
+      }
+    }
 
     // Calculate expiry date (365 days from now)
     const expiresAt = new Date();
@@ -141,7 +148,7 @@ export async function POST(request: Request) {
         includeCompensationData: roadmapData.includeCompensationData || false,
         includeOtherDetails: roadmapData.includeOtherDetails || false,
         otherDetails: roadmapData.otherDetails,
-        content,
+        content: fullRoadmap,
         userId: session.user.id,
         expiresAt,
       },
@@ -160,7 +167,7 @@ export async function POST(request: Request) {
 
   } catch (error: any) {
     return NextResponse.json(
-      { 
+      {
         error: 'Failed to create roadmap',
         details: process.env.NODE_ENV === 'development' ? error.message : undefined
       },
@@ -171,31 +178,31 @@ export async function POST(request: Request) {
 
 async function generateRoadmapContent(prompt: string): Promise<string> {
   console.log('calling ai endpoint');
-    try {
-      const response = await openai.chat.completions.create({
-        model: 'compound-beta',
-        messages: [
-          { role: 'system', content: 'You are an expert career counselor who generates detailed, actionable roadmaps for users based on their career goals.' },
-          { role: 'user', content: prompt },
-        ],
-        temperature: 0.7,
-        max_tokens: 2000,
-      });
-      
-      console.log(`response from model is:` + response);
-      const content = response.choices[0]?.message?.content;
-      if (!content) throw new Error('No content received from OpenAI');
-      
-      return content.trim();
-    } catch (error: any) {
-      console.log('calling ai endpoint failed: ', error);
-      throw new Error('Failed to generate roadmap content');
-    }
+  try {
+    const response = await openai.chat.completions.create({
+      //model: 'llama-3.3-70b-versatile',
+      model: 'whisper-large-v3-turbo',
+      messages: [
+        { role: 'system', content: 'You are an expert career counselor who generates detailed, actionable roadmaps for users based on their career goals.' },
+        { role: 'user', content: prompt },
+      ],
+      temperature: 0.7,
+      max_tokens: 6000,
+    });
+
+    console.log(`response from model is:` + response);
+    const content = response.choices[0]?.message?.content;
+    if (!content) throw new Error('No content received from OpenAI');
+
+    return content.trim();
+  } catch (error: any) {
+    console.log('calling ai endpoint failed: ', error);
+    throw new Error('Failed to generate roadmap content');
   }
+}
 
-  const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-    baseURL: 'https://api.groq.com/openai/v1', // Important!
-  });
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+  baseURL: 'https://api.groq.com/openai/v1', // Important!
+});
 
-  

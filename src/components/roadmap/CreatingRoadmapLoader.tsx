@@ -6,7 +6,11 @@ import { createPortal } from 'react-dom';
 const messages = [
   "Hang tight, we are creating the best roadmap for you",
   "We are as excited as you are in this journey",
+  "We are looking for the recent and latest data for you",
+  "We are conducting research on the recent information",
+  "Curious, Ah! Yes, but we are happy to assist you in this roadmap journey...",
   "Don't get bored, we're searching for the most useful information",
+  "We got almost all what you need.. just polishing it for the better quality",
   "Compiling the perfect resources for your success",
   "Almost there! Your personalized roadmap is coming together"
 ];
