@@ -15,6 +15,7 @@ import { PublicHomePageFeatures } from "../../../types/public-home-page-features
 import { getTestimonialsConfig } from "../../lib/publicHomePageTestimonials";
 import { PublicHomePageTestimonials } from "../../../types/public-home-page-testimonials";
 import { getRoadmapsConfig } from "../../lib/publicHomePageRoadmaps";
+import Tooltip from "@/components/ui/Tooltip";
 
 export default function PublicHomePage() {
     // Refs and state
@@ -483,25 +484,61 @@ export default function PublicHomePage() {
                     <div>
                         <h4 className="font-bold text-lg mb-3 md:mb-4 text-white">Connect</h4>
                         <div className="flex gap-3 md:gap-4">
-                            <a href="#" className="text-gray-400 hover:text-white transition-colors" aria-label="LinkedIn">
-                                <FaLinkedin className="w-4 h-4 md:w-5 md:h-5" />
-                            </a>
-                            <a href="#" className="text-gray-400 hover:text-white transition-colors" aria-label="Twitter">
-                                <FaTwitter className="w-4 h-4 md:w-5 md:h-5" />
-                            </a>
-                            <a href="#" className="text-gray-400 hover:text-white transition-colors" aria-label="Instagram">
-                                <FaInstagram className="w-4 h-4 md:w-5 md:h-5" />
-                            </a>
-                            <a href="#" className="text-gray-400 hover:text-white transition-colors" aria-label="GitHub">
-                                <FaGithub className="w-4 h-4 md:w-5 md:h-5" />
-                            </a>
+                            <Tooltip
+                                content="We appreciate your excitement! We're not on LinkedIn yet, but coming soon!"
+                                position="bottom"
+                            >
+                                <button
+                                    className="text-gray-400 hover:text-white transition-colors cursor-pointer"
+                                    aria-label="LinkedIn"
+                                >
+                                    <FaLinkedin className="w-4 h-4 md:w-5 md:h-5" />
+                                </button>
+                            </Tooltip>
+
+                            <Tooltip
+                                content="We appreciate your excitement! We're not on Twitter yet, but coming soon!"
+                                position="bottom"
+                            >
+                                <button
+                                    className="text-gray-400 hover:text-white transition-colors cursor-pointer"
+                                    aria-label="Twitter"
+                                >
+                                    <FaTwitter className="w-4 h-4 md:w-5 md:h-5" />
+                                </button>
+                            </Tooltip>
+
+                            <Tooltip
+                                content="We appreciate your excitement! We're not on Instagram yet, but coming soon!"
+                                position="bottom"
+                            >
+                                <button
+                                    className="text-gray-400 hover:text-white transition-colors cursor-pointer"
+                                    aria-label="Instagram"
+                                >
+                                    <FaInstagram className="w-4 h-4 md:w-5 md:h-5" />
+                                </button>
+                            </Tooltip>
+
+                            <Tooltip
+                                content="We appreciate your excitement! We're not on GitHub yet, but coming soon!"
+                                position="bottom"
+                            >
+                                <button
+                                    className="text-gray-400 hover:text-white transition-colors cursor-pointer"
+                                    aria-label="GitHub"
+                                >
+                                    <FaGithub className="w-4 h-4 md:w-5 md:h-5" />
+                                </button>
+                            </Tooltip>
                         </div>
                     </div>
                 </div>
+
                 <div className={`max-w-7xl mx-auto mt-8 md:mt-12 pt-6 border-t border-gray-800 text-center ${theme.typography.caption}`}>
                     © {new Date().getFullYear()} {COMPANY_NAME}. All rights reserved.
                 </div>
             </footer>
-        </main>
+        </main >
     );
 }

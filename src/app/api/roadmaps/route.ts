@@ -180,8 +180,8 @@ async function generateRoadmapContent(prompt: string): Promise<string> {
   console.log('calling ai endpoint');
   try {
     const response = await openai.chat.completions.create({
-      //model: 'llama-3.3-70b-versatile',
-      model: 'whisper-large-v3-turbo',
+      model: 'llama-3.3-70b-versatile',
+      //model: 'whisper-large-v3-turbo',
       messages: [
         { role: 'system', content: 'You are an expert career counselor who generates detailed, actionable roadmaps for users based on their career goals.' },
         { role: 'user', content: prompt },

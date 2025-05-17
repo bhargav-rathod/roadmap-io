@@ -15,6 +15,7 @@ export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [formErrors, setFormErrors] = useState<Record<string, string>>({})
+  const [acceptedTerms, setAcceptedTerms] = useState(false)
 
   const validateForm = (formData: FormData) => {
     const errors: Record<string, string> = {}
@@ -53,6 +54,11 @@ export default function SignupPage() {
       errors.confirmPassword = 'Passwords do not match'
     }
 
+    // Terms validation
+    if (!acceptedTerms) {
+      errors.terms = 'You must accept the terms and conditions'
+    }
+
     setFormErrors(errors)
     return Object.keys(errors).length === 0
   }
@@ -64,7 +70,7 @@ export default function SignupPage() {
     setSuccessMessage(null)
 
     const formData = new FormData(e.currentTarget)
-    
+
     if (!validateForm(formData)) {
       setIsLoading(false)
       return
@@ -122,7 +128,7 @@ export default function SignupPage() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
         <h1 className="text-2xl font-bold mb-6 text-center">Sign Up</h1>
-        
+
         {error && (
           <div className="mb-4 p-2 bg-red-100 text-red-700 rounded">
             {error}
@@ -175,7 +181,7 @@ export default function SignupPage() {
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                   Password
                 </label>
-                
+
                 <div className="relative mt-1 rounded-md shadow-sm">
                   <input
                     id="password"
@@ -236,6 +242,35 @@ export default function SignupPage() {
                 )}
               </div>
 
+              <div className="flex items-start">
+                {/* <div className="flex items-center h-5">
+                  <input
+                    id="terms"
+                    name="terms"
+                    type="checkbox"
+                    checked={acceptedTerms}
+                    onChange={(e) => setAcceptedTerms(e.target.checked)}
+                    className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                  />
+                </div> */}
+                <div className="text-xs">
+                  <label htmlFor="terms" className="font-medium text-gray-700">
+                    By continuing, you agree to our{' '}
+                    <Link href="/terms" className="text-indigo-600 hover:text-indigo-500">
+                      Terms and Conditions
+                    </Link>{' '}
+                    and{' '}
+                    <Link href="/privacy" className="text-indigo-600 hover:text-indigo-500">
+                      Privacy Policy
+                    </Link>
+                  </label>
+                  {formErrors.terms && (
+                    <p className="mt-1 text-sm text-red-600">{formErrors.terms}</p>
+                  )}
+                </div>
+              </div>
+
+
               <div>
                 <button
                   type="submit"
@@ -260,7 +295,7 @@ export default function SignupPage() {
               </div>
 
               <div>
-                <br/>
+                <br />
                 <button
                   onClick={() => handleSocialSignIn('google')}
                   disabled={isLoading}
