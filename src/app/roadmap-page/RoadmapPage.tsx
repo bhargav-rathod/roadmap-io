@@ -141,7 +141,7 @@ export default function RoadmapPage({ roadmap }: RoadmapPageProps) {
                     darkMode ? 'border-gray-700' : 'border-gray-200'
                 }`}>
                     <div className="flex flex-col md:flex-row justify-between items-start gap-4">
-                        <h1 className="text-2xl md:text-4xl font-extrabold break-words">{roadmap.title}</h1>
+                        <h1 className="text-2xl md:text-2xl font-extrabold break-words">{roadmap.title}</h1>
 
                         <div className="flex items-center gap-2 md:gap-4 flex-wrap">
                             {/* Reading controls */}
