@@ -31,6 +31,9 @@ Roadmap.IO is a dynamic web application that helps users generate role-based car
 
 ---
 
+### 📸 Snapshots
+
+---
 ## 📦 Local Development
 
 ### 1. Clone the repo
@@ -60,6 +63,12 @@ NEXT_PUBLIC_BASE_URL=http://localhost:3000
 npm run dev
 ```
 
-### 5. Snapshots
+---
 
+## 🤝 Contributing
+We welcome contributions! To contribute:
 
+  - Fork the repository
+  - Create a new branch: git checkout -b feature-name
+  - Commit your changes
+  - Push and open a Pull Request
