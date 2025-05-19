@@ -8,14 +8,13 @@ Roadmap.IO is a dynamic web application that helps users generate role-based car
 
 - 🎯 Generate detailed career/interview roadmaps by selecting a role and company
 - ✨ GPT-powered insights based on real-world patterns
-- 📦 Download and save roadmaps (first one free; rest behind a paywall)
-- 💳 Payment integration (INR 100 / $1.5 per roadmap)
-- 🔐 Secure Login/Signup with Google & reCAPTCHA v3
-- 🖼️ Beautiful public homepage with:
-  - Sample roadmaps
-  - Feature highlights
-  - Testimonials
-  - About & Support links
+- 📦 Create roadmaps specific to company, designation, country, years of experience or even with specific Job Descriptions
+- ✨ Focused on reading (Dark Mode, Font Change and Full Page Features)
+- 💳 Payment integration
+- 🔐 Secure Login/Signup with Change Password
+- 🔐 Login with Google 
+- 🔐 Email Verification
+- 🖼️ Beautiful public homepage with Sample roadmaps, Feature highlights, Testimonials, About, Support and Required links
 
 ---
 
@@ -66,7 +65,7 @@ npm run dev
 ---
 
 ## 🤝 Contributing
-We welcome contributions! To contribute:
+Welcome contributions! To contribute:
 
   - Fork the repository
   - Create a new branch: git checkout -b feature-name
