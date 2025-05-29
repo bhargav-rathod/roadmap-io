@@ -55,9 +55,9 @@ export default function SignupPage() {
     }
 
     // Terms validation
-    if (!acceptedTerms) {
-      errors.terms = 'You must accept the terms and conditions'
-    }
+    // if (!acceptedTerms) {
+    //   errors.terms = 'You must accept the terms and conditions'
+    // }
 
     setFormErrors(errors)
     return Object.keys(errors).length === 0
