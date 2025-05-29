@@ -34,50 +34,60 @@ Roadmap.IO is a dynamic web application that helps users generate role-based car
 <div align="center">
   <img src="https://github.com/bhargav-rathod/roadmap-io/blob/main/snapshots/1.png?raw=true" alt="Homepage" width="300" />
   <img src="https://github.com/bhargav-rathod/roadmap-io/blob/main/snapshots/2.png?raw=true" alt="Homepage" width="300" />
-  <img src="https://github.com/bhargav-rathod/roadmap-io/blob/main/snapshots/3.png?raw=true" alt="Homepage" width="300" />
 </div>
 <div align="center">
+  <img src="https://github.com/bhargav-rathod/roadmap-io/blob/main/snapshots/3.png?raw=true" alt="Homepage" width="300" />
   <img src="https://github.com/bhargav-rathod/roadmap-io/blob/main/snapshots/4.png?raw=true" alt="Homepage" width="300" />
+</div>
+<div align="center">
   <img src="https://github.com/bhargav-rathod/roadmap-io/blob/main/snapshots/5.png?raw=true" alt="Homepage" width="300" />
   <img src="https://github.com/bhargav-rathod/roadmap-io/blob/main/snapshots/6.png?raw=true" alt="Homepage" width="300" />
 </div>
 <div align="center">
   <img src="https://github.com/bhargav-rathod/roadmap-io/blob/main/snapshots/7.png?raw=true" alt="Homepage" width="300" />
   <img src="https://github.com/bhargav-rathod/roadmap-io/blob/main/snapshots/8.png?raw=true" alt="Homepage" width="300" />
-  <img src="https://github.com/bhargav-rathod/roadmap-io/blob/main/snapshots/9.png?raw=true" alt="Homepage" width="300" />
 </div>
 <div align="center">
+  <img src="https://github.com/bhargav-rathod/roadmap-io/blob/main/snapshots/9.png?raw=true" alt="Homepage" width="300" />
   <img src="https://github.com/bhargav-rathod/roadmap-io/blob/main/snapshots/10.png?raw=true" alt="Homepage" width="300" />
+</div>
+<div align="center">
   <img src="https://github.com/bhargav-rathod/roadmap-io/blob/main/snapshots/11.png?raw=true" alt="Homepage" width="300" />
   <img src="https://github.com/bhargav-rathod/roadmap-io/blob/main/snapshots/12.png?raw=true" alt="Homepage" width="300" />
 </div>
 <div align="center">
   <img src="https://github.com/bhargav-rathod/roadmap-io/blob/main/snapshots/13.png?raw=true" alt="Homepage" width="300" />
   <img src="https://github.com/bhargav-rathod/roadmap-io/blob/main/snapshots/14.png?raw=true" alt="Homepage" width="300" />
-  <img src="https://github.com/bhargav-rathod/roadmap-io/blob/main/snapshots/15.png?raw=true" alt="Homepage" width="300" />
 </div>
 <div align="center">
+  <img src="https://github.com/bhargav-rathod/roadmap-io/blob/main/snapshots/15.png?raw=true" alt="Homepage" width="300" />
   <img src="https://github.com/bhargav-rathod/roadmap-io/blob/main/snapshots/16.png?raw=true" alt="Homepage" width="300" />
+</div>
+<div align="center">
   <img src="https://github.com/bhargav-rathod/roadmap-io/blob/main/snapshots/17.png?raw=true" alt="Homepage" width="300" />
   <img src="https://github.com/bhargav-rathod/roadmap-io/blob/main/snapshots/18.png?raw=true" alt="Homepage" width="300" />
 </div>
 <div align="center">
   <img src="https://github.com/bhargav-rathod/roadmap-io/blob/main/snapshots/19.png?raw=true" alt="Homepage" width="300" />
   <img src="https://github.com/bhargav-rathod/roadmap-io/blob/main/snapshots/20.png?raw=true" alt="Homepage" width="300" />
-  <img src="https://github.com/bhargav-rathod/roadmap-io/blob/main/snapshots/21.png?raw=true" alt="Homepage" width="300" />
 </div>
 <div align="center">
+  <img src="https://github.com/bhargav-rathod/roadmap-io/blob/main/snapshots/21.png?raw=true" alt="Homepage" width="300" />
   <img src="https://github.com/bhargav-rathod/roadmap-io/blob/main/snapshots/22.png?raw=true" alt="Homepage" width="300" />
+</div>
+<div align="center">
   <img src="https://github.com/bhargav-rathod/roadmap-io/blob/main/snapshots/23.png?raw=true" alt="Homepage" width="300" />
   <img src="https://github.com/bhargav-rathod/roadmap-io/blob/main/snapshots/24.png?raw=true" alt="Homepage" width="300" />
 </div>
 <div align="center">
   <img src="https://github.com/bhargav-rathod/roadmap-io/blob/main/snapshots/25.png?raw=true" alt="Homepage" width="300" />
   <img src="https://github.com/bhargav-rathod/roadmap-io/blob/main/snapshots/26.png?raw=true" alt="Homepage" width="300" />
-  <img src="https://github.com/bhargav-rathod/roadmap-io/blob/main/snapshots/27.png?raw=true" alt="Homepage" width="300" />
 </div>
 <div align="center">
+  <img src="https://github.com/bhargav-rathod/roadmap-io/blob/main/snapshots/27.png?raw=true" alt="Homepage" width="300" />
   <img src="https://github.com/bhargav-rathod/roadmap-io/blob/main/snapshots/28.png?raw=true" alt="Homepage" width="300" />
+</div>
+<div align="center">
   <img src="https://github.com/bhargav-rathod/roadmap-io/blob/main/snapshots/29.png?raw=true" alt="Homepage" width="300" />
   <img src="https://github.com/bhargav-rathod/roadmap-io/blob/main/snapshots/30.png?raw=true" alt="Homepage" width="300" />
 </div>
