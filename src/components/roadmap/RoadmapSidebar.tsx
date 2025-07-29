@@ -7,6 +7,7 @@ import { useSession } from 'next-auth/react';
 import CreateRoadmapForm from './CreateRoadmapForm';
 import RoadmapList from './RoadmapList';
 import { FiX, FiPlus } from 'react-icons/fi';
+import { useEmulation } from '../EmulationProvider';
 
 export default function RoadmapSidebar({
   onClose,
@@ -19,6 +20,9 @@ export default function RoadmapSidebar({
 }) {
   const { data: session } = useSession();
   const [showForm, setShowForm] = useState(false);
+
+  const { emulatedUser } = useEmulation();
+  const user = emulatedUser || session?.user;
 
   return (
     <div className="h-full flex flex-col bg-white/95 backdrop-blur-sm rounded-r-xl border-r border-gray-200/50 shadow-2xl">
@@ -66,7 +70,7 @@ export default function RoadmapSidebar({
         <div className="flex items-center justify-between">
           <div>
             <p className="text-sm font-medium text-gray-700">
-              Available Credits: <span className="font-bold">{session?.user?.credits || 0}</span>
+              Available Credits: <span className="font-bold">{user?.credits || 0}</span>
             </p>
             <p className="text-xs text-gray-500 mt-1">
               Each roadmap creation uses 1 credit

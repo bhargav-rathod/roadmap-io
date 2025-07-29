@@ -6,6 +6,7 @@ import { Roadmap } from '../../../types/roadmaps';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { SortableItem } from './ScrollableItem';
+import { useEmulation } from '../EmulationProvider';
 
 const cardColors = [
   'bg-blue-50',
@@ -17,6 +18,8 @@ const cardColors = [
 
 export default function RoadmapList({ onClose }: { onClose?: () => void }) {
   const { data: session } = useSession();
+  const { emulatedUser } = useEmulation();
+  const user = emulatedUser || session?.user;
   const [roadmaps, setRoadmaps] = useState<Roadmap[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -33,9 +36,9 @@ export default function RoadmapList({ onClose }: { onClose?: () => void }) {
 
   useEffect(() => {
     async function fetchRoadmaps() {
-      if (session?.user?.id) {
+      if (user?.id) {
         try {
-          const res = await fetch(`/api/roadmaps?userId=${session.user.id}`);
+          const res = await fetch(`/api/roadmaps?userId=${user.id}`);
           const data = await res.json();
           setRoadmaps(data);
         } catch (error) {
@@ -45,7 +48,7 @@ export default function RoadmapList({ onClose }: { onClose?: () => void }) {
       }
     }
     fetchRoadmaps();
-  }, [session]);
+  }, [user]);
 
   function handleDragEnd(event: any) {
     const { active, over } = event;

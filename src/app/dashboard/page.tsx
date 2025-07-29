@@ -2,15 +2,18 @@
 
 import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
+import { useEmulation } from '../../components/EmulationProvider';
 
 export default function DashboardPage() {
   const { data: session, status } = useSession();
+  const { emulatedUser } = useEmulation();
+  const user = emulatedUser || session?.user;
 
   if (status === 'loading') {
     return <div>Loading...</div>;
   }
 
-  if (!session) {
+  if (!user) {
     redirect('/login');
   }
 

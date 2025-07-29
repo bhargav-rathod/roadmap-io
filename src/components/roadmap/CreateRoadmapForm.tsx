@@ -6,12 +6,15 @@ import CustomDropdown from '../ui/CustomDropDown';
 import { CREATE_ROADMAP_COMPANY_TOOLTIP, CREATE_ROADMAP_COUNTRY_TOOLTIP, CREATE_ROADMAP_EXTRA_DETAILS_LABEL, CREATE_ROADMAP_EXTRA_DETAILS_LABEL_TOOLTIP, CREATE_ROADMAP_EXTRA_DETAILS_TOOLTIP, CREATE_ROADMAP_FRESHER_LABEL, CREATE_ROADMAP_INCLUDE_COMP_LABEL, CREATE_ROADMAP_INCLUDE_SIMILAR_ROLE_LABEL, CREATE_ROADMAP_PROGRAMMING_LANGAGE_TOOLTOP, CREATE_ROADMAP_ROLE_TOOLTIP, CREATE_ROADMAP_TARGET_DURATION_TOOLTIP, CREATE_ROADMAP_TOP_NOTE_LABEL } from '@/app/data/config';
 import Tooltip from '../ui/Tooltip';
 import ConfirmationModal from '../ui/ConfirmationModal';
+import { useEmulation } from '../EmulationProvider';
 
 export default function CreateRoadmapForm({ onSuccess, onCancel }: {
   onSuccess: (roadmap: any) => void;
   onCancel: () => void
 }) {
   const { data: session, update } = useSession();
+  const { emulatedUser } = useEmulation();
+  const user = emulatedUser || session?.user;
   const [formData, setFormData] = useState({
     roleType: '',
     company: '',
@@ -95,11 +98,11 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
     setShowConfirmation(false);
     setLoading(true);
     try {
-      if (!session?.user?.id) {
+      if (!user?.id) {
         throw new Error('User not authenticated');
       }
 
-      if (session.user.credits <= 0) {
+      if ((user.credits ?? (session && session.user?.credits) ?? 0) <= 0) {
         throw new Error('Insufficient credits to create roadmap');
       }
 
@@ -118,7 +121,7 @@ export default function CreateRoadmapForm({ onSuccess, onCancel }: {
         },
         body: JSON.stringify({
           ...formData,
-          userId: session.user.id,
+          userId: user.id,
           title: `${formData.role === 'Other' ? formData.roleOther : formData.role} at ${formData.company === 'Other' ? formData.companyOther : formData.company}`,
           // Clear experience fields if fresher is checked
           yearsOfExperience: formData.isFresher ? null : formData.yearsOfExperience,
