@@ -3,6 +3,8 @@
 
 import { FiX } from 'react-icons/fi'
 import { useSession } from 'next-auth/react'
+import { useEmulation } from '@/components/EmulationProvider'
+
 
 interface ProfileModalProps {
   isOpen: boolean
@@ -10,8 +12,9 @@ interface ProfileModalProps {
 }
 
 export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
-  const { data: session } = useSession()
-  const user = session?.user
+  const { data: session } = useSession();
+  const { emulatedUser } = useEmulation();
+  const user = emulatedUser || session?.user;
   
   // Generate avatar initials
   const firstLetter = user?.name?.charAt(0).toUpperCase() || ''

@@ -15,6 +15,8 @@ import SupportModal from './components/layout/SupportModal'
 import HelpModal from './components/layout/HelpModal'
 import ProfileModal from './components/layout/ProfileModal'
 import AboutModal from './components/layout/AboutModal'
+import EmulationProvider, { useEmulation } from '@/components/EmulationProvider'
+
 
 function LayoutContent({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(true)
@@ -30,7 +32,9 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
   const [showAboutModal, setShowAboutModal] = useState(false)
 
   const { data: session, update } = useSession()
-  const credits = session?.user?.credits ?? 0
+  const { emulatedUser } = useEmulation();
+  const user = emulatedUser || session?.user;
+  const credits = user?.credits ?? 0
   const pathname = usePathname()
 
   // Polling for credit updates
@@ -44,7 +48,7 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
   // Payment handler
   const handlePayment = async (planId: string) => {
     const plan = paymentPlans.find(p => p.id === planId)
-    if (!plan || !session?.user) return
+    if (!plan || !user) return
 
     setShowClassicLoader(true)
 
@@ -56,7 +60,7 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
         },
         body: JSON.stringify({
           planId: plan.id,
-          userId: session.user.id
+          userId: user.id
         })
       })
 
@@ -222,7 +226,9 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
     <SessionProvider>
-      <LayoutContent>{children}</LayoutContent>
+      <EmulationProvider>
+        <LayoutContent>{children}</LayoutContent>
+      </EmulationProvider>
     </SessionProvider>
   )
 }
